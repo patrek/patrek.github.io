@@ -1,0 +1,42 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = "Patrek's blog"
+description = "This is where I post my blog articles"
+theme = 'ananke'
+
+[params]
+  author = "patrek"
+show_reading_time = true
+date_format = "2006-01-02"
+featured_image = "/images/gold.jpg"
+
+
+[languages.en]
+contentDir = "content/en"
+languageCode = "en-CA"
+weight = 1
+title = "Patrek's blog"
+
+[languages.fr]
+  contentDir = "content/fr"
+  languageCode = "fr-CA"
+  weight = 2
+  title = "Blog de Patrek"
+
+
+
+[security]
+  enableInlineShortcodes = false
+
+  [security.exec]
+    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^git$', '^npx$', '^postcss$', '^tailwindcss$', '^asciidoctor$']
+    osEnv = ['(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w+|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG|SYSTEMDRIVE)$']
+
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$']
+
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']
+
+
