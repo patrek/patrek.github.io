@@ -27,7 +27,31 @@ featured_image = "/images/gold.jpg"
     contentDir = "content/fr"
     title = "Blog de Patrek"
     weight = 1
+  
+  [params.ananke.social.share]
+  networks = [
+  "email",
+  "facebook",
+  "bluesky",
+  "linkedin"
+]
 
+  [params.ananke.social.follow]
+  networks = [
+  "facebook",
+  "bluesky",
+  "linkedin"
+]
+
+  [ params.ananke.social.facebook ]
+  username = "patrick.kollitsch"
+  # profilelink = "https://www.facebook.com/patrick.kollitsch"
+
+  [ params.ananke.social.linkedin ]
+  username = "patrickkollitsch"
+
+  [ params.ananke.social.bluesky ]
+  username = "kollitsch.dev"
 
 [security]
   enableInlineShortcodes = false

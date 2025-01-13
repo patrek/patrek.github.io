@@ -1,0 +1,8 @@
+---
+title: Articles
+description: Bienvenue dans mes articles en français. J'espère qu'ils vous plairont.
+type: page
+menu: main
+cascade:
+    featured_image: "/images/alien.jpg"
+---

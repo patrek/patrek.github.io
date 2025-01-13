@@ -1,0 +1,12 @@
+---
+draft: true
+title: À propos
+description: Un peu sur moi
+type: page
+menu: main
+omit_header_text: true
+---
+
+== À propos
+
+Je suis un développeur dit "sénior" qui commence à rédiger des articles.

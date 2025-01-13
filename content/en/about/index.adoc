@@ -1,0 +1,11 @@
+---
+title: About
+description: A little bit about myself
+type: page
+menu: main
+omit_header_text: true
+---
+
+== About this pages
+
+I'm Patrek, a software developer who loves to write about programming, technology, and other things that interest me. I hope you enjoy reading my articles.
