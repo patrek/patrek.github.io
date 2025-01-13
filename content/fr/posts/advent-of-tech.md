@@ -1,6 +1,6 @@
 +++
 date = '2024-12-21T00:00:00-05:00'
-draft = true
+draft = false
 title = "SOPS - Secrets encryptés dans un dépôt GIT"
 descrption = "Article publié dans le cadre de l'Advent of Tech 2024 @ Onepoint"
 featured_image = "/fr/posts/sops.png"

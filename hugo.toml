@@ -10,18 +10,23 @@ show_reading_time = true
 date_format = "2006-01-02"
 featured_image = "/images/gold.jpg"
 
-[languages.en]
-contentDir = "content/en"
-languageCode = "en-CA"
-weight = 2
-title = "Patrek's blog"
-
-[languages.fr]
-contentDir = "content/fr"
-languageCode = "fr-CA"
-weight = 1
-title = "Blog de Patrek"
-
+[languages]
+  [languages.en]
+    disabled = false
+    languageCode = ''
+    languageDirection = ''
+    languageName = ''
+    contentDir = "content/en"
+    title = "Patrek's blog"
+    weight = 2
+  [languages.fr]
+    disabled = false
+    languageCode = ''
+    languageDirection = ''
+    languageName = ''
+    contentDir = "content/fr"
+    title = "Blog de Patrek"
+    weight = 1
 
 
 [security]
