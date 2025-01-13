@@ -3,7 +3,7 @@ date = '2024-12-21T00:00:00-05:00'
 draft = true
 title = "SOPS - Secrets encryptés dans un dépôt GIT"
 descrption = "Article publié dans le cadre de l'Advent of Tech 2024 @ Onepoint"
-featured_image = "/images/sops.png"
+featured_image = "/fr/posts/sops.png"
 +++
 
 Publié initialement sur [dev.to](https://dev.to/onepoint/sops-secrets-encryptes-dans-un-depot-git-1c04) dans le contexte du [Advent of Tech 2024](https://dev.to/onepoint/advent-of-tech-2024-onepoint-le)

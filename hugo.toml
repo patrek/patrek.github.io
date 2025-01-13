@@ -1,27 +1,26 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
+baseURL = 'https://patrek.github.io'
+languageCode = 'en-ca'
 title = "Patrek's blog"
 description = "This is where I post my blog articles"
 theme = 'ananke'
 
 [params]
-  author = "patrek"
+author = "patrek"
 show_reading_time = true
 date_format = "2006-01-02"
 featured_image = "/images/gold.jpg"
 
-
 [languages.en]
 contentDir = "content/en"
 languageCode = "en-CA"
-weight = 1
+weight = 2
 title = "Patrek's blog"
 
 [languages.fr]
-  contentDir = "content/fr"
-  languageCode = "fr-CA"
-  weight = 2
-  title = "Blog de Patrek"
+contentDir = "content/fr"
+languageCode = "fr-CA"
+weight = 1
+title = "Blog de Patrek"
 
 
 
