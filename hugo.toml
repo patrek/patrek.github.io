@@ -2,13 +2,20 @@ baseURL = 'https://patrek.github.io'
 languageCode = 'en-ca'
 title = "Patrek's blog"
 description = "This is where I post my blog articles"
-theme = 'ananke'
+theme = ["github.com/theNewDynamic/gohugo-theme-ananke/v2"]
+#theme = "silhouette-hugo"
+#theme = ["github.com/razonyang/hugo-theme-bootstrap/v1.9"]
+  
+#staticDir = ["static", "themes/Niello/static"]
+  
+#theme = "Niello"
 
 [params]
-author = "patrek"
+author = "Patrick Turcotte"
 show_reading_time = true
 date_format = "2006-01-02"
 featured_image = "/images/gold.jpg"
+custom_css = ["tables.css"]
 
 [languages]
   [languages.en]

@@ -3,4 +3,6 @@ title: "English articles"
 cascade:
     featured_image: "/images/alien.jpg"
 ---
-Welcome to my articles in English. I hope you enjoy them.
+
+Welcome to my articles in English. I hope you enjoy them. You can also take a look at my articles in French link:/fr/[here] there are not all on the same subject.
+
