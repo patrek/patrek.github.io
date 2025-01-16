@@ -2,28 +2,15 @@
 date = '2024-12-21T00:00:00-05:00'
 draft = false
 title = "SOPS - Secrets encryptés dans un dépôt GIT"
-descrption = "Article publié dans le cadre de l'Advent of Tech 2024 @ Onepoint"
+description = "Article publié dans le cadre de l'Advent of Tech 2024 @ Onepoint"
 featured_image = "/fr/posts/sops.png"
+tags = ["sops" ,"secrets", "chiffrement", "git", "sécurité"]
+[params]
+author = "onepoint / Patrick Turcotte"
 +++
 
 Publié initialement sur [dev.to](https://dev.to/onepoint/sops-secrets-encryptes-dans-un-depot-git-1c04) dans le contexte du [Advent of Tech 2024](https://dev.to/onepoint/advent-of-tech-2024-onepoint-le)
 
-
-## Table des matières
-1. [SOPS - Secrets encryptés dans un dépôt GIT](#sops---secrets-encryptés-dans-un-dépôt-git)
-    1. [Partager ses secrets en toute sécurité avec SOPS](#partager-ses-secrets-en-toute-sécurité-avec-sops)
-    2. [SOPS (Secrets OPerationS) à la rescousse](#sops-secrets-operations-à-la-rescousse)
-        1. [Installation de `sops`](#installation-de-sops)
-        2. [Options de la commande `sops`](#options-de-la-commande-sops)
-    3. [Utilisation avec `age`](#utilisation-avec-age)
-        1. [Chiffrer un fichier avec plusieurs clés de chiffrement](#chiffrer-un-fichier-avec-plusieurs-clés-de-chiffrement)
-        2. [Filtrer les clés de valeur du fichier à chiffrer](#filtrer-les-clés-de-valeur-du-fichier-à-chiffrer)
-    4. [Configuration de sops](#configuration-de-sops)
-    5. [Clés de chiffrement AWS KMS](#clés-de-chiffrement-aws-kms)
-    6. [Autres systèmes supportés](#autres-systèmes-supportés)
-    7. [Conclusion](#conclusion)
-
-----
 
 [comment]: # (Le contenu de l'article commence ici)
 
