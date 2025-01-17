@@ -3,14 +3,14 @@ date : '2025-01-13T00:00:00-05:00'
 draft : false
 title : "Green Field Project"
 description : "If I was to start a project from scratch"
-featured_image : "/posts/greenfield.jpg"
+featured_image : "/images/greenfield.jpg"
 tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailhog", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "sonarqube", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
 summary: "A curated list of projects, libraries, tools and practices I would use if I was to start a project from scratch."
 ---
 
 = Green Field Project
 :sectnums:
-:toc:
+:toc: left
 
 [[introduction]]
 == I'm dreaming
@@ -110,6 +110,7 @@ We need to track information and document various aspects of our project.
 Not all documentation needs to be in the same place. It is often better to keep documentation close to the code to ensure it stays up to date.
 
 However, we also need a central place to index all documentation. A wiki is a good solution for this.
+
 === Diataxis
 
 I've recently been introduced to the concept of Diataxis (https://dev.to/onepoint/documentation-chaotique-diataxis-a-la-rescousse--3e9o).
@@ -272,6 +273,14 @@ Code review is a good practice to have in place. It helps both with having quali
 === Curated code examples
 
 I would identify in the code base examples of good code. This way, when a new developer joins the team, they can see what is considered good code. It can be a simple class, a method, a pattern, etc.
+
+=== Testing: unit and integration
+
+From the beginning, we should have unit tests in place. They are the first line of defense against bugs. They are also a good way to document the code. Start with the unit tests, and then add integration tests when needed.
+
+We don't have to test libraries. We should test our code, the code that we write.
+
+Code should be tested before it is merged. We should have a pipeline that runs the tests and blocks the merge if the tests fail.
 
 == Frameworks and Libraries
 
