@@ -2,5 +2,6 @@
 title: "Articles en français"
 cascade:
     featured_image: "/images/sherby.jpg"
+    toc: true
 ---
 Bienvenue dans mes articles en français. J'espère qu'ils vous plairont. Visitez aussi mes articles en anglais link:/en/[ici] ils ne sont pas tous sur le même sujet.
