@@ -1,6 +1,6 @@
 ---
 date : '2025-01-13T00:00:00-05:00'
-draft : true
+draft : false
 title : Démarrage d'un nouveau projet en terrain vierge
 description: Les projets, bibliothèques, outils et pratiques que j'ai remarqués
 featured_image : "/images/greenfield.jpg"
@@ -62,7 +62,7 @@ Le type peut être l'un des suivants :
 * chore : Changements qui ne modifient pas les fichiers src ou test
 * ci : Changements apportés à nos fichiers de configuration CI et scripts
 * docs: Changements uniquement dans la documentation
-* style: Changements qui n'affectent pas le sens du code (espaces, formatage, point-virgule manquant	deux-points, etc)
+* style: Changements qui n'affectent pas le sens du code (espaces, formatage, point-virgule manquant deux-points, etc)
 * refactor: Un changement de code qui ne corrige ni un bug ni n'ajoute une fonctionnalité
 * perf: Amélioration des performances
 * test: Ajout de tests manquants ou correction de tests existants
@@ -167,18 +167,18 @@ Dans nos projets, le script d'aide comprend des profils. Ainsi, un développeur 
 
 * Page d'aide en libre-service. C'est une simple page html qui est servie par les services d'aide. Elle contient des informations sur les services d'aide, comme la version, les points de terminaison, la documentation, etc. Nous utilisons https://github.com/caddyserver/caddy-docker[caddy] pour cela, et un volume local pour servir la page html.
 * https://traefik.io/traefik/[traefik] comme un proxy inverse pour toutes nos applications
-	** Nous pouvons le configurer avec un basculement. De cette façon, même si nous avons commencé avec un profil spécifique, disons 		dites backend, nous pouvons toujours démarrer le backend localement et cela prendra le pas sur celui 		dans le fichier docker-compose.
-	** https: traefik nous permet d'utiliser https avec une configuration simple. Cela peut provenir d'un certificat let’s 	encrypt, ou d'un certificat auto-signé, ou en utilisant le .
+ ** Nous pouvons le configurer avec un basculement. De cette façon, même si nous avons commencé avec un profil spécifique, disons  dites backend, nous pouvons toujours démarrer le backend localement et cela prendra le pas sur celui  dans le fichier docker-compose.
+ ** https: traefik nous permet d'utiliser https avec une configuration simple. Cela peut provenir d'un certificat let’s encrypt, ou d'un certificat auto-signé, ou en utilisant le .
 * https://www.portainer.io/products/portainer-platform-universal-container-management-platform[portainer] pour gérer nos conteneurs sans se soucier de la plateforme que nos développeurs ou qa utilisent
 * traduction des jetons JWT avec https://jwt.io/[jwt.io]
-	** Si nous utilisons un jeton JWT, nous devrons souvent extraire les informations de ceux-ci. Nous pouvons utiliser 			jwt.io pour cela. C'est un outil simple qui peut être utilisé pour extraire les informations d'un JWT 			token. Mais, si nous avons peur de la fuite d'informations, nous pouvons également utiliser une version locale de 			jwt.io.
+ ** Si nous utilisons un jeton JWT, nous devrons souvent extraire les informations de ceux-ci. Nous pouvons utiliser  jwt.io pour cela. C'est un outil simple qui peut être utilisé pour extraire les informations d'un JWT  token. Mais, si nous avons peur de la fuite d'informations, nous pouvons également utiliser une version locale de  jwt.io.
 * postgresql ou autre base de données
 * serveur keycloak si nécessaire
 * grafana : dans notre cas, nous utilisons grafana pour afficher aux utilisateurs
-* rabbitmq : dans notre cas, nous utilisons rabbitmq pour gérer les messages et les files d'attente entre les 	différents services
+* rabbitmq : dans notre cas, nous utilisons rabbitmq pour gérer les messages et les files d'attente entre les différents services
 * wiremock : dans notre cas, nous utilisons wiremock pour simuler des services externes
 * https://dozzle.dev/[dozzle], pour voir les journaux des conteneurs
-* https://github.com/mailhog/MailHog[mailhog] pour voir les e-mails envoyés par l'application, c'est un simple serveur smtp qui peut être utilisé pour 	voir les e-mails envoyés par l'application
+* https://github.com/mailhog/MailHog[mailhog] pour voir les e-mails envoyés par l'application, c'est un simple serveur smtp qui peut être utilisé pour voir les e-mails envoyés par l'application
 * une sorte de service de surveillance
 
 Nous pouvons également ajouter tout autre service d'assistance qui peut être dockerisé.
@@ -207,7 +207,7 @@ Pour le frontend, j'aurais du mal à choisir entre React et Angular. React a bea
 La simple réalité est de choisir un, n'importe lequel et de s'y tenir.
 Mais, d'après mon expérience, j'ajouterais d'autres critères pour le sélectionner :
 
-* Défini par une entité bien connue (ne perdez pas de temps à débattre si vous devez mettre des accolades à la 	fin de la ligne ou sur la ligne suivante)
+* Défini par une entité bien connue (ne perdez pas de temps à débattre si vous devez mettre des accolades à la fin de la ligne ou sur la ligne suivante)
 * Facile à utiliser (vous ne devriez pas avoir à y penser)
 * Peut être vérifié automatiquement par vos pipelines
 * Peut être appliqué automatiquement par votre IDE
@@ -263,12 +263,11 @@ S'assurer que nous créons des canaux dédiés pour différents aspects (code, r
 
 === Revue de code
 
-La revue de code est une bonne pratique à mettre en place. Cela aide à avoir un code de qualité et à partager des connaissances. Nous devrions avoir nos blocs de pipeline si le code n'est pas revu.
+La revue de code est une bonne pratique à mettre en place. Cela aide à avoir un code de qualité et à partager des connaissances. Nous devrions avoir des bloquages du pipeline si le code n'est pas revu.
 
 === Exemples de code sélectionnés
 
-J'identifierais dans la base de code des exemples de bon code. De cette façon, lorsqu'un nouveau développeur rejoint le équipe, il peut voir ce qui est considéré comme un bon code. Cela peut être une classe simple, une méthode, un modèle, etc.
-
+J'identifierais dans la base de code des exemples de bon code. De cette façon, lorsqu'un nouveau développeur rejoint l'équipe, il peut voir ce qui est considéré comme un bon code. Cela peut être une classe simple, une méthode, un modèle, etc.
 
 === Tests unitaires et d'intégration
 
@@ -282,13 +281,13 @@ Les tests doivent être exécutés automatiquement à chaque fois que le code es
 
 === https://quarkus.io/[Quarkus]
 
-J'utiliserais Quarkus comme cadre pour construire le backend du projet. C'est un Java moderne cadre qui est assez mature. On dirait qu'il a été construit dès le départ avec le développeur en tête. Et il peut créer des artefacts qui sont natifs, rapides et adaptés aux conteneurs.
+J'utiliserais Quarkus comme cadre pour construire le backend du projet. C'est un cadre Java moderne cadre qui est assez mature. On dirait qu'il a été construit dès le départ avec le développeur en tête. Et il peut créer des artefacts qui sont natifs, rapides et adaptés aux conteneurs.
 
 Il existe un excellent tutoriel pour nous donner un aperçu du cadre et des fonctionnalités associées. https://quarkus.io/quarkus-workshops/super-heroes/
 
 === https://mapstruct.org/[Mapstruct]
 
-Très souvent, lors de la construction d'un backend robuste, nous aurons besoin de différents modèles mais correspondants (DTO, pojo, entités) pour différentes parties de l'application.
+Très souvent, lors de la construction d'un backend robuste, nous aurons besoin de différents modèles (DTO, pojo, entités) pour différentes parties de l'application.
 
 À mesure que l'information passe d'une partie de l'application à une autre (de la base de données au service, du service au contrôleur, du contrôleur au client), nous devrons mapper les informations d'un modèle à un autre.
 
@@ -298,13 +297,15 @@ C'est assez utile quand nous devons mapper d'un DTO à une entité et vice versa
 
 === https://projectlombok.org/[Lombok]
 
-L'une des plaintes que les gens ont sur Java est d'écrire beaucoup de code standard. J'utiliserais Lombok pour alléger cela. C'est un produit puissant qui peut être utilisé pour générer le code standard pour nous. Il peut être utilisé pour générer le code de base pour nous de plusieurs manières, comme les accesseurs, les mutateurs, les constructeurs, y compris certains modèles comme les constructeurs, equals et hashcode, etc.
+L'une des plaintes que les gens ont sur Java est de devoir écrire beaucoup de code répétitif. J'utiliserais Lombok pour alléger cela. C'est un produit puissant qui peut être utilisé pour générer le code répétitif pour nous. Il peut être utilisé pour générer le code de base pour nous de plusieurs manières, comme les accesseurs, les mutateurs, les constructeurs, y compris certains modèles comme les constructeurs, equals et hashcode, etc.
 
 Pour certaines constructions, utiliser les https://www.baeldung.com/java-record-keyword[Records] de java pourrait être une bonne alternative.
 
 === https://www.liquibase.com/[Liquibase]
 
-À un certain moment, nous aurons probablement besoin d'une base de données relationnelle pour stocker nos données (voir Postgresql plus tard à ce sujet). Et ensuite, nous aurons besoin d'un moyen de gérer le schéma de cette base de données. J'utiliserais Liquibase pour cela. C'est un produit mature qui peut être utilisé pour gérer le schéma de la base de données. Il peut être utilisé pour créer le schéma, mettre à jour le schéma, etc. Il peut également être utilisé pour créer des données dans la base de données.
+À un certain moment, nous aurons probablement besoin d'une base de données relationnelle pour stocker nos données (voir <<postgresql>> plus tard à ce sujet). Et ensuite, nous aurons besoin d'un moyen de gérer le schéma de cette base de données. J'utiliserais Liquibase pour cela.
+
+C'est un produit mature qui peut être utilisé pour gérer le schéma de la base de données. Il peut être utilisé pour créer le schéma, mettre à jour le schéma, etc. Il peut également être utilisé pour créer des données dans la base de données.
 
 Il prend également en charge le concept de contextes. Ainsi, nous pouvons stocker dans le même système différents ensembles de modifications pour différents environnements, besoins ou fonctionnalités. C'est une fonctionnalité puissante.
 
@@ -312,7 +313,7 @@ Il y a même un certain support pour certaines bases de données non relationnel
 
 === https://opentelemetry.io/[OpenTelemetry]
 
-Surveiller notre application est souvent une tâche qui est repoussée dans le futur, après que les fonctionnalités soient mises en œuvre. Mais il est important de commencer à y penser tôt. J'utiliserais OpenTelemetry pour surveiller l'application. C'est un moderne cadre qui peut être utilisé pour surveiller l'application. Il peut être utilisé pour surveiller l'application en production, mais aussi en développement. Il peut être utilisé pour surveiller l'application dans un conteneur, mais aussi dans un environnement natif.
+Surveiller notre application est souvent une tâche qui est repoussée à plus tard, après que les fonctionnalités soient mises en oeuvre. Mais il est important de commencer à y penser tôt. J'utiliserais OpenTelemetry pour surveiller l'application. C'est un projet cadre implémenté par plusieurs bibliothèque de coe. Il peut être utilisé pour surveiller l'application en production, mais aussi en développement. Il peut être utilisé pour surveiller l'application dans un conteneur, mais aussi dans un environnement natif.
 
 Et nous pouvons également ajouter nos propres métriques. Disons que nous voulons surveiller le nombre de fois qu'un fonctionnalité spécifique est utilisée. Nous pouvons ajouter une métrique pour cela. Ou si nous voulons nous assurer qu'un job cron est complété correctement au taux attendu, nous pouvons ajouter une métrique pour cela.
 
@@ -333,23 +334,23 @@ import org.jboss.logging.Logger;
 @Path("/hello-metrics")
 public class MetricResource {
 
-    private static final Logger LOG = Logger.getLogger(MetricResource.class);
+  private static final Logger LOG = Logger.getLogger(MetricResource.class);
 
-    private final LongCounter counter;
+  private final LongCounter counter;
 
 public MetricResource(Meter meter) {
-        counter = meter.counterBuilder("hello-metrics")
-                .setDescription("hello-metrics")
-                .setUnit("invocations")
+    counter = meter.counterBuilder("hello-metrics")
+        .setDescription("hello-metrics")
+        .setUnit("invocations")
  .build();
-    }
+  }
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        counter.add(1);
-        LOG.info("hello-metrics");
-        return "hello-metrics";
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
+  public String hello() {
+    counter.add(1);
+    LOG.info("hello-metrics");
+    return "hello-metrics";
  }
 }
 ```
@@ -362,14 +363,14 @@ Dès que notre système central existe, nous devrions envisager d'encapsuler cha
 
 Il y a deux raisons principales à cela :
 
-* Nous pouvons publier une fonctionnalité sans la rendre disponible aux utilisateurs, ce qui facilite la 	livraison continue
-* Nous pouvons publier une fonctionnalité à un sous-ensemble d'utilisateurs, afin de pouvoir la tester avec de vrais utilisateurs avant de la publier pour tout le monde. Nous pouvons également rendre la fonctionnalité disponible sur différents plans d'abonnement, etc. Enfin, nous pouvons également utiliser des commutateurs de fonctionnalité pour désactiver une fonctionnalité si elle ne fonctionne pas comme prévu.
+* Nous pouvons publier une fonctionnalité sans la rendre disponible aux utilisateurs, ce qui facilite la livraison continue
+* Nous pouvons publier une fonctionnalité à un sous-ensemble d'utilisateurs, afin de pouvoir la tester avec de vrais utilisateurs avant de la publier pour tout le monde. Nous pouvons également rendre la fonctionnalité disponible sur différents plans d'abonnement, etc.
 
 Nous pouvons également utiliser des commutateurs de fonctionnalité pour désactiver une fonctionnalité si elle ne fonctionne pas comme prévu.
 
 ==== https://openfeature.dev/[OpenFeature]
 
-En recherchant pour cet article, je suis tombé sur OpenFeature. C'est un service de commutateurs de fonctionnalités gratuit spécification qui peut être implémentée par n'importe quel service.
+En recherchant pour cet article, je suis tombé sur OpenFeature. C'est une spécification de service de commutateurs de fonctionnalités qui peut être implémentée par n'importe quel service.
 
 En utilisant les SDK openfeature, nous pouvons éviter le verrouillage des fournisseurs et avoir une manière cohérente de gérer nos drapeaux de fonctionnalités.
 
@@ -383,7 +384,7 @@ Il y a une discussion sur le fait de faire en sorte qu'unleash prenne en charge 
 
 === https://www.postgresql.org/[Postgresql] [[postgresql]]
 
-Si notre projet nécessite une base de données relationnelle, j'utiliserais Postgresql. C'est un produit mature qui peut être utilisé pour stocker les données du projet. C'est un produit puissant qui a de nombreuses fonctionnalités comme les transactions, les contraintes, les déclencheurs, etc. Il a de nombreuses capacités intégrées, comme le stockage d'objets en json format, la recherche en texte intégral, etc. Il a également de nombreux , comme Postgis, qui peuvent être utilisés pour stocker et interroger des données géospatiales, TimescaleDB, qui peut être utilisé pour stocker et interroger des données de séries temporelles, etc. Il est très stable et a une grande communauté.
+Si notre projet nécessite une base de données relationnelle, j'utiliserais Postgresql. C'est un produit mature qui peut être utilisé pour stocker les données du projet. C'est un produit puissant qui a de nombreuses fonctionnalités comme les transactions, les contraintes, les déclencheurs, etc. Il a de nombreuses capacités intégrées, comme le stockage d'objets en json format, la recherche en texte intégral, etc. Il a également de nombreuses https://www.postgresql.org/download/products/6-postgresql-extensions/[extensions], comme Postgis, qui peuvent être utilisés pour stocker et interroger des données géospatiales, TimescaleDB, qui peut être utilisé pour stocker et interroger des données de séries temporelles, etc. Il est très stable et a une grande communauté.
 
 
 ==== https://www.timescale.com/[TimescaleDB] Données de séries temporelles
@@ -396,17 +397,21 @@ Si jamais nous rencontrons une situation où nous devons stocker des données de
 
 === https://www.wiremock.io/[Wiremock]
 
-Il est tout à fait possible que notre projet doive interagir avec des services externes. Nous voudrons tester notre code sans avoir à dépendre de l'appel réel de ces services externes. J'utiliserais Wiremock pour cela. C'est un produit mature qui peut simuler les services externes. Nous pouvons définir les réponses que nous voulons obtenir des services externes et utiliser Wiremock pour simuler les services externes. Il prend même en charge la randomisation du résultat ou le retour de timestamps qui sont toujours une période définie dans le passé ou le futur de l'appel.
+Il est tout à fait possible que notre projet doive interagir avec des services externes. Nous voudrons tester notre code sans avoir à dépendre de l'appel réel de ces services externes.
+
+J'utiliserais Wiremock pour cela. C'est un produit mature qui peut simuler les services externes. Nous pouvons définir les réponses que nous voulons obtenir des services externes et utiliser Wiremock pour simuler les services externes.
+
+Il prend même en charge la randomisation du résultat ou le retour de timestamps qui sont toujours une période définie dans le passé ou le futur de l'appel.
 
 === Gestion des mots de passe
 
-Nous avons des mots de passe, trop d'entre eux. Et nous ne devrions pas les stocker en texte clair. J'utiliserais un gestionnaire de mots de passe pour stocker les mots de passe. Il existe de nombreux gestionnaires de mots de passe disponibles, comme 1Password, LastPass, Bitwarden, etc.
+Nous avons des mots de passe, beaucoup trop probablement. Et nous ne devrions pas les stocker en texte clair. J'utiliserais un gestionnaire de mots de passe pour stocker les mots de passe. Il existe de nombreux gestionnaires de mots de passe disponibles, comme 1Password, LastPass, Bitwarden, etc.
 
 Certains, comme 1Password, sont plus qu'un simple coffre-fort de mots de passe, ils viennent avec des outils qui nous permettent d'utiliser en toute sécurité les mots de passe dans nos applications ou sur la ligne de commande.
 
 == https: Let’s Encrypt ou localhost.direct
 
-De nos jours, le web est censé être sécurisé. Nous devrions utiliser https. Nous pouvons utiliser https://letsencrypt.org/[Let's Encrypt] pour obtenir un certificat gratuit. Mais, si nous travaillons dans un environnement local, nous pouvons utiliser  pour obtenir un certificat gratuit pour notre environnement local.
+De nos jours, le web est censé être sécurisé. Nous devrions utiliser https. Nous pouvons utiliser https://letsencrypt.org/[Let's Encrypt] pour obtenir un certificat gratuit. Mais, si nous travaillons dans un environnement local, nous pouvons utiliser le projet https://get.localhost.direct/[localhost.direct] pour obtenir un certificat gratuit pour notre environnement local.
 
 == Commit
 
@@ -418,48 +423,51 @@ Je serais pragmatique et choisirais ce qui est déjà utilisé dans l'organisati
 
 ==== https://github.com/frace/git-passport[Git passport]
 
-Si nous travaillons sur plusieurs projets, où le code est stocké dans différents dépôts, nous pourrions veut utiliser git passport. C'est un outil qui nous permet de gérer plusieurs identités git.
+Si nous travaillons sur plusieurs projets, où le code est stocké dans différents dépôts où nous n'avons pas les même nom d'utilisateurs, courriels, etc., nous pourrions peut-être utiliser git passport. C'est un outil qui nous permet de gérer plusieurs identités git.
 
 ==== https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
 
-Nous travaillerons probablement sur plus d'un projet à un moment donné, et nous devrons gérer nos identifiants. J'utiliserais Git Credential Manager pour gérer mes identifiants. C'est un outil puissant qui peut être utilisé pour gérer nos identifiants. Il peut être utilisé pour gérer nos identifiants de plusieurs manières, comme les stocker de manière sécurisée, les partager avec notre équipe, etc. Il peut également être utilisé pour gérer nos identifiants dans de nombreux environnements, comme le développement, la qa, la mise en scène, l'uat, la production.
+Nous travaillerons probablement sur plus d'un projet à un moment donné, et nous devrons gérer nos identifiants. J'utiliserais **Git Credential Manager** pour gérer mes identifiants.
+
+C'est un outil puissant qui peut être utilisé pour gérer nos identifiants. Il peut être utilisé pour gérer nos identifiants de plusieurs manières, comme les stocker de manière sécurisée, les partager avec notre équipe, etc. Il peut également être utilisé pour gérer nos identifiants dans de nombreux environnements, comme le développement, la qa, la mise en scène, l'uat, la production.
 
 === https://getsops.io/[Sops]
 
-À un moment donné, c'est sûr, nous devrons gérer des secrets dans notre dépôt. J'utiliserais Sops pour chiffrer ces secrets. De cette façon, je peux les stocker dans le dépôt git sans craindre qu'ils soient lu par des personnes qui ne devraient pas avoir accès.
-Assurez-vous que nous incluons cela tôt dans le processus, afin qu'aucun secret ne soit jamais stocké en texte clair dans notre dépôt. (Voir l'article correspondant)
+À un moment donné, c'est sûr, nous devrons gérer des secrets dans notre dépôt. J'utiliserais Sops pour chiffrer ces secrets. De cette façon, je peux les stocker dans le dépôt git sans craindre qu'ils ne soient lu par des personnes qui ne devraient pas y avoir accès.
+
+Assurez-vous que nous mettons cette pratique en place tôt dans le processus, afin qu'aucun secret ne soit jamais stocké en texte clair dans notre dépôt. (https://patrek.github.io/fr/posts/advent-of-tech/[Voir l'article que j'ai rédigé à ce sujet])
 
 === https://gitlab.com[Gitlab] ou autre dépôt de code
 
-Certaines organisations utilisent Gitlab, d'autres utilisent Github, Bitbucket ou même AWS CodeCommit. Quoi que votre organisation utilise, assurez-vous d'avoir un pipeline qui peut vérifier, construire et empaqueter le code. Assurez-vous d'avoir un pipeline qui peut déployer le code. Assurez-vous d'avoir un pipeline qui peut surveiller le code. Assurez-vous d'avoir un pipeline qui peut revenir en arrière sur le code.
+Certaines organisations utilisent Gitlab, d'autres utilisent Github, Bitbucket ou même AWS CodeCommit. Peut importe ce que votre organisation utilise, assurez-vous que votre organisation dispose d'un système pipeline capable de vérifier, construire, empaqueter, déployer, surveiller et revenir en arrière sur le code.
 
 == CI (Intégration continue)
 
 === Gitlab CI / Pipelines
 
-Comme nous utilisons Gitlab, nous utiliserons les pipelines qui peuvent s'exécuter dans gitlab. C'est un outil puissant qui peut être utilisé pour vérifier, construire et empaqueter le code. Il peut être utilisé pour déployer le code. Il peut être utilisé pour surveiller le code. Il peut être utilisé pour revenir en arrière sur le code.
+Comme nous utilisons Gitlab, nous utiliserons les pipelines qui peuvent s'exécuter dans gitlab. C'est un outil puissant qui peut être utilisé pour vérifier, construire et empaqueter le code. Il peut également être utilisé pour déployer, surveiller la qualité du code. Il peut être utilisé pour revenir en arrière sur le code si un problème était découvert..
 
 Voici quelques étapes typiques que nous mettons dans nos pipelines :
 
-* pré-valider : utiliser <<dangerjs>> pour vérifier les messages de commit et s'assurer qu'ils respectent les 	conventions que nous avons établies avec l'équipe.
+* pré-valider : utiliser <<dangerjs>> pour vérifier les messages de commit et s'assurer qu'ils respectent les conventions que nous avons établies avec l'équipe.
 * vérifier le format : assurez-vous que le code est correctement formaté. Comme nous ne voulons pas donner les droits de commit du pipeline, nous ne formatons pas le code, mais nous vérifions qu'il est correctement formaté.
 * compiler : assurez-vous que le code se compile correctement. C'est une étape simple qui peut être effectuée rapidement.
 * test unitaire : exécutez des tests unitaires pour le code
-* installer : installez le code java dans le dépôt local maven
+* installer : installez le code java dans le dépôt maven
 * test d'intégration : s'ils existent, exécutez le test d'intégration.
-* rapport de couverture de code : générez le rapport de couverture de code. Cela peut être fait avec JaCoCo, ou tout autre 	outil de couverture de code.
-* analyse statique : exécutez une analyse statique sur le code. Cela peut être fait avec Sonarqube, ou tout autre 	outil d'analyse statique.
+* rapport de couverture de code : générez le rapport de couverture de code. Cela peut être fait avec JaCoCo, ou tout autre outil de couverture de code.
+* analyse statique : exécutez une analyse statique sur le code. Cela peut être fait avec Sonarqube, ou tout autre outil d'analyse statique.
 * scan sat : exécutez l'outil satscan sur le code. Cela peut être fait avec l'outil satscan.
-* image(s) docker : créez l'image docker de l'application ou du module. Si nous utilisons le 	modèle mono-repo, il peut y avoir plusieurs images docker à construire ici.
-* post-validation : encore avec le cadre danger. Typiquement ici, nous vérifions si le nombre approprié 	d'approbations existe.
+* image(s) docker : créez l'image docker de l'application ou du module. Si nous utilisons le modèle mono-repo, il peut y avoir plusieurs images docker à construire ici.
+* post-validation : encore avec le cadre danger. Typiquement ici, nous vérifions si le nombre approprié d'approbations existe.
 
-===  https://danger.systems/js/[Danger] [[dangerjs]]
+=== https://danger.systems/js/[Danger] [[dangerjs]]
 
 Traduction libre du site web de danger :
 ```
-Danger s'exécute pendant votre processus CI, et donne aux équipes la chance d'automatiser les tâches de révision de code tâches de révision.
+Danger s'exécute pendant votre processus CI, et donne aux équipes la chance d'automatiser les tâches de révision de code.
 
-Cela fournit une autre étape logique dans votre construction, à travers cela Danger peut aider à lint vos tâches répétitives dans la révision quotidienne du code.
+Cela fournit une autre étape logique dans votre construction, à travers cela Danger peut aider à appliquer vos tâches répétitives dans la révision quotidienne du code.
 
 Vous pouvez utiliser Danger pour codifier les normes de vos équipes. Laisser les humains réfléchir à des problèmes plus difficiles .
 
@@ -470,7 +478,7 @@ Au fil du temps, à mesure que les règles sont respectées, le message est modi
 
 === https://www.sonarsource.com/products/sonarqube/[Sonarqube]
 
-Nous voudrons vérifier la qualité de notre code. L'analyse statique de notre code permet de détecter de nombreux problèmes. habitudes, bugs ou problèmes de sécurité.
+Nous voudrons vérifier la qualité de notre code. L'analyse statique de notre code permet de détecter de nombreux des mauvaises habitudes, bugs ou problèmes de sécurité.
 
 J'utiliserais Sonarqube pour cela. C'est un produit mature qui peut vérifier notre code pour des bugs, vulnérabilités, mauvaises pratiques de code, etc. Il peut également vérifier notre code pour la couverture, les duplications, etc.
 
@@ -480,29 +488,31 @@ La plupart des IDE devraient avoir un plugin afin que nous puissions voir les r�
 
 === Images et conteneurs Docker
 
-Je pense qu'il est raisonnable de penser que nous déploierons notre application dans des conteneurs. D'autant plus si notre application n'est pas un gros monolithe, mais un ensemble de modules ou de microservices. Pensez à faire un front end en React, un backend en Quarkus, une base de données en Postgresql, etc. Nous pouvons utiliser Docker pour créer les images de notre application. Nous pouvons utiliser Docker pour exécuter les conteneurs de notre application. Et, si le besoin se présente, nous pouvons utiliser Kubernetes pour déployer l'ensemble de notre pile d'application.
+Je pense qu'il est raisonnable de penser que nous déploierons notre application dans des conteneurs. D'autant plus si notre application n'est pas un gros monolithe, mais un ensemble de modules ou de microservices. Pensez à un front end en React, un backend en Quarkus, une base de données en Postgresql, etc.
+
+Nous pouvons utiliser Docker pour créer les images de notre application. Nous pouvons également utiliser Docker pour exécuter les conteneurs de notre application. Et, si le besoin se présente, nous pouvons utiliser Kubernetes pour déployer l'ensemble de notre pile d'application.
 
 Donc, tôt dans le projet, assurez-vous que nous avons un pipeline qui peut construire les images de notre application. Et testez-le.
 
-Idéalement, nous devrions avoir un pipeline qui construit les images, et les pousser vers un dépôt de conteneurs. Cela nous permet d'utiliser la même image dans tous nos environnements.
+Idéalement, nous devrions avoir un pipeline qui construit les images, et les pousse vers un dépôt de conteneurs. Cela nous permet d'utiliser la même image dans tous nos environnements.
 
 Je pense que faire une image différente pour chaque environnement est une mauvaise idée. Nous devrions être capables de déployer la même image dans tous nos environnements. La seule différence devrait être la configuration.
 
-Nous nous épargnerons beaucoup de douleur et de stress si nous commençons tôt avec cela au lieu d'attendre de le faire quand nous sommes près du Test d'Acceptation Utilisateur ou pire, de la date de Production.
+Nous nous épargnerons beaucoup de stress si nous commençons tôt avec cela au lieu d'attendre de le faire quand nous sommes près du Test d'Acceptation Utilisateur ou pire, de la date de Production.
 
 === https://www.terraform.io/[Terraform] pour l'infrastructure en tant que code
 
-Nous allons déployer notre application dans une sorte d'infrastructure. Et nous aurons très probablement besoin de la même infrastructure dans différents environnements, comme le développement, la qa, la mise en scène, l'uat, la production. Le meilleur moyen de s'assurer que chaque environnement est aussi proche que possible du précédent est de le rendre reproductible. J'utiliserais Terraform pour définir l'infrastructure en tant que code. De cette façon, nous pouvons déployer la même infrastructure dans chaque environnement.
+Nous allons déployer notre application dans une sorte d'infrastructure. Et nous aurons très probablement besoin de la même infrastructure dans différents environnements, comme le développement, la qa, la pré-production, l'uat, la production. Le meilleur moyen de s'assurer que chaque environnement est aussi proche que possible du précédent est de le rendre reproductible. J'utiliserais Terraform pour définir l'infrastructure en tant que code. De cette façon, nous pouvons déployer la même infrastructure dans chaque environnement.
 
 === https://terragrunt.gruntwork.io//[Terragrunt] pour aider à rendre Terraform un peu plus gérable
 
 Terragrunt est un mince wrapper pour Terraform qui fournit des outils supplémentaires pour garder vos configurations DRY, travailler avec plusieurs modules Terraform, et gérer l'état distant.
 
-Gérer une grande infrastructure avec Terraform est un peu douloureux. Nous avons probablement un gros fichier d'état sur le bucket AWS S3. Nous avons probablement beaucoup de modules. Nous avons probablement beaucoup d'environnements. Terragrunt peut nous aider à gérer tout cela.
+Gérer une grande infrastructure avec Terraform est un peu douloureux. Nous avons probablement un gros fichier d'état sur le bucket AWS S3. Nous avons probablement beaucoup de modules. Nous aurons probablement plusieurs d'environnements. Terragrunt peut nous aider à gérer tout cela.
 
 == Surveillance des projets
 
-À un moment donné, nous devrons surveiller notre application d'une manière ou d'une autre. Je suis actuellement en train de chercher chez Signoz, mais je n'ai pas vraiment d'option préférée ou recommandée pour le moment.
+À un moment donné, nous devrons surveiller notre application d'une manière ou d'une autre. Je suis actuellement en train d'évaluer Signoz, mais je n'ai pas vraiment d'option préférée ou recommandée pour le moment.
 
 * https://signoz.io/[Signoz]
 * https://www.elastic.co/apm/[Elastic APM]
@@ -515,11 +525,12 @@ Gérer une grande infrastructure avec Terraform est un peu douloureux. Nous avon
 
 === https://github.com/plausible/community-edition/[plausible] pour les données analytiques
 
-Je considère cela comme un sous-ensemble de la surveillance. Nous voudrons probablement savoir si nos utilisateurs utilisent notre application. Nous voudrons probablement savoir comment ils utilisent notre application. Nous voudrons probablement savoir d'où ils viennent. J'utiliserais Plausible pour cela. C'est un produit simple qui peut être utilisé pour surveiller notre application. Il peut être utilisé pour surveiller notre application en production, mais aussi en développement. Il peut être utilisé pour surveiller notre application dans un conteneur, mais aussi dans un environnement natif.
+Je considère cela comme un sous-ensemble de la surveillance. Nous voudrons savoir si nos utilisateurs utilisent notre application. Nous voudrons aussi savoir comment ils utilisent notre application. Et nous voudrons finalement savoir d'où ils viennent.
+
+J'utiliserais Plausible pour cela. C'est un produit simple qui peut être utilisé pour surveiller notre application. Il peut être utilisé pour surveiller notre application en production, mais aussi en développement. Il peut être utilisé pour surveiller notre application dans un conteneur, mais aussi dans un environnement natif.
 
 == Autres projets à explorer
 
-*  pour la capture de données de changement
-*  pour l'audit des changements de ligne
-*  pour l'audit des changements
-
+* https://debezium.io/[Debezium] pour la capture de données de changement
+* https://javers.org/[Javers] pour l'audit des changements de ligne
+* https://hibernate.org/orm/envers/[Hibernate Envers] pour l'audit des changements

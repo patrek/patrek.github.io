@@ -367,7 +367,7 @@ As soon as our core system exists, we should consider wrapping every feature ont
 There are the two main reasons for that:
 
 * We can release a feature without making it available to the users, so it ease the continuous delivery
-* We can release a feature to a subset of users, so we can test it with real users before releasing it to everyone. We can also make the feature available on different subscription plans, etc. Finally, we can also use feature flags to turn off a feature if it's not working as expected.
+* We can release a feature to a subset of users, so we can test it with real users before releasing it to everyone. We can also make the feature available on different subscription plans, etc.
 
 We can also use feature flags to turn off a feature if it's not working as expected.
 
@@ -399,7 +399,11 @@ At some point, we will need to manage users and their access to the application.
 
 === https://www.wiremock.io/[Wiremock]
 
-It is quite possible that our project will have to interact with external services. We will want to test our code without having to rely on actually calling these external services. I would use Wiremock for that. It's a mature product that can simulate the external services. We can define the responses we want to get from the external services and use Wiremock to simulate the external services. It even supports randomizing the result or returning timestamps that are always a set period in the past or the future of the call.
+It is quite possible that our project will have to interact with external services. We will want to test our code without having to rely on actually calling these external services.
+
+I would use Wiremock for that. It's a mature product that can simulate the external services. We can define the responses we want to get from the external services and use Wiremock to simulate the external services.
+
+It even supports randomizing the result or returning timestamps that are always a set period in the past or the future of the call.
 
 === Password management
 
