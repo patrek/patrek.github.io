@@ -152,6 +152,26 @@ If we ever need to convert it back to markdown, we can use the following command
 asciidoctor -b docbook -a leveloffset=+1 -o - green-field.adoc| pandoc --wrap=preserve -t markdown_strict -f docbook - > green-field2.md
 ```
 
+=== Documentation project https://antora.org/[antora]
+
+The single or multi-repository documentation site generator for tech writers who  writing in AsciiDoc.
+Antora allows you to write asciidoctor documentation in multiple code repository, and to setup a centralizing project where you can gather the documentation from all your repositories. You can then publish it as a static website for your organisation.
+
+It is a very interesting way to make sure you have a good starting point for all your documentation.
+
+=== Architectural Decision Records https://adr.github.io/[ADR]
+
+From a project start, we make architectural decisions.
+As time goes by, the people and the memory of those decision and why they were taken get lost.
+Architectural Decision Records is a way to record them and keep them in a single place.
+A few projects exists to facilitate the creation of ADR, but most use markdown.
+I'm still looking for a good project that would support asciidoctor.
+For now https://github.com/adoble/adr-j[adr-j] seems a good candidate that supports both markdown and asciidoctor.
+
+=== For other articles or documentation, see https://gohugo.io/[Hugo]
+
+Claming to be _The world's fastest framework for building websites_, Hugo is a framework that takes a set of markdown or asciidoctor documents and converts them into a static website with theming and nice features.
+
 == Development
 
 === IDE (Integrated Development Environment)
