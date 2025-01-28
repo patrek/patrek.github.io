@@ -30,7 +30,7 @@ Rare are the cases where we need to invent something new. Most of the time, we c
 
 I call that **Standing on the shoulders of giants**.
 
-== Conventions
+== Conventions and practices
 
 === https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
 
@@ -103,6 +103,35 @@ On the subject of version, there are just numbers, we should not hesitate to inc
 
 But, when we deploy, we need keep track of the versions of the different parts of the project. This way, we can easily see what is deployed where.
 
+=== i18n from the start
+
+We need to make sure we take i18n (internalization) into account from the start.
+We will not simply place string of character for buttons, menus, descriptions, etc. We will use a library that is appropriate to the selected frameworks (frontend and backend).
+
+It is much easier to put in place from the start, even with only one language, that to retro-fit once started.
+
+Also, if we store the information in the backend, like configuration, we shall return all the languages from queries and let the frontend pick the one needed.
+This is especially true when writing apis.
+
+=== ISO8061 dates from the start
+
+Most projects are going to need dates at some point or other.
+We will make sure that the communication between services and between the frontend and backend uses ISO8601 date format from the start.
+
+Also, dates are hard, just google it or take a look at https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca[Falsehoods programmers believe about time].
+So, we should be smart and use libraries to manipulate time.
+
+It will save us from pain in the long run.
+
+=== Security from the start
+
+Security should not be an afterthought.
+We should have it in mind as we start the project.
+We should define permissions and groups, determine which endpoints should be secured, which need authentication and authorization and which should be public.
+
+We should also be using the security features of the selected framework, not only for access, but to avoid sql injections, sessions takeover, etc.
+https://owasp.org/www-project-top-ten/[OWASP Top Ten] is a good starting point.
+
 == Documentation
 
 We need to track information and document various aspects of our project.
@@ -154,15 +183,15 @@ asciidoctor -b docbook -a leveloffset=+1 -o - green-field.adoc| pandoc --wrap=pr
 
 === Documentation project https://antora.org/[antora]
 
-The single or multi-repository documentation site generator for tech writers who  writing in AsciiDoc.
+The single or multi-repository documentation site generator for tech writers who love writing in AsciiDoc.
 Antora allows you to write asciidoctor documentation in multiple code repository, and to setup a centralizing project where you can gather the documentation from all your repositories. You can then publish it as a static website for your organisation.
 
-It is a very interesting way to make sure you have a good starting point for all your documentation.
+It is a very interesting way to make sure you have a good starting point for all your up to date documentation.
 
 === Architectural Decision Records https://adr.github.io/[ADR]
 
 From a project start, we make architectural decisions.
-As time goes by, the people and the memory of those decision and why they were taken get lost.
+As time goes by, the people may change project and the memory of those decision and why they were taken get lost.
 Architectural Decision Records is a way to record them and keep them in a single place.
 A few projects exists to facilitate the creation of ADR, but most use markdown.
 I'm still looking for a good project that would support asciidoctor.

@@ -30,7 +30,7 @@ Rares sont les cas où nous devons inventer quelque chose de nouveau. La plupart
 
 J'appelle cela **Se tenir sur les épaules de géants**.
 
-== Conventions
+== Conventions et pratiques
 
 === https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
 
@@ -101,6 +101,35 @@ En ce qui concerne la version, ce ne sont que des chiffres, nous ne devrions pas
 
 Mais, lorsque nous déployons, nous devons garder une trace des versions des différentes parties du projet. Cela nous permet de voir facilement ce qui est déployé où.
 
+=== i18n dès le départ
+
+Nous devons nous assurer de tenir compte de l'internationalisation (i18n) dès le début du projet.
+Nous ne pouvons pas simplement écrire les chaines de caractères pour les boutons, menus, descriptions, etc. Nous utiliserons une bibliothèque appropriée pour les frameworks retenus (frontend et backend).
+
+C'est beaucoup plus facile à mettre en place dès le départ que de tenter de réinsérer le tout une fois le projet démarré.
+
+Aussi, si nous enregistrons de l'information dans le backend, comme des configurations, nous devrions retourner toutes les langues comme réponses aux interrogations, et laisser le frontend décider de ce qu'il affiche.
+C'est particulièrement vrai quand on crée des apis.
+
+=== ISO8601 dès le départ
+
+La plupart des projets vont devoir gérer des dates à un moment ou un autre.
+Nous nous assurerons que les communications entre les services et entre le frontend et le backend utiliserons le format de date ISO8601 dès le départ.
+
+De plus, les dates, c'est difficile. Il suffit de demander à google ou de jeter un oeil à https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca[Falsehoods programmers believe about time].
+Nous utiliserons donc des bibliothèques reconnues pour manipuler les données temporelles.
+
+Ça va nous sauver du temps à long terme.
+
+=== Securité dès le départ
+
+La sécurité ne doit pas être une arrière pensée.
+Nous devons l'avoir à l'esprit dès le début du projet.
+Nous devrions réfléchir aux permissions et aux groupes, déterminer quels points d'accès doivent être sécurisés, quels demandent des authorisations particulières et quels doivent être public.
+
+Nous devrions aussi utiliser les fonctionalités de sécurité des frameworks retenus, pas seulement pour l'accès, mais aussi pour éviter l'injection SQL, la reprise de session, etc.
+https://owasp.org/www-project-top-ten/[OWASP Top Ten] est un bon point de départ.
+
 == Documentation
 
 Nous devons colliger les informations et documenter divers aspects de notre projet.
@@ -148,6 +177,26 @@ Si nous devons un jour le convertir à nouveau en markdown, nous pouvons utilise
 ```bash
 asciidoctor -b docbook -a leveloffset=+1 -o - green-field.adoc| pandoc --wrap=preserve-t markdown_strict -f docbook - > green-field2.md
 ```
+
+=== Documentation de projet https://antora.org/[antora]
+
+Défini comme le _générateur de site de documentation mono ou multi dépôt pour les rédacteurs techniques qui aiment rédiger en Asciidoc_.
+Antora permet de rédiger de la documentation en asciidoc dans plusieurs dépôt de codes (penser frontend, multiples modules backend) et de créer un dépôt pour centraliser toute la documentation des vos dépôts et de publier un site statique pour votre organisation.
+
+C'est une façon très intéressante de faire en sorte d'avoir un point de départ pour toutes la documentation du projet tout en la maintenant à jour.
+
+=== Enregistrement de décisions architecturales (Architectural Decision Records https://adr.github.io/[ADR])
+
+Dès le début d'un projet, nous prenons des décisions d'architectures. Cet article en suggère plusieurs.
+Avec le temps qui avance, les personnes peuvent changer de projet et la mémoire de ces décisions et des raisons qui les ont appuyées peut se perdre.
+Les ADR sont une façon d'enregistrer ces décisions et de les garder au même endroit.
+Quelques projets existent pour facilité la création d'ADR, mais la plupart utilisent du markdown comme format.
+Je suis encore à la recherche d'un bon projet qui supporte le asciidoc.
+Pour l'instant, https://github.com/adoble/adr-j[adr-j] semble un bon candidat qui supporte à la fois le markdown et le asciidoc.
+
+=== Pour des articles ou de la documentation, voir aussi  https://gohugo.io/[Hugo]
+
+Se prétendant être le framework le plus rapide pour construire un site statique, Hugo est un framework qui prend un ensemble de documents rédigés en markdown ou asciidoc et les convertis en site statique avec la possibilité d'appliquer des thèmes et d'autres fonctionnalités intéressantes comme les mots clés.
 
 == Développement
 
