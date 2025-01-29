@@ -3,7 +3,7 @@ date : '2025-01-13T00:00:00-05:00'
 draft : false
 title : "Green Field Project"
 description : "If I was to start a project from scratch"
-featured_image : "/images/greenfield.jpg"
+featured_image : "/images/greenfield_circuit.png"
 tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailhog", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "sonarqube", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
 summary: "A curated list of projects, libraries, tools and practices I would use if I was to start a project from scratch."
 ---
