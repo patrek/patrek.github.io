@@ -4,7 +4,7 @@ draft : false
 title : "Green Field Project"
 description : "If I was to start a project from scratch"
 featured_image : "/images/greenfield_circuit.png"
-tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailhog", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "sonarqube", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
+tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailhog", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
 summary: "A curated list of projects, libraries, tools and practices I would use if I was to start a project from scratch."
 ---
 
@@ -14,29 +14,69 @@ summary: "A curated list of projects, libraries, tools and practices I would use
 
 [[introduction]]
 == I'm dreaming
-I'm dreaming of the day where I would be invited to participate in a project from it's inception, to be able to decide what would go in it and what would not. To be able to choose the technologies, the architecture, the practices, the tools, the processes, the methodologies, the team even.
 
-Back in the days when I started programming for a job, many of the technologies we take for granted today did not even exist. It's like I've grown with the evolution of some technologies, learn from my mistakes. I've tried different alternatives for the same need and experienced where some are better than others.
+I'm dreaming of the day where I would be invited to participate in a project from it's inception, to be able to decide what would go in it and what would not.
+To be able to choose the technologies, the architecture, the practices, the tools, the processes, the methodologies, the team even.
 
-From a long time, I've been mainly a java developer. When I started, I knew about programming, but not about **Object Oriented Programming**. My first dab in Java was to help a project at my alumni. I didn't really know what a class was, or how to compile it, but I could escape special characters so a servlet could create javascript that would create html would compile and work. I learned a lot since then. I have to acknowledge that I got started on this journey by [Big Java](https://horstmann.com/bigjava/).
+Back in the days when I started programming for a job, many of the technologies we take for granted today did not even exist.
+It's like I've grown with the evolution of some technologies, learn from my mistakes.
+I've tried different alternatives for the same need and experienced where some are better than others.
 
-So let's jump right into it. I'll list technologies, practices, tools, processes, methodologies, team members, etc. that I would like to have in my green field project.
+From a long time, I've been mainly a java developer.
+When I started, I knew about programming, but not about **Object Oriented Programming**.
+My first dab in Java was to help a project at my alumni.
+I didn't really know what a class was, or how to compile it, but I could escape special characters so a servlet could create javascript that would create html would compile and work.
+I learned a lot since then.
+I have to acknowledge that I got started on this journey by [Big Java](https://horstmann.com/bigjava/).
+
+So let's jump right into it.
+I'll list technologies, practices, tools, processes, methodologies, team members, etc. that I would like to have in my green field project.
 
 == Don't reinvent the wheel
 
-As a guiding principle, I would not reinvent the wheel. I would use existing technologies, practices, tools, processes, methodologies, team members, etc. that already exists.
+As a guiding principle, I would not reinvent the wheel.
+I would use existing technologies, practices, tools, processes, methodologies, team members, etc. that already exists.
 
-Rare are the cases where we need to invent something new. Most of the time, we can use something that already exists. It's faster, cheaper, and more reliable.
+Rare are the cases where we need to invent something new.
+Most of the time, we can use something that already exists.
+It's faster, cheaper, and more reliable.
 
 I call that **Standing on the shoulders of giants**.
+
+== Code has bugs
+
+As a conversation starter, I often like to say to managers that a developer is a "bug creator".
+It starts from the principle that every line of code we write can have a bug in it.
+But, if we don't write code, we also don't have features.
+
+The other principle is that, the later we find a bug, the more expensive it is to fix it.
+Imagine finding a bug in a Mars rover after it has been launched.
+As a corollary, the closer to the bug creation we find the bug, the cheaper it is to fix it.
+
+So, we should aim to find the bugs as soon as possible. Here are some practices that help:
+
+    * Use an *IDE*. There are more than just glorified text editors. They can help us find bugs as we write the code.
+    * Write tests. Even if we don't do TDD, we should write tests. They can help us find bugs. And, when we are reported a bug, why not create a test that reproduce it, fix the bug, and make sure the test pass.
+    * Run the tests, both locally and in the pipeline. We should have a pipeline that runs the tests and blocks the merge if the tests fail.
+    * Do code review (see below).
+    * Use static analysis. It can help us find bugs that are not obvious.
+    * Plan time to apply what was found in the code review and static analysis.
+    * Deploy to QA environment as soon as possible. The sooner we can test the code in a real environment, the sooner we can find bugs.
+    * Have qa test the code. They can find bugs that we didn't think about.
+    * Monitor the application. We can find bugs that are not reported by the users.
+    * Deploy with a subset of users first. We can find bugs that are not found in the QA environment.
 
 == Conventions and practices
 
 === https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
 
-A while ago, I discovered the Conventional Commits specification. It's a simple convention on how to write commit messages. It's simple, but it's powerful. It allows us to generate changelogs, version numbers, etc. automatically.
+A long while ago, I discovered the *Conventional Commits* specification.
+It's a simple convention on how to write commit messages.
+It's simple, but it's powerful.
+It allows us to generate changelogs, version numbers, etc. automatically.
 
-With a defined convention, it is easier for every on in the team to understand what a commit is about. It also makes it easier to generate release notes.
+With a defined convention, it is easier for every on in the team to understand what a commit is about.
+It also makes it easier to generate release notes.
 
 A typical commit message would look like this:
 
@@ -46,6 +86,7 @@ feat: allow provided config object to extend other configs
 Closes: JIRA-1234
 ```
 
+.format for commits
 ```
 <type>[optional scope]: <description>
 
@@ -69,28 +110,32 @@ The type can be one of the following:
 
 In the footer, I would add a reference to the JIRA ticket (or any other ticket system) that the commit is related to.
 
-Going one step further, I think the **type** should also be the prefix for the branch name. Followed by the ticket number, and finally some words about the feature or problem. This way, we can easily see what the branch is about.
+Going one step further, I think the **type** should also be the prefix for the branch name.
+Followed by the ticket number, and finally some words about the feature or problem.
+This way, we can easily see what the branch is about.
 
 .example
 ```
-feat/JIRA-1234-allow-provided-config-object-to-extend-other-configs
+feat/JIRA-1234_allow-provided-config-object-to-extend-other-configs
 ```
-
 
 === https://semver.org/[Semantic versioning]
 
-I would use semantic versioning to version the project. It's a simple convention that allows us to know what kind of changes are in a version just by looking at the version number.
+I would use semantic versioning to version the project.
+It's a simple convention that allows us to know what kind of changes are in a version just by looking at the version number.
 
 From the semver website:
-```
+
+[.excerpt]
+====
 Given a version number MAJOR.MINOR.PATCH, increment the:
 
-MAJOR version when you make incompatible API changes
-MINOR version when you add functionality in a backward compatible manner
-PATCH version when you make backward compatible bug fixes
+* MAJOR version when you make incompatible API changes
+* MINOR version when you add functionality in a backward compatible manner
+* PATCH version when you make backward compatible bug fixes
 
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
-```
+====
 
 .examples
 ```
@@ -99,27 +144,31 @@ Additional labels for pre-release and build metadata are available as extensions
 4.1.3ALPHA
 ```
 
-On the subject of version, there are just numbers, we should not hesitate to increment them, they cost nothing. And we should not try to keep all parts of a project in sync with the version number. It's ok to have a version 1.0.0 of a library and a version 2.0.0 of the application that uses it.
+On the subject of version, there are just numbers, we should not hesitate to increment them, they cost nothing.
+And we should not try to keep all parts of a project in sync with the version number.
+It's ok to have a version 1.0.0 of a library and a version 2.0.0 of the application that uses it.
 
-But, when we deploy, we need keep track of the versions of the different parts of the project. This way, we can easily see what is deployed where.
+But, when we deploy, we need keep track of the versions of the different parts of the project.
+This way, we can easily see what is deployed where.
 
-=== i18n from the start
+=== Conquer the world (_i18n_) from the start
 
 We need to make sure we take i18n (internalization) into account from the start.
-We will not simply place string of character for buttons, menus, descriptions, etc. We will use a library that is appropriate to the selected frameworks (frontend and backend).
+We will not simply place string of character for buttons, menus, descriptions, etc.
+We will use a library that is appropriate to the selected frameworks (frontend and backend).
 
 It is much easier to put in place from the start, even with only one language, that to retro-fit once started.
 
 Also, if we store the information in the backend, like configuration, we shall return all the languages from queries and let the frontend pick the one needed.
 This is especially true when writing apis.
 
-=== ISO8061 dates from the start
+=== Standard (_ISO8061_) dates from the start
 
 Most projects are going to need dates at some point or other.
 We will make sure that the communication between services and between the frontend and backend uses ISO8601 date format from the start.
 
 Also, dates are hard, just google it or take a look at https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca[Falsehoods programmers believe about time].
-So, we should be smart and use libraries to manipulate time.
+So, we should be smart and use libraries to manipulate time and dates.
 
 It will save us from pain in the long run.
 
@@ -127,18 +176,34 @@ It will save us from pain in the long run.
 
 Security should not be an afterthought.
 We should have it in mind as we start the project.
-We should define permissions and groups, determine which endpoints should be secured, which need authentication and authorization and which should be public.
+We should take the time to define permissions and groups, to determine which endpoints should be secured, which need authentication and authorization and which should be public.
 
 We should also be using the security features of the selected framework, not only for access, but to avoid sql injections, sessions takeover, etc.
 https://owasp.org/www-project-top-ten/[OWASP Top Ten] is a good starting point.
+
+== Teams, or the necessary roles
+
+Some roles are essential for a project.
+They can be combined, but each must be associated with team members.
+
+* **Developer**: This is the person who writes the code.
+* **QA**: This is the person who tests the code.
+* **Architect**: This is the person who designs the architecture of the project.
+* **Product Owner**: This is the person who defines the features of the project.
+* **Project Manager**: This is the person who ensures that the project is delivered on time and within budget.
+* **Agile Methodology Master**: This is the person who ensures that the team follows the principles of the chosen methodology.
+* **DevOps**: This is the person who ensures that the code is deployed correctly.
 
 == Documentation
 
 We need to track information and document various aspects of our project.
 
-Not all documentation needs to be in the same place. It is often better to keep documentation close to the code to ensure it stays up to date.
+Not all documentation needs to be stored in the same place.
+It is often better to keep documentation close to the code to ensure it stays up to date.
 
-However, we also need a central place to index all documentation. A wiki is a good solution for this.
+However, we also need a central place to index all documentation.
+
+A wiki is a good solution for this. <<antora>> is another solution.
 
 === Diataxis
 
@@ -168,11 +233,18 @@ It can be seen as a matrix with two axis: the content and the form.
 |reference
 |===
 
+I have not yet used this concept, but I think it is a good way to organize the documentation.
+
 === Format https://asciidoctor.org/[asciidoctor]
 
-There exists many ways and format to document our future project. Quite often, we will see markdown as a format. Unfortunately, markdown is more limited, and there is a variety of flavor for markdown.
+There exists many ways and format to document our future project.
+Quite often, we will see markdown as a format.
+Unfortunately, markdown is more limited, and there is a variety of competing flavors for markdown.
 
-So, we should use Asciidoc as the format. It's a powerful format that can be used to create documentation. It can be used to generate documentation in many formats, like html, pdf, etc. Documentation can be for different outputs, like book, article, etc.
+So, we should use Asciidoc as the format.
+It's a powerful format that can be used to create documentation.
+It can be used to generate documentation in many formats, like html, pdf, etc.
+Documentation can be for different outputs, like book, article, etc.
 
 If we ever need to convert it back to markdown, we can use the following command:
 
@@ -181,57 +253,85 @@ If we ever need to convert it back to markdown, we can use the following command
 asciidoctor -b docbook -a leveloffset=+1 -o - green-field.adoc| pandoc --wrap=preserve -t markdown_strict -f docbook - > green-field2.md
 ```
 
+// Some recommended practices https://asciidoctor.org/docs/asciidoc-recommended-practices/
+
 === Documentation project https://antora.org/[antora]
 
-The single or multi-repository documentation site generator for tech writers who love writing in AsciiDoc.
-Antora allows you to write asciidoctor documentation in multiple code repository, and to setup a centralizing project where you can gather the documentation from all your repositories. You can then publish it as a static website for your organisation.
+Antora [[antora]] is the single or multi-repository documentation site generator for tech writers who love writing in AsciiDoc.
+
+Antora allows you to write asciidoctor documentation in multiple code repository, and to setup a centralizing project where you can gather the documentation from all your repositories.
+You can then publish it as a static website for your organisation.
 
 It is a very interesting way to make sure you have a good starting point for all your up to date documentation.
 
 === Architectural Decision Records https://adr.github.io/[ADR]
 
-From a project start, we make architectural decisions.
+From a project start, we make architectural decisions. This article suggest some of them.
 As time goes by, the people may change project and the memory of those decision and why they were taken get lost.
+
 Architectural Decision Records is a way to record them and keep them in a single place.
+
 A few projects exists to facilitate the creation of ADR, but most use markdown.
 I'm still looking for a good project that would support asciidoctor.
 For now https://github.com/adoble/adr-j[adr-j] seems a good candidate that supports both markdown and asciidoctor.
+
+// https://medium.com/decathlondigital/software-architecture-architecture-decision-record-c4-11ceff211baf
 
 === For other articles or documentation, see https://gohugo.io/[Hugo]
 
 Claming to be _The world's fastest framework for building websites_, Hugo is a framework that takes a set of markdown or asciidoctor documents and converts them into a static website with theming and nice features.
 
+I've started using it with github actions to generate my blog, and I'm happy with it.
+
 == Development
 
 === IDE (Integrated Development Environment)
 
-I love IntelliJ IDEA by jetbrains. I've been using it for a long time (since december 2012). But in fact, each person should use any IDE they like, on one condition: *They should master it*. They should know how to use it to its full potential.
+I love IntelliJ IDEA by jetbrains.
+I've been using it for a long time (since december 2012).
+
+But in fact, each person should use any IDE they like, on one condition: *They should master it*.
+They should know how to use it to its full potential.
 
 If we have junior person in our team, make sure they take time to learn their IDE.
 
 === Helper services project (docker-compose)
 
-In many projects, we will need some helper services. I would use docker-compose to define the helper services. And wrap the actions in a shell script that offer some help and sane default.
+In many projects, we will need some helper services.
+I would use docker-compose to define and bundle the helper services for the developers.
+And wrap the actions in a shell script that offer some help and sane default.
 
-This way, we can start the helper services with a single command. We can also stop the helper services with a single command. We can also restart the helper services with a single command.
+This way, we can start the helper services with a single command.
+We can also stop the helper services with a single command.
+We can also restart the helper services with a single command.
 
-In our projects, the helper script understands profiles. So a front end developer would start helper services like the database and the backend, while a backend developer would start the database and the front end. And a QA would start everything.
+In our projects, the helper script understands profiles.
+So a front end developer would start helper services like the database and the backend, while a backend developer would start the database and the front end.
+And a QA would start everything.
 
-* Self served help page. This is a simple html page that is served by the helper services. It contains information about the helper services, like the version, the endpoints, the documentation, etc. We are using https://github.com/caddyserver/caddy-docker[caddy] for this, and local volume to serve the html page.
-* https://traefik.io/traefik/[traefik] as a reverse proxy for all our applications
-** We can configure it with fallover. This way, even if we started with a specific profile, let's say backend, we can still start the backend locally and it will take precedence over the one in the docker-compose file.
-** https: traefik allows we to use https with a simple configuration. It can either be from a let's encrypt certificate, or a self-signed certificate, or using the https://get.localhost.direct/[localhost.direct project].
-* https://www.portainer.io/products/portainer-platform-universal-container-management-platform[portainer] to manage our containers without care about what platform our developers or qas are using
-* JWT translation with https://jwt.io/[jwt.io]
-** If we use JWT token, we will often need to extract the information from them. We can use jwt.io to do that. It's a simple tool that can be used to extract the information from a JWT token. But, if we a are afraid of leakage of information, we can also use a local version of jwt.io.
-* postgresql or other database
-* keycloak server if needed
-* grafana : in our case, we are using grafana to display to the users
-* rabbitmq: in our case, we are using rabbitmq to manage messages and queues between the different services
-* wiremock: in our case, we are using wiremock to simulate external services
-* https://dozzle.dev/[dozzle], to see the logs of the containers
-* https://github.com/mailhog/MailHog[mailhog] to see the emails sent by the application, it is a simple smtp server that can be used to see the emails sent by the application
-* some kind of monitoring service
+    * Self served help page.
+    This is a simple html page that is served by the helper services.
+    It contains information about the helper services, like the version, the endpoints, the documentation, etc.
+    We are using https://github.com/caddyserver/caddy-docker[caddy] for this, and local volume to serve the html page.
+    * https://traefik.io/traefik/[traefik] as a reverse proxy for all our applications
+        ** We can configure it with fallover.
+        This way, even if we started with a specific profile, let's say backend, we can still start the backend locally and it will take precedence over the one in the docker-compose file.
+        ** https: traefik allows we to use https with a simple configuration.
+        It can either be from a let's encrypt certificate, or a self-signed certificate, or using the https://get.localhost.direct/[localhost.direct project].
+    * https://www.portainer.io/products/portainer-platform-universal-container-management-platform[portainer] to manage our containers without care about what platform our developers or QAs are using
+    * JWT translation with https://jwt.io/[jwt.io]
+        ** If we use JWT token, we will often need to extract the information from them.
+        We can use jwt.io to do that.
+        It's a simple tool that can be used to extract the information from a JWT token.
+        But, if we a are afraid of leakage of information, we can also use a local version of jwt.io.
+    * postgresql or other database
+    * keycloak server if needed
+    * grafana : in our case, we are using grafana to display to the users
+    * rabbitmq: in our case, we are using rabbitmq to manage messages and queues between the different services
+    * wiremock: in our case, we are using wiremock to simulate external services
+    * https://dozzle.dev/[dozzle], to see the logs of the containers
+    * https://github.com/mailhog/MailHog[mailhog] to see the emails sent by the application, it is a simple smtp server that can be used to see the emails sent by the application without having to send them to a real smtp server.
+    * some kind of <<monitoring>> service
 
 We can also add any other helper service that can be dockerized.
 
@@ -246,13 +346,26 @@ And of course, all the projects, modules or microservices that are part of the p
 
 ==== Backend: Java
 
-Like I said at the beginning, I'm a Java developer by trade and experience. I would use Java to build the backend of the project. It's a mature language. It's a powerful language that has many features like object oriented programming, functional programming, etc. There are also many mature frameworks and libraries that were developed by exports in their fields.
+Like I said at the beginning, I'm a Java developer by trade and experience.
+I would use Java to build the backend of the project.
 
-Of course, other language could be used, like Kotlin, Scala, Groovy, etc. But I would stick with Java.
+It's a mature language.
+It's a powerful language that has many features like object oriented programming, functional programming, etc.
+There are also many mature frameworks and libraries that were developed by exports in their fields.
+
+Of course, other language could be used, like Kotlin, Scala, Groovy, etc.
+But I would stick with Java.
 
 ==== Frontend
 
-For the frontend, I would have a hard time to choose between React and Angular. React has a lot of momentum right now, but I don't have much experience with it. On the other hand, I'm told they are lot of extensions that serve the same purpose, so it not clear what the right path is. The jury is still out on this one.
+For the frontend, I would have a hard time to choose between React and Angular.
+
+React has a lot of momentum right now, but I don't have much experience with it.
+On the other hand, I'm told they are a lot of extensions that serve the same purpose, so it not clear what the right path is.
+
+Angular is a framework that is well-defined and has a lot of features. It is backed by Google, so it is well-supported.
+
+The jury is still out on this one.
 
 === Code formatting
 
@@ -268,15 +381,22 @@ But, from experience, I would add some other criteria to select it:
 
 ==== Java code base: https://github.com/google/google-java-format[Google java format]
 
-For the Java code, I would use Google Java Format. It's defined by Google, so it's a well known entity. It's easy to use, and it will format our code. It can be checked automatically by our pipelines and applied automatically by our IDE.
+For the Java code, I would use Google Java Format.
+It's defined by Google, so it's a well known entity.
+It's easy to use, and it will format our code.
+It can be checked automatically by our pipelines and applied automatically by our IDE.
 
 ==== Javascript/Typescript code formatting: https://prettier.io/[Prettier]
 
-I don't know much about Javascript code formatting. I would use the same criteria as for the Java code formatting. *Prettier* seems like a good candidate.
+I don't know much about Javascript code formatting.
+I would use the same criteria as for the Java code formatting. *Prettier* seems like a good candidate.
 
 === Tickets and issues system
 
-As soon as there are (or could be) more than one person working on a project, we will need a way to manage our work, note that tasks that need to be done, etc. We should use the ticket system that is already in place at the organisation where the project is started. If there is none, many options are available.
+As soon as there are (or could be) more than one person working on a project, we will need a way to manage our work, note the tasks that need to be done, etc.
+
+We should use the ticket system that is already in place at the organisation where the project is started.
+If there is none, many options are available.
 
 * https://www.atlassian.com/software/jira[Atlassian Jira]
 * https://www.jetbrains.com/youtrack/[Jetbrains Youtrack]
@@ -286,9 +406,13 @@ As soon as there are (or could be) more than one person working on a project, we
 
 === Error messages: use problems api RFC 9457
 
-When we are building an API, we will need to return error messages. It is nice if we can predefined the format of the error messages and be consistent across all the apis we expose, even if only internally.
+When we are building an API, we will need to return error messages.
+It is nice if we can predefined the format of the error messages and be consistent across all the apis we expose, even if only internally.
 
-I would use the _Problem Details for HTTP APIs_ (https://datatracker.ietf.org/doc/rfc9457/[RFC 9457]) to return error messages. It's a simple convention that can be used to return error messages. It can be used to return error messages in many formats, like json, xml, etc. It can be used to return error messages in many languages, like java, javascript, etc.
+I would use the _Problem Details for HTTP APIs_ (https://datatracker.ietf.org/doc/rfc9457/[RFC 9457]) to return error messages.
+It's a simple convention that can be used to return error messages.
+It can be used to return error messages in many formats, like json, xml, etc.
+It can be used to return error messages in many languages, like java, javascript, etc.
 
 .problems api example
 ```json
@@ -301,7 +425,8 @@ I would use the _Problem Details for HTTP APIs_ (https://datatracker.ietf.org/do
 }
 ```
 
-One feature to notice is that we can make it so the error in the logs have a unique UUID that is also returned to the client. This way, We can trace the error in the logs and in the client.
+One feature to notice is that we can make it so the error in the logs have a unique UUID that is also returned to the client.
+This way, We can trace the error in the logs and in the client.
 
 Here is a longer post by _A java geek_ that explains https://blog.frankel.ch/problem-details-http-apis/
 
@@ -309,33 +434,69 @@ There is an implementation ready for Quarkus: https://github.com/quarkiverse/qua
 
 === Chat system
 
-Communication is key in a project. Either for a quick question, to share a snippet of code, to ask for help, etc. We need a chat system.
+Communication is key in a project.
+Either for a quick question, to share a snippet of code, to ask for help, etc.
+We need a chat system.
 
-Here again, I would use the chat system that is already in place at the organisation where the project is started. If there is none, many options like MS Teams, Slack, etc. are available.
+Here again, I would use the chat system that is already in place at the organisation where the project is started.
+If there is none, many options like MS Teams, Slack, etc. are available.
 
-Just make sure we create dedicated channels for different aspects (code review, deployments/devops, fun) of the project. This way, we can keep the conversation focused.
-
-=== Code review
-
-Code review is a good practice to have in place. It helps both with having quality code and with sharing knowledge. We should have our pipeline blocks if code is not reviewed.
+Just make sure we create dedicated channels for different aspects (code review, deployments/devops, fun) of the project.
+This way, we can keep the conversation focused.
 
 === Curated code examples
 
-I would identify in the code base examples of good code. This way, when a new developer joins the team, they can see what is considered good code. It can be a simple class, a method, a pattern, etc.
+I would identify in the code base examples of good code.
+This way, when a new developer joins the team, they can see what is considered good code.
+It can be a simple class, a method, a pattern, etc.
 
 === Testing: unit and integration
 
-From the beginning, we should have unit tests in place. They are the first line of defense against bugs. They are also a good way to document the code. Start with the unit tests, and then add integration tests when needed.
+From the beginning, we should have unit tests in place.
+They are the first line of defense against bugs.
+They are also a good way to document the code.
+Start with the unit tests, and then add integration tests when needed.
 
-We don't have to test libraries. We should test our code, the code that we write.
+We don't have to test libraries.
+We should test our code, the code that we write.
 
-Code should be tested before it is merged. We should have a pipeline that runs the tests and blocks the merge if the tests fail.
+Code should be tested before it is merged.
+We should have a pipeline that runs the tests and blocks the merge if the tests fail.
+
+== Code quality
+
+If we are writing code, we should aim to make it the best code we can. Here are some good practices to follow.
+
+=== Static analysis
+
+Static analysis is a good way to catch bugs before they happen.
+
+Your IDE is your first line of defence, keep an eye on the warnings it gives you.
+
+Ideally, we would link our IDE to a more robust tool like <<sonarqube>> that can check the code with same configuration as the pipeline for us.
+It can be done as you code, or, minimally, before the code is commited.
+
+=== Code Review
+
+Another way to increase quality code is to review it.
+It allows us to catch bugs, but also to share knowledge.
+
+Even if the team is small, it is a good practice to have a code review.
+We should have our pipeline blocks if code is not reviewed.
+
+=== Build pipeline
+
+We should have a build pipeline that runs the tests, the static analysis, and make sure there was code review, etc.
+It will catch errors that don't happen on our machine and make sure the build is more robust.
 
 == Frameworks and Libraries
 
 === https://quarkus.io/[Quarkus]
 
-I would use Quarkus as the framework to build the backend the project. It's a modern Java framework that is pretty mature. It looks like it was build from the start with the developer in mind. And it can create artifact that are native and fast and tailored for containers.
+I would use Quarkus as the framework to build the backend the project.
+It's a modern Java framework that is pretty mature.
+It looks like it was build from the start with the developer in mind.
+And it can create artifact that are native and fast and tailored for containers.
 
 There is an excellent tutorial to give we an overview of the framework and the associated features. https://quarkus.io/quarkus-workshops/super-heroes/
 
@@ -345,29 +506,55 @@ Quite often, when building a robust backend, we will need different but correspo
 
 As the information moves from one part of the application to another (from the database to the service, from the service to the controller, from the controller to the client), we will need to map the information from one model to another.
 
-I would use Mapstruct. It's a powerful product that can be used to map objects from one type to another. The mapping is done at compile time, so it's fast.
+I would use Mapstruct.
+It's a powerful product that can be used to map objects from one type to another.
+The mapping is done at compile time, so it's fast.
 
-It is pretty useful if we have to map from a DTO to an entity and back. It can match properties by name, or we can define the mapping ourselves. Wew can also easily define custom transformation methods.
+It is pretty useful if we have to map from a DTO to an entity and back.
+It can match properties by name, or we can define the mapping ourselves.
+We can also easily define custom transformation methods.
 
 === https://projectlombok.org/[Lombok]
 
-One of the complaint people have over java is writing lots of boilerplate code. I would use Lombok to alleviate this. It's a powerful product that can be used to generate the boilerplate code for we. It can be used to generate the boilerplate code for we in many ways, like getters, setters, constructors, including some patterns like builders, equals and hashcode, etc.
+One of the complaint people have over java is writing lots of boilerplate code.
+
+I would use Lombok to alleviate this.
+It's a powerful product that can be used to generate the boilerplate code for we.
+It can be used to generate the boilerplate code for we in many ways, like getters, setters, constructors, including some patterns like builders, equals and hashcode, etc.
 
 For some constructs, using https://www.baeldung.com/java-record-keyword[Java Records] could be a good alternative.
 
 === https://www.liquibase.com/[Liquibase]
 
-At some point, we will probably need a relational database to store our data (See <<postgresql>> later on). And then, we will need a way to manage the schema of that database. I would use Liquibase for that. It's a mature product that can be used to manage the schema of the database. It can be used to create the schema, update the schema, etc. It can also be used to create some data in the database.
+At some point, we will probably need a relational database to store our data (See <<postgresql>> later on).
+And then, we will need a way to manage the schema of that database.
 
-It also support the concept of contexts. So we can store in the same system different change sets for different environments, needs or features. This is a powerful feature.
+I would use Liquibase for that.
+It's a mature product that can be used to manage the schema of the database.
+It can be used to create the schema, update the schema, etc.
+It can also be used to create some data in the database.
+
+It also support the concept of contexts.
+So we can store in the same system different change sets (example data for dev or qa) for different environments, needs or features.
+This is a powerful feature.
 
 There is even some support for some non relational/sql databases, like MongoDB, Noe4j, Databricks Data Lakehouses, etc.
 
 === https://opentelemetry.io/[OpenTelemetry]
 
-Monitoring our application is often a task that is pushed into the future, after the features are implemented. But it's important to start thinking about it early. I would use OpenTelemetry to monitor the application. It's a modern _framework_ that can be used to monitor the application. It can be used to monitor the application in production, but also in development. It can be used to monitor the application in a container, but also in a native environment.
+Monitoring our application is often a task that is pushed into the future, after the features are implemented.
+But it's important to start thinking about it early.
 
-And we can add our own metrics as well. Let's say we want to monitor the number of times a specific feature is used. We can add a metric for that. Or if we want to make sure a cron job is completing properly at the expected rate, we can add a metric for that.
+I would use *OpenTelemetry* to monitor the application.
+It's a modern _framework_ that can be used to monitor the application.
+It can be used to monitor the application in production, but also in development.
+It can be used to monitor the application in a container, but also in a native environment.
+Many libraries implement the open telemetry specification, so we can use it to monitor the application in many languages.
+
+And we can add our own metrics as well.
+Let's say we want to monitor the number of times a specific feature is used.
+We can add a metric for that.
+Or if we want to make sure a cron job is completing properly at the expected rate, we can add a metric for that.
 
 An example from the quarkus documentation:
 
@@ -411,24 +598,27 @@ public class MetricResource {
 
 _What if I told you "you can put everything into feature flags"?_
 
-As soon as our core system exists, we should consider wrapping every feature onto feature flags.
+As soon as our core application exists, we should consider wrapping every feature with a feature flag.
 
 There are the two main reasons for that:
 
 * We can release a feature without making it available to the users, so it ease the continuous delivery
-* We can release a feature to a subset of users, so we can test it with real users before releasing it to everyone. We can also make the feature available on different subscription plans, etc.
+* We can release a feature to a subset of users, so we can test it with real users before releasing it to everyone.
+We can also make the feature available on different subscription plans, etc.
 
 We can also use feature flags to turn off a feature if it's not working as expected.
 
 ==== https://openfeature.dev/[OpenFeature]
 
-While researching for this article, I stumbled upon OpenFeature. It's a free feature flag service specification that can be implemented by any service.
+While researching for this article, I stumbled upon OpenFeature.
+It's a free feature flag service specification that can be implemented by any service.
 
 Using the openfeature sdks, we can avoid vendor locking and have a consistent way to manage our feature flags.
 
 ==== https://www.getunleash.io/[Unleash]
 
-Unleash has a free version that we can use to get started. We can deploy it on our own infrastructure.
+Unleash has a free version that we can use to get started.
+We can deploy it on our own infrastructure.
 
 There is a discussion as to making unleash support the openfeature specification, but it is not implemented yet.
 
@@ -436,85 +626,142 @@ There is a discussion as to making unleash support the openfeature specification
 
 === https://www.postgresql.org/[Postgresql] [[postgresql]]
 
-If our project needs a relational database, I would use Postgresql. It's a mature product that can be used to store the data of the project. It's a powerful product that has many features like transactions, constraints, triggers, etc. It has many built in capabilities, like storing objects in json format, full text search, etc. It also has many https://www.postgresql.org/download/products/6-postgresql-extensions/[extensions], like Postgis, that can be used to store and query geospatial data, TimescaleDB, that can be used to store and query time series data, etc. It is very stable and has a large community.
+If our project needs a relational database, I would use Postgresql.
+It's a mature product that can be used to store the data of the project.
+It's a powerful product that has many features like transactions, constraints, triggers, etc.
+It has many built in capabilities, like storing objects in json format, full text search, etc.
+It also has many https://www.postgresql.org/download/products/6-postgresql-extensions/[extensions], like Postgis, that can be used to store and query geospatial data, Timescale, that can be used to store and query time series data, etc.
+It is very stable, adhere to standards and has a large community.
+It is well documented and available on most cloud providers
 
-==== https://www.timescale.com/[TimescaleDB] Time series data
+==== https://www.timescale.com/[Timescale] Time series data
 
-If we ever encounter a situation where we need to store time series data, I would use TimescaleDB. It's an extension of Postgresql that can be used to store and query time series data. It's a powerful and performant product that has many features like time bucketing, continuous aggregates, etc. It's a powerful product that can be used to store and query time series data.
+If we ever encounter a situation where we need to store time series data, I would use Timescale.
+It's an extension to Postgresql that can be used to store and query time series data.
+It's a powerful and performant product that has many features like time bucketing, continuous aggregates, etc.
+It's a powerful product that can be used to store and query time series data.
+There is a free version, and a cloud version that is managed by Timescale.
 
 === https://www.keycloak.org/[Keycloak]
 
-At some point, we will need to manage users and their access to the application. I would use Keycloak for that. It's a mature product that can be used to manage users, roles, permissions, etc. We can also set it up to defer the authentication to an external system by using identity providers. There is even a way to migrate our users from an external system to Keycloak.
+At some point, we will need to manage users and their access to the application.
+I would use Keycloak for that.
+It's a mature product that can be used to manage users, roles, permissions, etc.
+We can also set it up to defer the authentication to an external system by using identity providers.
+There is even a way to migrate our users from an external system to Keycloak.
 
 === https://www.wiremock.io/[Wiremock]
 
-It is quite possible that our project will have to interact with external services. We will want to test our code without having to rely on actually calling these external services.
+It is quite possible that our project will have to interact with external services.
+We will want to test our code without having to rely on actually calling these external services. We can use the service documentation to get the payload format.
 
-I would use Wiremock for that. It's a mature product that can simulate the external services. We can define the responses we want to get from the external services and use Wiremock to simulate the external services.
+I would use Wiremock to replace the services during development.
+It's a mature product that can simulate the external services.
+We can define the responses we want to get from the external services and use Wiremock to simulate the external services.
 
 It even supports randomizing the result or returning timestamps that are always a set period in the past or the future of the call.
 
 === Password management
 
-We have password, too many of them. And we should not store them in clear text. I would use a password manager to store the passwords. There are many password managers available, like 1Password, LastPass, Bitwarden, etc.
+We have password, too many of them.
+And we should not store them in clear text.
+
+I would use a password manager to store the passwords.
+There are many password managers available, like 1Password, LastPass, Bitwarden, etc.
 
 Some, like 1Password, are more than just a password vault, they come with some tools that allow us to securely use the passwords in our applications or on the command line.
 
 == https: Let's Encrypt or localhost.direct
 
-Now a days, the web is supposed to be secure. We should use https. We can use https://letsencrypt.org/[Let's Encrypt] to get a free certificate. But, if we are working on a local environment, we can use https://get.localhost.direct/[localhost.direct] to get a free certificate for our local environment.
+Nowadays, the web is supposed to be secure.
+We should use https.
+
+Using https from the start helps with the security of the project. Some tools to validate the frontend code will complain if the site is not secure.
+
+Deploying to a secure environment with https is not really hard on the cloud.
+And even if you use your own infrastructure, it's not that hard either.
+We can use https://letsencrypt.org/[Let's Encrypt] to get a free certificate
+
+But, doing so locally can be a bit more challenging.
+We can still use Let's Encrypt to get a free certificate.
+But it is more difficult to setup so that each developer has a certificate locally.
+
+For local environment, we can use https://get.localhost.direct/[localhost.direct] to get a free certificate for our local environment.
 
 == Commit
 
 === https://git-scm.com/[Git] and repository
 
-Since we are ultimately talking about writing code as a team, we need way to manage our code. I would choose Git as the version control system. Then, we would need a place to store that code. The usual suspects are Github, Gitlab, Bitbucket, etc.
+Since we are ultimately talking about writing code as a team, we need way to manage our code.
+I would choose Git as the version control system.
+Then, we would need a place to store that code.
+The usual suspects are Github, Gitlab, Bitbucket, etc.
 
-I'd be pragmatic and chose whatever is already used at the organisation where the project is started. As long as we can also have pipelines to check, build and package the code, I'm good.
-
-==== https://github.com/frace/git-passport[Git passport]
-
-If we are working on multiple projects, where the code is stored in different repositories, we might want to use git passport. It's a tool that allows us to manage multiple git identities.
+I'd be pragmatic and chose whatever is already used at the organisation where the project is started.
+As long as we can also have pipelines to check, build and package the code, I'm good.
 
 ==== https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
 
-We will probably be working on more than one project at some point, and we will need to manage our credentials. I would use Git Credential Manager to manage my credentials. It's a powerful tool that can be used to manage our credentials. It can be used to manage our credentials in many ways, like storing them in a secure way, sharing them with our team, etc. It can also be used to manage our credentials in many environments, like development, qa, staging, uat, production.
+We will probably be working on more than one project at some point, and we will need to manage our credentials.
+I would use Git Credential Manager to manage my credentials.
+It's a powerful tool that can be used to manage our credentials.
+It can be used to manage our credentials in many ways, like storing them in a secure way, sharing them with our team, etc.
+It can also be used to manage our credentials in many environments, like development, qa, staging, uat, production.
 
 === https://getsops.io/[Sops]
 
-At some point, for sure, we will have to manage secrets in our repository. I would use Sops to encrypt these secrets. This way, I can store them in the git repository without fear that they will be read by people who should not have access.
+At some point, for sure, we will have to manage secrets in our repository.
+I would use Sops to encrypt these secrets.
+This way, I can store them in the git repository without fear that they will be read by people who should not have access.
 
 Make sure we include this early in the process, so that no secrets is ever store in clear text in our repo.
 
-https://blog.gitguardian.com/a-comprehensive-guide-to-sops/
+More info on how to set this up here: https://blog.gitguardian.com/a-comprehensive-guide-to-sops/
 
 === https://gitlab.com[Gitlab] or other code repository
 
-Some organisations use Gitlab, other use Github, Bitbucket or even AWS CodeCommit. Whatever your organisation is using, make sure you have a pipeline that can check, build and package the code. Make sure you have a pipeline that can deploy the code. Make sure you have a pipeline that can monitor the code. Make sure you have a pipeline that can rollback the code.
+Some organisations use Gitlab, other use Github, Bitbucket or even AWS CodeCommit.
+Whatever your organisation is using, make sure you have a pipeline that can check, build and package the code.
+
+* Make sure you have a pipeline that can deploy the code.
+* Make sure you have a pipeline that can monitor the code.
+* Make sure you have a pipeline that can roll back the code.
 
 == CI
 
 === Gitlab CI / Pipelines
 
-As we are using Gitlab, we will be using the pipelines that can run in gitlab. It's a powerful tool that can be used to check, build and package the code. It can be used to deploy the code. It can be used to monitor the code. It can be used to rollback the code.
+As we are using Gitlab, we will be using the pipelines that can run in gitlab.
+It's a powerful tool that can be used to check, build and package the code.
+It can be used to deploy the code.
+It can be used to monitor the code.
+It can be used to roll back the code.
 
 Here are some typical steps that we put in our pipelines:
 
-* pre-validate: use the <<dangerjs>> framework to check the commit messages and that it adhere to the conventions we set with the team.
-* check format: make sure the code is formatted correctly. Since we don't want to give the pipeline commit rights, we do not format the code, but we check that it is formatted correctly.
-* compile: make sure the code compiles correctly. This is a simple step that can be done quickly.
-* unit test: run unit tests for the code
-* install: install the java code in the local maven repository
-* integration test: if they exists, run integration test.
-* code coverage report: generate the code coverage report. This can be done with JaCoCo, or any other code coverage tool.
-* static analysis: run static analysis on the code. This can be done with Sonarqube, or any other static analysis tool.
-* sat scan: run the satscan tool on the code. This can be done with the satscan tool.
-* docker image(s): create the docker image of the application or module. If we are using the mono-repo pattern, there may be multiple docker images to build here.
-* post validate: again with the danger framework. Typically here, we check if the appropriate number of approval exists.
+    * pre-validate: use the <<dangerjs>> framework to check the commit messages and that it adhere to the conventions we set with the team.
+    * check format: make sure the code is formatted correctly.
+    Since we don't want to give the pipeline commit rights, we do not format the code, but we check that it is formatted correctly.
+    * compile: make sure the code compiles correctly.
+    This is a simple step that can be done quickly.
+    * unit test: run unit tests for the code
+    * install: install the java code in the local maven repository
+    * integration test: if they exists, run integration test.
+    * code coverage report: generate the code coverage report.
+    This can be done with JaCoCo, or any other code coverage tool.
+    * static analysis: run static analysis on the code.
+    This can be done with <<sonarqube>>, or any other static analysis tool.
+    * sat scan: run the satscan tool on the code.
+    This can be done with the satscan tool.
+    * docker image(s): create the docker image of the application or module.
+    If we are using the mono-repo pattern, there may be multiple docker images to build here.
+    * post validate: again with the danger framework.
+    Typically here, we check if the appropriate number of approval exists.
 
 ===  https://danger.systems/js/[Danger] [[dangerjs]]
 
 From the danger website:
+
 ```
 Danger runs during your CI process, and gives teams the chance to automate common code review chores.
 
@@ -527,12 +774,16 @@ This happens by Danger leaving messages inside your PRs based on rules that you 
 Over time, as rules are adhered to, the message is amended to reflect the current state of the code review.
 ```
 
+We should use Danger to enforce the conventions we set with the team.
 
-=== https://www.sonarsource.com/products/sonarqube/[Sonarqube]
+=== https://www.sonarsource.com/products/sonarqube/[Sonarqube] [[sonarqube]]
 
-We will want to check the quality of our code. Static analyse of our code allows to catch many bad habits, bugs or security problems.
+We will want to check the quality of our code.
+Static analyse of our code allows to catch many bad habits, bugs or security problems.
 
-I would use Sonarqube for that. It's a mature product that can check our code for bugs, vulnerabilities, code smells, etc. It can also check our code for coverage, duplications, etc.
+I would use Sonarqube for that.
+It's a mature product that can check our code for bugs, vulnerabilities, code smells, etc.
+It can also check our code for coverage, duplications, etc.
 
 Most IDE should have a plugin so we can see the results of the analysis directly in our IDE or before commiting.
 
@@ -540,30 +791,52 @@ Most IDE should have a plugin so we can see the results of the analysis directly
 
 === Docker images and containers
 
-I think it is a good guess to think that we will deploy our application in containers. Even more so if our application is not a big monolith, but a set of modules or microservices. Think about doing a front end in React, a backend in Quarkus, a database in Postgresql, etc. We can use Docker to create the images of our application. We can use Docker to run the containers of our application. And, if the need arises, we can use Kubernetes to deploy our entire application stack.
+I think it is a good guess to think that we will deploy our application in containers.
+Even more so if our application is not a big monolith, but a set of modules or microservices.
+Think about doing a front end in React, a backend in Quarkus, a database in Postgresql, etc.
 
-So, early in the project, make sure we have a pipeline that can build the images of our application. And test it.
+We can use Docker to create the images of our application.
+We can use Docker to run the containers of our application.
+And, if the need arises, we can use Kubernetes to deploy our entire application stack.
 
-Ideally, we should have a pipeline that build the images, _and_ push it to a container repository. This way, we can use the same image in all our environments.
+So, early in the project, we should make sure we have a pipeline that can build the images of our application.
+We will need to take into consideration the necessary steps to build the images, and what configuration we need to pass to the images.
+And we will test both the pipeline and the resulting image.
 
-I think that making a different image for different environment is a bad idea. We should be able to deploy the same image in all our environments. The only difference should be the configuration.
+Ideally, we should have a pipeline that build the images, _and_ push it to a container repository.
+This way, we can use the same image in all our environments.
+
+I think that making different images for different environments is a bad idea.
+We should be able to deploy the same image in all our environments.
+The only difference should be the configuration.
 
 We'll save ourself a lot of pain and stress if we start early with this instead of waiting to do it when we are near the User Acceptance Test or worse, the Production date.
 
 === https://www.terraform.io/[Terraform] for infrastructure as code
 
-We are going to deploy our application into some kind of infrastructure. And we will most probably need the same infrastructure in different environments, like development, qa, staging, uat, production. The best way to make sure each environment is as close as possible to the previous one is to make it reproducible. I would use Terraform to define the infrastructure as code. This way, we can deploy the same infrastructure in each environment.
+We are going to deploy our application into some kind of infrastructure.
+And we will most probably need the same infrastructure in different environments, like development, qa, staging, uat, production.
+The best way to make sure each environment is as close as possible to the previous one is to make it reproducible.
+I would use Terraform to define the infrastructure as code.
+This way, we can deploy the same infrastructure in each environment.
+
+Another advantage of using Terraform is that we can bring together and synchronize parts of the infrastructure that are in different cloud providers.
+Let's say we use Github for our code repository, use Amazon Pipelines for our build pipelines, and want to configure Keycloak and Grafana, we can put all that into Terraform states.
+
+This is, I think, easier than using the proprietary configuration of each cloud provider.
 
 === https://terragrunt.gruntwork.io//[Terragrunt] to help make Terraform a little bit more manageable
 
 Terragrunt is a thin wrapper for Terraform that provides extra tools for keeping your configurations DRY, working with multiple Terraform modules, and managing remote state.
 
-Managing a big infrastructure with Terraform is a bit painful. We probably have a big state file on AWS S3 bucket. We probably have a lot of modules. We probably have a lot of environments. Terragrunt can help us manage all that.
-
+Managing a big infrastructure with Terraform is a bit painful.
+We probably have one or more of the following, a big state file on AWS S3 bucket, a lot of modules and many environments.
+Terragrunt can help us manage all that.
 
 == Monitoring Projects
 
-At some point, we will need to monitor our application in some way or other. I'm currently looking at Signoz, but I don't really have a preferred or recommended option yet.
+At some point, we will need to monitor our application in some way or other.
+I'm currently looking at Signoz, but I don't really have a preferred or recommended option yet.
 
 * https://signoz.io/[Signoz]
 * https://www.elastic.co/apm/[Elastic APM]
@@ -576,7 +849,11 @@ At some point, we will need to monitor our application in some way or other. I'm
 
 === https://github.com/plausible/community-edition/[plausible] for analytics
 
-I consider this a subset of monitoring. We will probably want to know if our users are using our application. We will probably want to know how they are using our application. We will probably want to know where they are coming from. I would use Plausible for that. It's a simple product that can be used to monitor our application. It can be used to monitor our application in production, but also in development. It can be used to monitor our application in a container, but also in a native environment.
+I consider this a subset of monitoring.
+We will probably want to know if, when and where our users are using our application.
+I would use Plausible for that.
+It's a simple product that can be used to monitor our application.
+It can be used to monitor our application in production, but also in development, in a container, or in a native environment.
 
 == Other projects to explore
 
