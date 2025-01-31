@@ -181,7 +181,7 @@ Nous utiliserons donc des bibliothèques reconnues pour manipuler les données t
 
 === Securité dès le départ
 
-La sécurité ne doit pas être une considération tartive.
+La sécurité ne doit pas être une considération tardive.
 Nous devons l'avoir à l'esprit dès le début du projet.
 Nous devrions prendre le temps de réfléchir aux permissions et aux groupes, de déterminer quels points d'accès doivent être sécurisés, quels demandent des authorisations particulières et quels doivent être public.
 
