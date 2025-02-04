@@ -14,7 +14,7 @@ toc: true
 :toc: left
 
 [[introduction]]
-== Je rêve
+== Je rêve d'un projet vert
 
 Je rêve du jour où je serai invité à participer à un projet depuis son inception, pour être capable de décider ce qui y entrerait et ce qui n'y entrerait pas.
 Être capable de choisir les technologies, l'architecture, les pratiques, les outils, les processus, les méthodologies, l'équipe même.
@@ -42,7 +42,7 @@ Rares sont les cas où nous devons inventer quelque chose de nouveau.
 La plupart du temps, nous pouvons utiliser quelque chose qui existe déjà.
 C'est plus rapide, moins cher et plus fiable.
 
-J'appelle cela: **Se tenir sur les épaules de géants**.
+J'appelle cela : **Se tenir sur les épaules de géants**.
 
 == Du code, des bugs
 
@@ -52,9 +52,9 @@ Mais, si nous n'écrivons pas de code, nous n'avons pas de fonctionnalités.
 
 L'autre principe, c'est que le plus tard nous trouvons un bug, le plus cher ce sera de le corriger.
 Imaginez trouver un bug dans le codu du véhicule Mars Rover après qu'il ait été lancé.
-Comme corollaire, le plut près de sa création nous trouvons un bug, le moins cher ce sera de le corriger.
+Comme corollaire, le plus près de sa création nous trouvons un bug, le moins cher ce sera de le corriger.
 
-Donc, nous devrions viser à trouver les bugs le plus rapidement possible. Voici quelques pratiques qui permettent d'aider à produire du code de qualité:
+Donc, nous devrions viser à trouver les bugs le plus rapidement possible. Voici quelques pratiques qui permettent d'aider à produire du code de qualité :
 
 * Utiliser un *IDE*. Ce sont plus que de simples éditeurs de texte.
 Ils peuvent nous aider à trouver des bugs, des erreurs de syntaxe, de logique, etc. avant même que nous compilions le code.
@@ -70,7 +70,7 @@ Elle permet de trouver des bugs qui ne sont pas évidents, comme des variables n
 * Déployer en environnement QA le plus tôt possible. Le plus tôt nous testons le code en environnement réel, le plus tôt nous trouvons les bugs.
 * Avoir des QA qui testent le code. Ils peuvent trouver des bugs ou situations auxquels nous n'avons pas pensé.
 * Faire du monitoring de l'application. Ça permet de déceler des bugs qui ne nous ont pas été rapportés par les utilisateurs.
-* Déployer à un sous-ensemble d'utilisateur en premier. Ça permet de trouver des bugs que nous n'avons pas vu en QA.
+* Déployer à un sous-ensemble d'utilisateur en premier. Ça permet de trouver des bugs que nous n'avons pas vus en QA.
 
 == Conventions et pratiques
 
@@ -86,20 +86,22 @@ Cela facilite également la génération de notes de version.
 
 Un message de commit typique ressemblerait à ceci :
 
-```
+[source]
+----
 feat: permettre à l'objet de configuration fourni d'étendre d'autres configurations
 
 Ferme: JIRA-1234
-```
+----
 
 .forme des commits
-```
+[source]
+----
 <type>[portée optionnelle]: <description>
 
 [corps optionnel]
 
 [pied(s) de page optionnel(s)]
-```
+----
 
 Le type peut être l'un des suivants :
 
@@ -117,13 +119,14 @@ Le type peut être l'un des suivants :
 Dans le pied de page, j'ajouterais une référence au ticket JIRA (ou tout autre système de tickets) auquel le commit est lié.
 
 En allant un peu plus loin, je pense que le type devrait également être le préfixe pour le nom de la branche.
-Suivi de le numéro de ticket, et enfin quelques mots sur la fonctionnalité ou le problème.
+Suivi du numéro de ticket, et enfin quelques mots sur la fonctionnalité ou le problème.
 De cette façon, nous pouvons facilement voir de quoi il s'agit dans la branche.
 
 .exemple
-```
+[source]
+----
 feat/JIRA-1234_permettre-objet-config-fourni-d'étendre-autres-configs
-```
+----
 
 === https://semver.org/[Semantic versioning]
 
@@ -144,11 +147,12 @@ Des étiquettes supplémentaires pour les métadonnées de pré-version et de co
 ====
 
 .exemples
-```
+[source]
+----
 1.0.0
 2.1.3
 4.1.3ALPHA
-```
+----
 
 En ce qui concerne la version, ce ne sont que des chiffres, nous ne devrions pas hésiter à les incrémenter, ils ne coûtent rien.
 Et nous ne devrions pas essayer de garder toutes les parties d'un projet synchronisées avec le numéro de version.
@@ -174,7 +178,7 @@ La plupart des projets vont devoir gérer des dates à un moment ou un autre.
 Nous nous assurerons que les communications entre les services et entre le frontend et le backend utiliserons le format de date ISO8601 dès le départ.
 
 De plus, les dates, c'est difficile.
-Il suffit de demander à google ou de jeter un oeil à https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca[Falsehoods programmers believe about time].
+Il suffit de demander à Google ou de jeter un oeil à https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca[Falsehoods programmers believe about time].
 Nous utiliserons donc des bibliothèques reconnues pour manipuler les données temporelles.
 
 Ça va nous sauver du temps à long terme.
@@ -259,17 +263,18 @@ La documentation peut être pour différentes sorties, comme un livre, un articl
 Si nous devons un jour le convertir à nouveau en markdown, nous pouvons utiliser la commande suivante :
 
 .Conversion d'asciidoctor à markdown
-```bash
+[source,bash]
+----
 asciidoctor -b docbook -a leveloffset=+1 -o - green-field.adoc| pandoc --wrap=preserve-t markdown_strict -f docbook - > green-field2.md
-```
+----
 
 === Documentation de projet https://antora.org/[antora]
 
-Antora [[antora]] est défini comme le _générateur de site de documentation mono ou multi dépôt pour les rédacteurs techniques qui aiment rédiger en Asciidoc_.
+Antora[[antora]] est défini comme le _générateur de site de documentation mono ou multi dépôt pour les rédacteurs techniques qui aiment rédiger en Asciidoc_.
 
-Antora permet de rédiger de la documentation en asciidoc dans plusieurs dépôt de codes (penser frontend, multiples modules backend) et de créer un dépôt pour centraliser toute la documentation des vos dépôts et de publier un site statique pour votre organisation.
+Antora permet de rédiger de la documentation en asciidoc dans plusieurs dépôts de codes (penser frontend, multiples modules backend) et de créer un dépôt pour centraliser toute la documentation de vos dépôts et de publier un site statique pour votre organisation.
 
-C'est une façon très intéressante de faire en sorte d'avoir un point de départ pour toutes la documentation du projet tout en la maintenant à jour.
+C'est une façon très intéressante de faire en sorte d'avoir un point de départ pour toute la documentation du projet tout en la maintenant à jour.
 
 === Enregistrement de décisions architecturales (Architectural Decision Records https://adr.github.io/[ADR])
 
@@ -279,7 +284,7 @@ Avec le temps qui passe, les personnes peuvent changer de projet et la mémoire 
 
 Les ADR sont une façon d'enregistrer ces décisions et de les garder au même endroit.
 
-Quelques projets existent pour facilité la création d'ADR, mais la plupart utilisent du markdown comme format.
+Quelques projets existent pour faciliter la création d'ADR, mais la plupart utilisent du markdown comme format.
 Je suis encore à la recherche d'un bon projet qui supporte le asciidoc.
 Pour l'instant, https://github.com/adoble/adr-j[adr-j] semble un bon candidat qui supporte à la fois le markdown et le asciidoc.
 
@@ -301,6 +306,7 @@ Ils devraient savoir comment l'utiliser à son plein potentiel.
 
 Si nous avons une personne junior dans notre équipe, assurons-nous qu'elle prenne le temps d'apprendre son IDE.
 
+[#projet-de-services-auxiliaires-docker-compose]
 === Projet de services auxiliaires (docker-compose)
 
 Dans de nombreux projets, nous aurons besoin de certains services auxiliaires.
@@ -315,7 +321,7 @@ Dans nos projets, le script d'aide comprend des profils.
 Ainsi, un développeur front-end commencerait par l'aide des services comme la base de données et le backend, tandis qu'un développeur backend commencerait par la base de données et le front-end.
 Et un QA commencerait tout.
 
-    * Page d'aide en libre-service.
+* Page d'aide en libre-service.
     C'est une simple page html qui est servie par les services d'aide.
     Elle contient des informations sur les services d'aide, comme la version, les points de terminaison, la documentation, etc.
     Nous utilisons https://github.com/caddyserver/caddy-docker[caddy] pour cela, et un volume local pour servir la page html.
@@ -420,14 +426,15 @@ Elle peut être utilisée pour renvoyer des messages d'erreur dans de nombreux f
 Elle peut être utilisée pour renvoyer des messages d'erreur dans de nombreux langages, comme java, javascript, etc.
 
 .exemple d'API de problèmes
-```json
+[source,json]
+----
 {
 "statut": 500,
 "titre": "Erreur interne du serveur",
 "uuid": "d79f8cfa-ef5b-4501-a2c4-8f537c08ec0c", "application": "super-microservice",
 "version": "1.0"
 }
-```
+----
 
 Une caractéristique à noter est que nous pouvons faire en sorte que l'erreur dans les journaux ait un UUID unique qui est également renvoyé au client.
 De cette façon, nous pouvons tracer l'erreur dans les journaux et dans le client.
@@ -487,7 +494,7 @@ Il devrait y avoir une étape dans le pipeline qui bloque le merge si le code n'
 
 === Pipeline de construction
 
-Nous devrions avoir un pipeline de construction qui roules les tests, l'analyse statique et s'assure que le code a été révisé.
+Nous devrions avoir un pipeline de construction qui roule les tests, l'analyse statique et s'assure que le code a été révisé.
 Il pourra attraper les erreurs qui n'arrivent pas sur notre propre poste et aider à faire un build plus robuste.
 
 == Cadres (framework) et bibliothèques
@@ -552,14 +559,15 @@ Il peut être utilisé pour surveiller l'application en production, mais aussi e
 Il peut être utilisé pour surveiller l'application dans un conteneur, mais aussi dans un environnement natif.
 
 Et nous pouvons également ajouter nos propres métriques.
-Disons que nous voulons surveiller le nombre de fois qu'un fonctionnalité spécifique est utilisée.
+Disons que nous voulons surveiller le nombre de fois qu'une fonctionnalité spécifique est utilisée.
 Nous pouvons ajouter une métrique pour cela.
 Ou si nous voulons nous assurer qu'un job cron est complété correctement au taux attendu, nous pouvons ajouter une métrique pour cela.
 
 Un exemple de la documentation quarkus :
 
 .https://quarkus.io/guides/opentelemetry-metrics
-```java
+[source,java]
+----
 package org.acme;
 
 import io.opentelemetry.api.metrics.LongCounter;
@@ -592,7 +600,7 @@ public MetricResource(Meter meter) {
     return "hello-metrics";
  }
 }
-```
+----
 
 === Nous aurons besoin de commutateurs de fonctionnalités (feature flags)
 
@@ -694,7 +702,7 @@ Pour les environnements locaux, nous pouvons utiliser le projet https://get.loca
 Puisque nous parlons finalement d'écrire du code en équipe, nous avons besoin d'un moyen de gérer notre code.
 Je choisirais Git comme système de contrôle de version.
 Ensuite, nous aurions besoin d'un endroit pour stocker ce code.
-Le suspects habituels sont Github, Gitlab, Bitbucket, etc.
+Les suspects habituels sont Github, Gitlab, Bitbucket, etc.
 
 Je serais pragmatique et choisirais ce qui est déjà utilisé dans l'organisation où le projet est commencé.
 Tant que nous pouvons également avoir des pipelines pour vérifier, construire et empaqueter le code, ça me va.
@@ -719,7 +727,7 @@ Assurez-vous que nous mettons cette pratique en place tôt dans le processus, af
 === https://gitlab.com[Gitlab] ou autre dépôt de code
 
 Certaines organisations utilisent Gitlab, d'autres utilisent Github, Bitbucket ou même AWS CodeCommit.
-Peut importe ce que votre organisation utilise, assurez-vous que votre organisation dispose d'un système pipeline capable de:
+Peu importe ce que votre organisation utilise, assurez-vous que votre organisation dispose d'un système pipeline capable de :
 
 * vérifier,
 * construire,
@@ -735,7 +743,7 @@ Peut importe ce que votre organisation utilise, assurez-vous que votre organisat
 Comme nous utilisons Gitlab, nous utiliserons les pipelines qui peuvent s'exécuter dans gitlab.
 C'est un outil puissant qui peut être utilisé pour vérifier, construire et empaqueter le code.
 Il peut également être utilisé pour déployer, surveiller la qualité du code.
-Il peut être utilisé pour revenir en arrière sur le code si un problème était découvert..
+Il peut être utilisé pour revenir en arrière sur le code si un problème était découvert.
 
 Voici quelques étapes typiques que nous mettons dans nos pipelines :
 
@@ -750,7 +758,7 @@ Voici quelques étapes typiques que nous mettons dans nos pipelines :
     * rapport de couverture de code : générez le rapport de couverture de code.
     Cela peut être fait avec JaCoCo, ou tout autre outil de couverture de code.
     * analyse statique : exécutez une analyse statique sur le code.
-    Cela peut être fait avec <<Sonarqube>>, ou tout autre outil d'analyse statique.
+    Cela peut être fait avec <<sonarqube>>, ou tout autre outil d'analyse statique.
     * scan sat : exécutez l'outil satscan sur le code.
     Cela peut être fait avec l'outil satscan.
     * image(s) docker : créez l'image docker de l'application ou du module.
@@ -762,7 +770,8 @@ Voici quelques étapes typiques que nous mettons dans nos pipelines :
 
 Traduction libre du site web de danger :
 
-```
+[source]
+----
 Danger s'exécute pendant votre processus CI, et donne aux équipes la chance d'automatiser les tâches de révision de code.
 
 Cela fournit une autre étape logique dans votre construction, à travers cela Danger peut aider à appliquer vos tâches répétitives dans la révision quotidienne du code.
@@ -772,7 +781,7 @@ Vous pouvez utiliser Danger pour codifier les normes de vos équipes. Laisser le
 Cela se produit par Danger laissant des messages dans vos PRs basés sur des règles que vous créez avec JavaScript ou TypeScript.
 
 Au fil du temps, à mesure que les règles sont respectées, le message est modifié pour refléter l'état actuel de la révision du code.
-```
+----
 
 Nous devrions utiliser Danger pour valider et imposer les normes de notre équipe.
 
@@ -833,7 +842,7 @@ Gérer une grande infrastructure avec Terraform est un peu douloureux.
 Nous avons probablement un gros fichier d'état sur le bucket AWS S3, plusieurs modules et plusieurs d'environnements.
 Terragrunt peut nous aider à gérer tout cela.
 
-== Surveillance des projets
+== Surveillance des projets [[surveillance]]
 
 À un moment donné, nous devrons surveiller notre application d'une manière ou d'une autre.
 Je suis actuellement en train d'évaluer Signoz, mais je n'ai pas vraiment d'option préférée ou recommandée pour le moment.
