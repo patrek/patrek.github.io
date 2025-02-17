@@ -16,17 +16,17 @@ toc: true
 [[introduction]]
 == Je rêve d'un projet vert
 
-Je rêve du jour où je serai invité à participer à un projet depuis son inception, pour être capable de décider ce qui y entrerait et ce qui n'y entrerait pas.
+Je rêve de participer à un projet dès son inception, pour pouvoir décider de chaque aspect à inclure.
 Être capable de choisir les technologies, l'architecture, les pratiques, les outils, les processus, les méthodologies, l'équipe même.
 
-À l'époque où j'ai commencé à programmer comme source de revenus, beaucoup des technologies que nous considérons comme acquises aujourd'hui n'existaient même pas.
+À l'époque où j'ai commencé à programmer gagner ma vie, beaucoup des technologies que nous considérons comme acquises aujourd'hui n'existaient même pas.
 C'est comme si j'avais grandi avec l'évolution de certaines technologies, appris de mes erreurs.
 J'ai essayé différentes alternatives pour le même besoin et j'ai expérimenté où certaines sont meilleures que d'autres.
 
 Depuis longtemps, je suis principalement un développeur Java.
 Quand j'ai commencé, je savais programmer, mais pas selon la **Programmation Orientée Objet**.
-Ma première expérience en Java était d'aider un projet dans mon université.
-Je ne savais pas vraiment ce qu'était une classe, ni comment la compiler, mais je pouvais échapper aux caractères spéciaux afin qu'un servlet puisse créer du javascript qui créerait du html qui se compilerait et fonctionnerait.
+Ma première expérience en Java était d'aider un projet dans l'université ou j'avais fait mes études en chimie.
+Je ne savais pas vraiment ce qu'était une classe, ni comment la compiler, mais je comprenais comment afin d'encoder les caractères spéciaux afin qu'un servlet puisse créer du JavaScript qui créerait lui-même du HTML qui se compilerait et fonctionnerait.
 J'ai beaucoup appris depuis.
 Je dois reconnaître que ce bouquin, https://horstmann.com/bigjava/[**Big Java**], ma permis de bien entreprendre ce voyage.
 
@@ -35,8 +35,7 @@ Je vais faire un inventaire non exhaustif des technologies, pratiques, outils, p
 
 == Ne pas réinventer la roue
 
-En tant que principe directeur, je ne réinventerais pas la roue.
-J'utiliserais des technologies, pratiques, outils, processus, méthodologies, membres de l'équipe, etc. qui existent déjà.
+En tant que principe directeur, je m'appuierais sur des technologies, pratiques, processus, méthodologies et outils existants plutôt que de réinventer la roue..
 
 Rares sont les cas où nous devons inventer quelque chose de nouveau.
 La plupart du temps, nous pouvons utiliser quelque chose qui existe déjà.
@@ -76,7 +75,7 @@ Elle permet de trouver des bugs qui ne sont pas évidents, comme des variables n
 
 === https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
 
-Il y a un certain temps déjà, j'ai découvert la spécification des *Conventional Commits*.
+J'ai découvert il y a un certain temps déjà la spécification des *Conventional Commits*.
 C'est une convention simple sur la façon d'écrire des messages de commit.
 C'est simple, mais c'est puissant.
 Cela nous permet de générer des journaux de modifications, des versions des numéros, etc. automatiquement.
@@ -130,7 +129,7 @@ feat/JIRA-1234_permettre-objet-config-fourni-d'étendre-autres-configs
 
 === https://semver.org/[Semantic versioning]
 
-J'utiliserais le versionnement sémantique pour versionner le projet.
+J'adopterais le versionnement sémantique pour gérer les versions projet.
 C'est une convention simple qui nous permet de savoir quel type de changements se trouvent dans une version rien qu'en regardant le numéro de version.
 
 Traduction de la définition depuis celle du site web semver :
@@ -163,7 +162,7 @@ Cela nous permet de voir facilement ce qui est déployé où.
 
 === Conquérir le monde (_i18n_) dès le départ
 
-Nous devons nous assurer de tenir compte de l'internationalisation (i18n) dès le début du projet.
+Nous devons intégrer l'internationalisation (i18n) dès le début du projet.
 Nous ne pouvons pas simplement écrire les chaines de caractères pour les boutons, menus, descriptions, etc.
 Nous utiliserons une bibliothèque appropriée pour les frameworks retenus (frontend et backend).
 
@@ -175,7 +174,7 @@ C'est particulièrement vrai quand on crée des apis.
 === Dates standard (_ISO8601_) dès le départ
 
 La plupart des projets vont devoir gérer des dates à un moment ou un autre.
-Nous nous assurerons que les communications entre les services et entre le frontend et le backend utiliserons le format de date ISO8601 dès le départ.
+Nous adopterons le format de date ISO8601 pour toutes les communications dès le début.
 
 De plus, les dates, c'est difficile.
 Il suffit de demander à Google ou de jeter un oeil à https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca[Falsehoods programmers believe about time].
@@ -183,9 +182,9 @@ Nous utiliserons donc des bibliothèques reconnues pour manipuler les données t
 
 Ça va nous sauver du temps à long terme.
 
-=== Securité dès le départ
+=== Securité dès le début
 
-La sécurité ne doit pas être une considération tardive.
+La sécurité doit être une priorité dès le début.
 Nous devons l'avoir à l'esprit dès le début du projet.
 Nous devrions prendre le temps de réfléchir aux permissions et aux groupes, de déterminer quels points d'accès doivent être sécurisés, quels demandent des authorisations particulières et quels doivent être public.
 
@@ -194,8 +193,7 @@ https://owasp.org/www-project-top-ten/[OWASP Top Ten] est un bon point de dépar
 
 == L'équipe, ou les rôles
 
-Certains rôles sont essentiels pour un projet.
-Ils peuvent être combinés, mais ils doivent être associés à des membres de l'équipe.
+Certains rôles et responsabilités sont essentiels et doivent être attribués à des membres de l'équipe, même s'ils peuvent être combinés.
 
     * **Développeur** : C'est la personne qui écrit le code.
     * **QA** : C'est la personne qui teste le code.
@@ -207,7 +205,7 @@ Ils peuvent être combinés, mais ils doivent être associés à des membres de 
 
 == Documentation
 
-Nous devons colliger les informations et documenter divers aspects de notre projet.
+Nous devons documenter divers aspects de notre projet de manière organisée.
 
 Toute la documentation n'a pas besoin d'être entreposée au même endroit.
 Il est souvent préférable de garder la documentation près du code pour s'assurer qu'elle reste à jour.
@@ -298,8 +296,7 @@ J'ai commencé à l'utiliser pour générer mon blog personnel. Pour l'instant, 
 
 === IDE (Environnement de Développement Intégré)
 
-J'adore IntelliJ IDEA de jetbrains.
-Je l'utilise depuis longtemps (depuis décembre 2012).
+J'utilise IntelliJ IDEA de JetBrains depuis décembre 2012 et je l'apprécie beaucoup.
 
 Mais en fait, chaque personne devrait utiliser n'importe quel IDE qu'elle aime, à une condition : *Ils devraient le maîtriser*.
 Ils devraient savoir comment l'utiliser à son plein potentiel.
@@ -463,7 +460,7 @@ Cela peut être une classe simple, une méthode, un modèle, etc.
 
 === Tests unitaires et d'intégration
 
-Mettre en place dès le début du projet la pratique de la rédaction de tests pour les fonctionnalités développées.
+Adopter dès le début la pratique de rédiger des tests pour chaque fonctionnalité développée.
 Premièrement des tests unitaires pour tester le code et les cas limites, et ensuite, des tests d'intégration pour tester les interactions entre les différentes parties du système là où c'est nécessaires.
 
 Éviter de tester les bibliothèques de code utilisées.
@@ -800,7 +797,7 @@ La plupart des IDE devraient avoir un plugin afin que nous puissions voir les r�
 
 === Images et conteneurs Docker
 
-Je pense qu'il est raisonnable de penser que nous déploierons notre application dans des conteneurs.
+Il est raisonnable de prévoir le déploiement de notre application dans des conteneurs.
 D'autant plus si notre application n'est pas un gros monolithe, mais un ensemble de modules ou de microservices.
 Pensez à un frontend en React, un backend en Quarkus, une base de données en Postgresql, etc.
 
@@ -844,7 +841,7 @@ Terragrunt peut nous aider à gérer tout cela.
 
 == Surveillance des projets [[surveillance]]
 
-À un moment donné, nous devrons surveiller notre application d'une manière ou d'une autre.
+Nous devrons mettre en place une surveillance pour notre application.
 Je suis actuellement en train d'évaluer Signoz, mais je n'ai pas vraiment d'option préférée ou recommandée pour le moment.
 
 * https://signoz.io/[Signoz]
