@@ -868,5 +868,5 @@ It can be used to monitor our application in production, but also in development
 * https://debezium.io/[Debezium] for change data capture
 * https://javers.org/[Javers] for auditing row changes
 * https://hibernate.org/orm/envers/[Hibernate Envers] for auditing changes
-
+* https://pitest.org/quickstart/maven/[Pitest Mutation Testing] a state of the art mutation testing system
 

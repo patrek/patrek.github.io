@@ -19,7 +19,7 @@ toc: true
 Je rêve de participer à un projet dès son inception, pour pouvoir décider de chaque aspect à inclure.
 Être capable de choisir les technologies, l'architecture, les pratiques, les outils, les processus, les méthodologies, l'équipe même.
 
-À l'époque où j'ai commencé à programmer gagner ma vie, beaucoup des technologies que nous considérons comme acquises aujourd'hui n'existaient même pas.
+À l'époque où j'ai commencé à programmer pour gagner ma vie, beaucoup des technologies que nous considérons comme acquises aujourd'hui n'existaient même pas.
 C'est comme si j'avais grandi avec l'évolution de certaines technologies, appris de mes erreurs.
 J'ai essayé différentes alternatives pour le même besoin et j'ai expérimenté où certaines sont meilleures que d'autres.
 
@@ -50,13 +50,13 @@ Souvent, j'aime provoquer un peu les gestionnaires en leur disant que "_des dév
 Mais, si nous n'écrivons pas de code, nous n'avons pas de fonctionnalités.
 
 L'autre principe, c'est que le plus tard nous trouvons un bug, le plus cher ce sera de le corriger.
-Imaginez trouver un bug dans le codu du véhicule Mars Rover après qu'il ait été lancé.
+Imaginez trouver un bug dans le code du véhicule Mars Rover après qu'il ait été lancé.
 Comme corollaire, le plus près de sa création nous trouvons un bug, le moins cher ce sera de le corriger.
 
 Donc, nous devrions viser à trouver les bugs le plus rapidement possible. Voici quelques pratiques qui permettent d'aider à produire du code de qualité :
 
-* Utiliser un *IDE*. Ce sont plus que de simples éditeurs de texte.
-Ils peuvent nous aider à trouver des bugs, des erreurs de syntaxe, de logique, etc. avant même que nous compilions le code.
+* Utiliser un *IDE*. Ce sont plus que de simples éditeurs de textes.
+Ils peuvent nous aider à trouver des bugs, des erreurs de syntaxe, de logique, etc. avant même que nous compilions le code. Portons attention aux avertissements qu'ils nous donnent.
 * Écrivons des tests. Même si nous n'appliquons pas la méthode TDD, nous devrions écrire des tests.
 Ils nous aident à trouver des bugs.
 Et, quand un bug est rapporté, nous devrions écrire un test pour le reproduire, réparer le bug, et rouler le test pour nous assurer que le bug est corrigé.
@@ -249,6 +249,7 @@ Je n'ai pas encore utilisé cette méthode, mais je pense que c'est une bonne id
 Il existe de nombreuses façons et formats pour documenter notre futur projet.
 Très souvent, nous verrons markdown comme format.
 Malheureusement, markdown est plus limité, et il existe une variété de saveurs en compétition pour markdown.
+Par exemple, il est difficile de numéroter les titres dans markdown, il faut le faire à la main, et s'assurer de faire suivre la numérotation quand on déplace des sections.
 
 AsciiDoc est un format plus puissant qui peut être utilisé pour rédiger de la documentation.
 Il permet de faire plus de choses que markdown.
@@ -308,7 +309,7 @@ Si nous avons une personne junior dans notre équipe, assurons-nous qu'elle pren
 
 Dans de nombreux projets, nous aurons besoin de certains services auxiliaires.
 J'utiliserais docker-compose pour définir ces services auxiliaires et les rassembler.
-Et envelopper les actions dans un script shell qui offre une aide et des valeurs par défaut raisonnables.
+Et envelopper les actions (démarrage, arrêt, réinitalisation de la base de données, etc.) dans un script shell qui offre une aide et des valeurs par défaut raisonnables.
 
 De cette façon, nous pouvons démarrer les services auxiliaires avec une seule commande.
 Nous pouvons également arrêter les services avec une seule commande.
@@ -378,14 +379,14 @@ Le jury est toujours en délibération sur ce choix.
 
 === Formatage du code
 
-La simple réalité est de choisir un, n'importe lequel et de s'y tenir.
+La simple réalité est qu'il faut choisir un format pour le code, n'importe lequel et de s'y tenir.
 Mais, d'après mon expérience, j'ajouterais d'autres critères pour le sélectionner :
 
 * Défini par une entité bien connue (ne perdez pas de temps à débattre si vous devez mettre des accolades à la fin de la ligne ou sur la ligne suivante)
 * Facile à utiliser (vous ne devriez pas avoir à y penser)
 * Peut être vérifié automatiquement par vos pipelines, donc instrumenté
 * Peut être appliqué automatiquement par votre IDE
-* Est orienté (il ne devrait pas y avoir beaucoup de configurations que vous pouvez lui appliquer)
+* Est fortement prescriptif (il ne devrait pas y avoir beaucoup de configurations que vous pouvez lui appliquer)
 
 ==== Base de code Java : https://github.com/google/google-java-format[Google java format]
 
@@ -483,7 +484,7 @@ Idéalement, nous devrions relier notre IDE à un outil plus robuste, comme <<so
 === Revue de code
 
 Une autre façon d'augmenter la qualité du code, c'est de le réviser.
-Ça permet d'attraper les bugs, mais aussi de partager la connaissance.
+Ça permet d'attraper les bugs, mais aussi de partager la connaissance sur le code, les pratiques et le projet.
 Ça permet aussi d'avoir une base de code cohérente et facilement lisible pour l'ensemble de l'équipe et des futurs développeurs.
 
 Même si l'équipe est petite, c'est une bonne pratique que de faire de la revue de code.
@@ -499,7 +500,7 @@ Il pourra attraper les erreurs qui n'arrivent pas sur notre propre poste et aide
 === https://quarkus.io/[Quarkus]
 
 J'utiliserais Quarkus comme _framework_ pour construire le backend du projet.
-C'est un _framework_ Java moderne _framework_ qui est assez mature.
+C'est un _framework_ Java moderne qui est assez mature.
 On dirait qu'il a été construit dès le départ avec le développeur en tête.
 Et il peut créer des artefacts qui sont natifs, rapides et adaptés aux conteneurs.
 
@@ -615,7 +616,7 @@ Nous pouvons également utiliser des commutateurs de fonctionnalité pour désac
 
 ==== https://openfeature.dev/[OpenFeature]
 
-En recherchant pour cet article, je suis tombé sur OpenFeature.
+En préparant cet article, je suis tombé sur le projet OpenFeature.
 C'est une spécification de service de commutateurs de fonctionnalités qui peut être implémentée par n'importe quel service.
 
 En utilisant les SDK openfeature, nous pouvons éviter le verrouillage des fournisseurs et avoir une manière cohérente de gérer nos drapeaux de fonctionnalités.
@@ -651,13 +652,13 @@ Il existe une version gratuite et une version cloud géré par la compagnie.
 À un moment donné, nous devrons gérer les utilisateurs et leur accès à l'application.
 J'utiliserais Keycloak pour cela.
 C'est un produit mature qui peut être utilisé pour gérer les utilisateurs, les rôles, les permissions, etc.
-Nous pouvons également le configurer pour différer l'authentification à un système externe en utilisant des fournisseurs d'identité.
+Nous pouvons également le configurer pour déférer l'authentification à un système externe en utilisant des fournisseurs d'identité.
 Il existe même un moyen de migrer nos utilisateurs d'un système externe vers Keycloak.
 
 === https://www.wiremock.io/[Wiremock]
 
 Il est tout à fait possible que notre projet doive interagir avec des services externes.
-Nous voudrons tester notre code sans avoir à dépendre de l'appel réel de ces services externes.
+Nous voudrons tester notre code sans avoir à dépendre de l'appel réel à ces services externes.
 Nous pouvons utiliser la documentation du service pour obtenir le format du payload attendu.
 
 J'utiliserais Wiremock pour remplacer ces services pendant le développement.
@@ -690,7 +691,7 @@ Mais, si nous travaillons dans un environnement local, le défi est plus importa
 Nous pouvons encore utiliser _Let's Encrypt_ pour obtenir un certificat gratuit.
 Cependant, c'est plus difficile de faire en sorte que chaque développeur ait son propre certificat localement.
 
-Pour les environnements locaux, nous pouvons utiliser le projet https://get.localhost.direct/[localhost.direct] pour obtenir un certificat gratuit pour notre environnement local.
+Pour les environnements locaux, nous pouvons nous inspirer du projet https://get.localhost.direct/[localhost.direct] pour obtenir un certificat gratuit pour notre environnement local et gérer les noms de domaines en local.
 
 == Commit
 
@@ -744,7 +745,7 @@ Il peut être utilisé pour revenir en arrière sur le code si un problème éta
 
 Voici quelques étapes typiques que nous mettons dans nos pipelines :
 
-    * pré-valider : utiliser <<dangerjs>> pour vérifier les messages de commit et s'assurer qu'ils respectent les conventions que nous avons établies avec l'équipe.
+    * pré-valider : utilisé <<dangerjs>> pour vérifier les messages de commit et s'assurer qu'ils respectent les conventions que nous avons établies avec l'équipe.
     * vérifier le format : assurez-vous que le code est correctement formaté.
     Comme nous ne voulons pas donner les droits de commit du pipeline, nous ne formatons pas le code, mais nous vérifions qu'il est correctement formaté.
     * compiler : assurez-vous que le code se compile correctement.
@@ -785,7 +786,7 @@ Nous devrions utiliser Danger pour valider et imposer les normes de notre équip
 === https://www.sonarsource.com/products/sonarqube/[Sonarqube] [[sonarqube]]
 
 Nous voudrons vérifier la qualité de notre code.
-L'analyse statique de notre code permet de détecter de nombreux des mauvaises habitudes, bugs ou problèmes de sécurité.
+L'analyse statique de notre code permet de détecter de nombreux problèmes comme des mauvaises habitudes de programmation, des bugs ou des problèmes de sécurité.
 
 J'utiliserais Sonarqube pour cela.
 C'est un produit mature qui peut vérifier notre code pour des bugs, vulnérabilités, mauvaises pratiques de code, etc.
@@ -820,7 +821,7 @@ Nous nous épargnerons beaucoup de stress si nous commençons tôt avec cela au 
 
 === https://www.terraform.io/[Terraform] pour l'infrastructure en tant que code
 
-Nous allons déployer notre application dans une sorte d'infrastructure.
+Nous allons déployer notre application dans une infrastructure, qu'elle soit chez un fournisseur cloud, ou déployée sur l'infra de l'organisation.
 Et nous aurons très probablement besoin de la même infrastructure dans différents environnements, comme le développement, la qa, la pré-production, l'uat, la production.
 Le meilleur moyen de s'assurer que chaque environnement est aussi proche que possible du précédent est de le rendre reproductible.
 J'utiliserais Terraform pour définir l'infrastructure en tant que code.
@@ -836,7 +837,7 @@ Ce qui est, je pense, plus simple que d'utiliser la configuration propre à chaq
 Terragrunt est un wrapper mince pour Terraform qui fournit des outils supplémentaires pour garder vos configurations DRY, travailler avec plusieurs modules Terraform, et gérer l'état distant.
 
 Gérer une grande infrastructure avec Terraform est un peu douloureux.
-Nous avons probablement un gros fichier d'état sur le bucket AWS S3, plusieurs modules et plusieurs d'environnements.
+Nous avons probablement un gros fichier d'état sur le bucket AWS S3, plusieurs modules et plusieurs environnements.
 Terragrunt peut nous aider à gérer tout cela.
 
 == Surveillance des projets [[surveillance]]
@@ -867,3 +868,4 @@ Il peut être utilisé pour surveiller notre application en production, mais aus
 * https://debezium.io/[Debezium] pour la capture de données de changement
 * https://javers.org/[Javers] pour l'audit des changements de ligne
 * https://hibernate.org/orm/envers/[Hibernate Envers] pour l'audit des changements
+* https://pitest.org/quickstart/maven/[Pitest Mutation Testing] pour évaluer la résistance des tests à la mutation
