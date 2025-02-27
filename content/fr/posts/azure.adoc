@@ -1,0 +1,214 @@
+---
+date : '2025-01-29T00:00:00-05:00'
+draft : true
+title : Note pour azure
+toc: true
+---
+
+= Azure (mes notes)
+
+== Azure cli
+
+```bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
+== Azure data studio
+
+install: https://azuredatastudio-update.azurewebsites.net/latest/linux-deb-x64/stable
+
+```bash
+sudo dpkg -i ./Downloads/azuredatastudio-linux-<version string>.deb
+```
+== Azure CLI Single Sign-On (SSO)
+
+Yes, Azure provides a way to set up Single Sign-On (SSO) for command-line access using Azure CLI. You can authenticate using Azure Active Directory (AAD) to enable SSO. Here’s how to set it up:
+
+== Setting Up SSO for Azure CLI
+
+To connect to Azure using SSO from the command line, follow these steps:
+
+1. **Install Azure CLI**:
+Ensure you have the Azure CLI installed. You can download it from the official Azure website.
+
+```bash
+   # For Windows
+   https://aka.ms/installazurecliwindows
+
+   # For macOS
+   brew update && brew install azure-cli
+
+   # For Linux
+   curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
+Login with Azure CLI: Use the following command to log in to Azure using your Azure Active Directory credentials:
+
+```
+az login
+```
+
+This command will open a web browser where you can enter your credentials. If your organization has SSO configured, you will be redirected to your organization's login page.
+Use Device Code Login (Optional): If you are unable to use a web browser, you can use the device code login method:
+
+```
+az login --use-device-code
+```
+
+This command will provide a code and a URL. Open the URL in a web browser, enter the code, and complete the login process.
+Set the Subscription (if necessary): If you have multiple subscriptions, you can set the active subscription using:
+
+```
+az account set --subscription "Your Subscription Name or ID"
+```
+
+Verify Login: To verify that you are logged in and to see your account details, use:
+
+```
+az account show
+```
+By following these steps, you can set up SSO for Azure CLI and connect from the command line using your Azure Active Directory credentials.
+
+
+== High level description
+
+Azure is a cloud computing platform and service created by Microsoft. It provides a wide range of cloud services, including those for computing, analytics, storage, and networking. Users can choose and configure these services to meet their specific needs.
+
+== Key Components of Azure
+
+Azure offers various components that can be utilized to build and manage applications and services:
+
+* **Virtual Machines (VMs)**: On-demand, scalable computing resources that allow you to run applications in the cloud.
+* **Virtual Networks (VNet)**: A logically isolated network that enables you to securely connect Azure resources to each other and to on-premises networks.
+* **Azure Storage**: A scalable cloud storage solution for data, files, and backups.
+* **Azure App Services**: A platform for building, deploying, and scaling web apps and APIs.
+* **Azure Functions**: A serverless compute service that allows you to run event-driven code without managing infrastructure.
+* **Azure SQL Database**: A fully managed relational database service based on SQL Server.
+* **Azure Kubernetes Service (AKS)**: A managed Kubernetes container orchestration service for deploying and managing containerized applications.
+
+== Creating a Virtual Machine
+
+To create a Virtual Machine in Azure, follow these steps:
+
+1. Sign in to the Azure portal.
+2. In the left-hand menu, select **Virtual Machines**.
+3. Click on **+ Add** to create a new VM.
+4. Fill in the required information:
+   * **Subscription**: Select your Azure subscription.
+   * **Resource Group**: Choose an existing resource group or create a new one.
+   * **Virtual Machine Name**: Enter a name for your VM.
+   * **Region**: Select the Azure region where you want to deploy the VM.
+   * **Image**: Choose the operating system image for your VM (e.g., Windows, Linux).
+   * **Size**: Select the size of the VM based on your performance needs.
+5. Configure additional settings as needed (e.g., networking, management, security).
+6. Review your configuration and click **Create** to deploy the VM.
+
+== Creating a Virtual Network
+
+To create a Virtual Network in Azure, follow these steps:
+
+1. Sign in to the Azure portal.
+2. In the left-hand menu, select **Virtual Networks**.
+3. Click on **+ Add** to create a new VNet.
+4. Fill in the required information:
+   * **Subscription**: Select your Azure subscription.
+   * **Resource Group**: Choose an existing resource group or create a new one.
+   * **Name**: Enter a name for your VNet.
+   * **Region**: Select the Azure region where you want to deploy the VNet.
+   * **Address Space**: Define the IP address range for the VNet (e.g., 10.0.0.0/16).
+5. Configure subnets as needed.
+6. Review your configuration and click **Create** to deploy the VNet.
+
+== Azure Equivalents of AWS Tools/Features
+
+Azure provides various services that are equivalent to AWS tools and features. Below are the Azure equivalents for the specified AWS services:
+
+* **Security Groups**:
+  ** **Azure Network Security Groups (NSGs)**: NSGs are used to control inbound and outbound traffic to Azure resources. They allow you to define rules based on IP address, port, and protocol.
+
+* **CloudFront**:
+  ** **Azure Content Delivery Network (CDN)**: Azure CDN is a global content delivery network that caches content at strategically placed physical nodes to provide high availability and performance.
+
+* **Load Balancers**:
+  ** **Azure Load Balancer**: Azure Load Balancer distributes incoming network traffic across multiple virtual machines to ensure high availability and reliability.
+
+* **ECS / Fargate**:
+  ** **Azure Container Instances (ACI)**: ACI allows you to run containers without managing servers, similar to AWS Fargate.
+  ** **Azure Kubernetes Service (AKS)**: For orchestrating containerized applications, AKS is the equivalent of AWS ECS.
+
+* **RDS (Relational Database Service)**:
+  ** **Azure SQL Database**: Azure SQL Database is a fully managed relational database service based on SQL Server.
+  ** **Other Supported Databases**: Azure also supports other database services, including:
+    *** **Azure Database for MySQL**
+    *** **Azure Database for PostgreSQL**
+    *** **Azure Database for MariaDB**
+    *** **Azure Cosmos DB**: A fully managed NoSQL database service that supports multiple data models.
+
+== Creating a Virtual Network and Network Security Group with Terraform
+
+To create a Virtual Network (VNet) and an associated Network Security Group (NSG) in Azure using Terraform, you can use the following example configuration:
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+
+# Create a Resource Group
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "East US"
+}
+
+# Create a Virtual Network
+resource "azurerm_virtual_network" "example" {
+  name                = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+# Create a Subnet
+resource "azurerm_subnet" "example" {
+  name                 = "example-subnet"
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+# Create a Network Security Group
+resource "azurerm_network_security_group" "example" {
+  name                = "example-nsg"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+
+  # Define security rules
+  security_rule {
+    name                       = "allow-ssh"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+# Associate the NSG with the Subnet
+resource "azurerm_subnet_network_security_group_association" "example" {
+  subnet_id                 = azurerm_subnet.example.id
+  network_security_group_id = azurerm_network_security_group.example.id
+}
+```
+
+== Explanation of the Configuration
+
+Provider Block: Specifies the Azure provider.
+Resource Group: Creates a resource group to contain the VNet and NSG.
+Virtual Network: Defines the VNet with an address space.
+Subnet: Creates a subnet within the VNet.
+Network Security Group: Defines an NSG with a security rule to allow SSH traffic (port 22).
+Subnet Association: Associates the NSG with the created subnet.
+== Applying the Configuration
+
