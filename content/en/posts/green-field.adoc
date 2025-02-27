@@ -15,11 +15,11 @@ summary: "A curated list of projects, libraries, tools and practices I would use
 [[introduction]]
 == I'm dreaming
 
-I'm dreaming of the day where I would be invited to participate in a project from its inception, to be able to decide what would go in it and what would not.
+I'm dreaming of the day when I would be invited to participate in a project from its inception, to be able to decide what would go in it and what would not.
 To be able to choose the technologies, the architecture, the practices, the tools, the processes, the methodologies, the team even.
 
 Back in the days when I started programming for a job, many of the technologies we take for granted today did not even exist.
-It's like I've grown with the evolution of some technologies, learn from my mistakes.
+It's like I've grown with the evolution of some technologies, learned from my mistakes.
 I've tried different alternatives for the same need and experienced where some are better than others.
 
 For a long time, I've been mainly a java developer.
