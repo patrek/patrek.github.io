@@ -1,5 +1,5 @@
 ---
-date : '2025-01-13T00:00:00-05:00'
+date : '2025-02-26T00:00:00-05:00'
 draft : false
 title : "Green Field Project"
 description : "If I was to start a project from scratch"

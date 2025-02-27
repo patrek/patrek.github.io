@@ -1,5 +1,5 @@
 ---
-date : '2025-01-13T00:00:00-05:00'
+date : '2025-03-26T00:00:00-05:00'
 draft : false
 title : Démarrage d'un nouveau projet à partir de zéro
 description: Les projets, bibliothèques, outils et pratiques que j'ai remarqués
