@@ -4,7 +4,7 @@ draft : false
 title : "Green Field Project"
 description : "If I was to start a project from scratch"
 featured_image : "/images/greenfield_circuit.png"
-tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailhog", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
+tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailpit", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
 summary: "A curated list of projects, libraries, tools and practices I would use if I was to start a project from scratch."
 ---
 
@@ -459,7 +459,7 @@ It can be a simple class, a method, a pattern, etc.
 === Testing: unit and integration
 
 From the beginning, we should have unit tests in place.
-They are the first line of defense against bugs.
+They are the first line of defence against bugs.
 They are also a good way to document the code.
 Start with the unit tests, and then add integration tests when needed.
 

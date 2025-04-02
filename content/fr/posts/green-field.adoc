@@ -4,7 +4,7 @@ draft : false
 title : Démarrage d'un nouveau projet à partir de zéro
 description: Les projets, bibliothèques, outils et pratiques que j'ai remarqués
 featured_image : "/images/greenfield_circuit.png"
-tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailhog", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
+tags: ["project", "libraries", "java", "quarkus", "conventional commits", "semantic versioning", "asciidoctor", "intellij", "docker-compose", "traefik", "portainer", "jwt", "postgresql", "keycloak", "grafana", "rabbitmq", "wiremock", "dozzle", "mailpit", "google-java-format", "prettier", "mapstruct", "lombok", "liquibase", "opentelemetry", "openfeature", "unleash", "sonarqube", "sops", "git", "gitlab", "danger", "terraform", "terragrunt", "signoz", "elastic-apm", "jaeger", "prometheus", "skywalking", "pinpoint", "stamonitor", "debezium", "javers", "hibernate-envers", "plausible"]
 summary: Une liste de projets, bibliothèques, outils et pratiques que j'utiliserais si je démarrais un projet à partir de rien
 toc: true
 ---
@@ -340,7 +340,7 @@ Et un QA commencerait tout.
     * rabbitmq : dans notre cas, nous utilisons rabbitmq pour gérer les messages et les files d'attente entre les différents services
     * wiremock : dans notre cas, nous utilisons wiremock pour simuler des services externes
     * https://dozzle.dev/[dozzle], pour voir les journaux des conteneurs
-    * https://github.com/mailhog/MailHog[mailhog] pour voir les e-mails envoyés par l'application, c'est un simple serveur smtp qui peut être utilisé pour voir les e-mails envoyés par l'application
+    * https://mailpit.axllent.org[Mailpit] pour voir les e-mails envoyés par l'application, c'est un simple serveur smtp qui peut être utilisé pour voir les e-mails envoyés par l'application
     * une sorte de service de <<surveillance>> pour surveiller les services auxiliaires et expérimenter avec le monitoring de l'application
 
 Nous pouvons également ajouter tout autre service d'assistance qui peut être dockerisé.
