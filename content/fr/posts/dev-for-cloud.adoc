@@ -1,0 +1,77 @@
+---
+date : '2025-04-02T00:00:00-05:00'
+draft : true
+title : Développer pour le cloud (distribué)
+description: Considérations pour le développement d'une application cloud native
+featured_image : "/images/greenfield_circuit.png"
+tags: ["cloud", "aws", "azure", "gcp"]
+summary: Une liste de considérations et pratiques pour le développement d'une application cloud native.
+toc: true
+---
+
+= Développer pour le cloud (distribué)
+:sectnums:
+:toc: left
+
+== Introduction
+
+==  @Scheduled / Cron
+
+== UTC et autres
+
+== Cache mémoire
+
+== Tourner 2 ou plus instances
+
+== execution concurrente et paralèlisme
+
+== logs et démêler qui a fait quoi (traces)
+
+== REST ou gestion de l'auth
+
+== Considérations de sécurité
+
+== Concepts à haut niveau de l'architecture devops
+
+== CI/CD Pipelines :
+Décrire l'importance des pipelines d'intégration et de déploiement continus pour automatiser les tests et les déploiements.
+
+== Observabilité :
+Ajouter des sections sur la surveillance, la journalisation et le traçage distribués.
+
+== Gestion des secrets :
+Expliquer comment gérer les secrets et les configurations sensibles de manière sécurisée.
+
+== Scalabilité :
+Discuter des stratégies pour rendre l'application scalable, comme l'auto-scaling et le load balancing.
+
+== Réseautage :
+Considérations sur le réseautage dans le cloud, y compris les VPC, les sous-réseaux et les pare-feu.
+
+== Stockage :
+Options de stockage persistant et éphémère, et comment les gérer.
+
+== Sécurité :
+Pratiques de sécurité avancées, comme l'authentification et l'autorisation, la gestion des vulnérabilités, et les politiques de sécurité.
+
+== Gestion des coûts :
+Stratégies pour optimiser les coûts dans le cloud.
+
+== Résilience et tolérance aux pannes :
+Techniques pour assurer la résilience de l'application, comme les sauvegardes, les restaurations et les déploiements multi-régions.
+
+* Robustesse :
+  - Gestion des erreurs et des exceptions.
+  - Mise en place de mécanismes de reprise après sinistre.
+  - Utilisation de modèles de conception pour la résilience.
+* Performance :
+    - Optimisation des performances de l'application.
+    - Mise en cache des données et des résultats.
+    - Utilisation de réseaux de diffusion de contenu (CDN).
+* Disponibilité :
+  - Surveillance de la disponibilité des services.
+  - Mise en place de mécanismes d'alerte et de notification.
+  - Tests de charge et de performance.
+
+== Infrastructure as Code (IaC) :
+Utilisation d'outils comme Terraform pour gérer l'infrastructure.
