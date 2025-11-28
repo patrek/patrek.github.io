@@ -335,7 +335,7 @@ And a QA would start everything.
     * rabbitmq: in our case, we are using rabbitmq to manage messages and queues between the different services
     * wiremock: in our case, we are using wiremock to simulate external services
     * https://dozzle.dev/[dozzle], to see the logs of the containers
-    * https://github.com/mailhog/MailHog[mailhog] to see the emails sent by the application, it is a simple smtp server that can be used to see the emails sent by the application without having to send them to a real smtp server.
+    * https://mailpit.axllent.org/[mailpit] to see the emails sent by the application, it is a simple smtp server that can be used to see the emails sent by the application without having to send them to a real smtp server.
     * some kind of <<monitoring>> service
 
 We can also add any other helper service that can be dockerized.
