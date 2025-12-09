@@ -15,7 +15,7 @@ toc: true
 
 == Introduction
 
-L'idée de cet article m'est venue, en début d'année, après ma publication sur les éléments à considérer quand on link:{{< ref "green-field.adoc" >}}[démarre un projet de développement] et en discutant avec des collègues qui commençaient à apprendre un environnement cloud.
+L'idée de cet article m'est venue, en début d'année, après ma publication sur les éléments à considérer quand on link:/fr/posts/green-field/[démarre un projet de développement] et en discutant avec des collègues qui commençaient à apprendre un environnement cloud.
 
 Les applications sont maintenant souvent déployées dans des environnements distribués, que ce soit via des fournisseurs cloud (AWS, Azure, GCP), des orchestrateurs comme Kubernetes, des services managés, des fonctions serverless, ou même des infrastructures on-premise distribuées.
 
@@ -81,12 +81,15 @@ Le choix final que vous ferez dépendra de si vous prévoyez déployer votre app
 Les feature flags, c'est comme les scènes post-crédits Marvel: on peut les activer pour certains, les cacher pour d'autres, et les couper net si ça tourne mal. Zéro recompilation, juste un interrupteur.
 ====
 
-Les feature flags (drapeaux de fonctionnalités) permettent d'activer ou désactiver des fonctionnalités sans redéployer l'application.
+Les feature flags (drapeaux de fonctionnalités) permettent d'activer ou désactiver des fonctionnalités sans recompiler l'application, ou même la redéployer si vous mettez en place une façon d'en prendre compte pendant que l'application roule. Cette stratégie peut être très utile, notamment pour :
 
-    * *Déploiements progressifs* : Activer une nouvelle fonctionnalité pour un pourcentage d'utilisateurs ou certains groupes d'utilisateurs
-    * *A/B testing* : Tester différentes versions d'une fonctionnalité
-    * *Kill switch* : Désactiver rapidement une fonctionnalité problématique en production sans redéployer
-    * *Environnements spécifiques* : Activer des fonctionnalités seulement dans certains environnements, comme dev ou qa mais pas en production pour valider avant le déploiement complet sans devoir gérer plusieurs branches de code.
+*Déploiements progressifs* : Activer une nouvelle fonctionnalité pour un pourcentage d'utilisateurs ou certains groupes d'utilisateurs
+
+*A/B testing* : Tester différentes versions d'une fonctionnalité
+
+*Kill switch* : Désactiver rapidement une fonctionnalité problématique en production sans redéployer
+
+*Environnements spécifiques* : Activer des fonctionnalités seulement dans certains environnements, comme dev ou qa mais pas en production pour valider avant le déploiement complet sans devoir gérer plusieurs branches de code.
 
 Des outils comme LaunchDarkly, Unleash, Split.io, ou AWS AppConfig peuvent être utilisés pour gérer les feature flags.
 
@@ -146,10 +149,13 @@ Dans un environnement distribué avec plusieurs instances, la gestion de l'état
 
 Plusieurs approches existent :
 
-    * *Sessions stateless* : Utiliser des tokens JWT (JSON Web Tokens) qui contiennent toutes les informations nécessaires. Le client transmet le token à chaque requête. Il peut le transmettre par header, par cookie, ou dans le corps de la requête.
-    * *Cache distribué* : Stocker les sessions dans un cache distribué comme Redis ou Memcached, accessible par toutes les instances.
-    * *Sticky sessions* : Configurer le load balancer pour router toujours le même utilisateur vers la même instance (moins recommandé car crée des dépendances et ne fonctionnera pas si l'instance est arrêtée).
-    * *Base de données* : Stocker les sessions dans la base de données (moins performant mais plus simple).
+*Sessions stateless* : Utiliser des tokens JWT (JSON Web Tokens) qui contiennent toutes les informations nécessaires. Le client transmet le token à chaque requête. Il peut le transmettre par header, par cookie, ou dans le corps de la requête.
+
+*Cache distribué* : Stocker les sessions dans un cache distribué comme Redis ou Memcached, accessible par toutes les instances.
+
+*Sticky sessions* : Configurer le load balancer pour router toujours le même utilisateur vers la même instance (moins recommandé car crée des dépendances et ne fonctionnera pas si l'instance est arrêtée).
+
+*Base de données* : Stocker les sessions dans la base de données (moins performant mais plus simple).
 
 La meilleure approche dépend de vos besoins spécifiques, mais les sessions stateless (JWT) ou le cache distribué (Redis, Memcached) souvent généralement préférés. Les sessions stateless permettent de réduire la dépendance à un stockage centralisé et facilitent le scaling horizontal. Par contre, la révocation immédiate des sessions peut être plus complexe avec JWT. De l'autre côté, l'utilisation d'un cache distribué offre une gestion centralisée des sessions, mais introduit une dépendance supplémentaire et peut nécessiter une infrastructure plus complexe.
 
@@ -209,29 +215,46 @@ Le cache est crucial pour la performance dans un environnement distribué. Obten
 
 === Types de cache
 
-* *Cache en mémoire local* : Rapide mais non partagé entre instances (Caffeine, Guava Cache)
-* *Cache distribué* : Partagé entre toutes les instances (Redis, Memcached, Hazelcast)
-* *CDN* : Pour les ressources statiques (CloudFront, Azure CDN, Cloud CDN)
-* *HTTP caching* : Utilisez les headers HTTP (Cache-Control, ETag) pour le cache côté client
-* *Reverse proxy cache* : Cache comme varnish
+Il existe plusieurs types de cache que vous pouvez utiliser.
+
+*Cache en mémoire local* : Rapide mais non partagé entre instances (Caffeine, Guava Cache)
+
+*Cache distribué* : Partagé entre toutes les instances (Redis, Memcached, Hazelcast)
+
+*CDN* : Pour les ressources statiques (CloudFront, Azure CDN, Cloud CDN, autres)
+
+*HTTP caching* : Utilisez les headers HTTP (Cache-Control, ETag) pour le cache côté client
+
+*Reverse proxy cache* : Cache comme varnish
 
 === Stratégies de cache
 
-* *Cache-aside* : L'application vérifie le cache, puis la base de données si nécessaire
-* *Write-through* : Les données sont écrites dans le cache et la base de données simultanément
-* *Write-behind* : Les données sont écrites dans le cache d'abord, puis dans la base de données de façon asynchrone
-* *Invalidation* : Définissez des stratégies claires pour invalider le cache (TTL, événements)
+La stratégie de cache dépendra de vos besoins spécifiques.
+
+
+*Cache-aside* : L'application vérifie le cache, puis la base de données si nécessaire
+
+*Write-through* : Les données sont écrites dans le cache et la base de données simultanément
+
+*Write-behind* : Les données sont écrites dans le cache d'abord, puis dans la base de données de façon asynchrone
+
+*Invalidation* : Définissez des stratégies claires pour invalider le cache (TTL, événements)
 
 === Invalidation et nettoyage du cache
 
 L'un des défis les plus importants avec le cache est de savoir quand le nettoyer ou l'invalider. Un cache obsolète peut causer des bugs difficiles à diagnostiquer.
 
-* *TTL (Time-To-Live)* : Définissez une durée de vie maximale pour chaque entrée du cache. Après ce délai, l'entrée est automatiquement supprimée ou marquée comme expirée.
-* *Invalidation par événement* : Lorsque des données sont modifiées dans la base de données, invalidez ou mettez à jour les entrées de cache correspondantes. Utilisez des event listeners ou des patterns pub/sub.
-* *Cache tagging* : Associez des tags aux entrées de cache pour pouvoir invalider plusieurs entrées liées d'un coup (par exemple, toutes les entrées liées à un utilisateur spécifique).
-* *Versioning* : Incluez une version dans la clé de cache. Quand vous déployez un changement de format, incrémentez la version pour invalider automatiquement les anciennes entrées.
-* *Flush sélectif vs global* : Évitez de vider tout le cache (flush) sauf en cas d'urgence. Préférez l'invalidation ciblée pour maintenir les performances.
-* *Cache warming* : Après un vidage ou au démarrage, préremplissez le cache avec les données les plus utilisées pour éviter une charge soudaine sur la base de données.
+*TTL (Time-To-Live)* : Définissez une durée de vie maximale pour chaque entrée du cache. Après ce délai, l'entrée est automatiquement supprimée ou marquée comme expirée.
+
+*Invalidation par événement* : Lorsque des données sont modifiées dans la base de données, invalidez ou mettez à jour les entrées de cache correspondantes. Utilisez des event listeners ou des patterns pub/sub.
+
+*Cache tagging* : Associez des tags aux entrées de cache pour pouvoir invalider plusieurs entrées liées d'un coup (par exemple, toutes les entrées liées à un utilisateur spécifique).
+
+*Versioning* : Incluez une version dans la clé de cache. Quand vous déployez un changement de format, incrémentez la version pour invalider automatiquement les anciennes entrées.
+
+*Flush sélectif vs global* : Évitez de vider tout le cache (flush) sauf en cas d'urgence. Préférez l'invalidation ciblée pour maintenir les performances.
+
+*Cache warming* : Après un vidage ou au démarrage, préremplissez le cache avec les données les plus utilisées pour éviter une charge soudaine sur la base de données.
 
 Certaines considérations sont importantes pour l'invalidation et le nettoyage de la cache pour les environnements distribués. Si vous utilisez un cache distribué (Redis, Memcached), l'invalidation sera visible par toutes les instances. Par contre, si vous utilisez un cache local en mémoire, chaque instance aura son propre cache. Vous devrez propager les événements d'invalidation à toutes les instances (via pub/sub ou message queue). Documentez clairement votre stratégie d'invalidation pour chaque type de données cachées.
 
@@ -476,15 +499,18 @@ Si nécessaire, intégrez des tests de chaos engineering pour valider la résili
 == Communication entre services
 
 ====
-La communication entre services, c'est comme un orchestre de jazz : chaque musicien doit savoir quand jouer, dans quelle tonalité, et à quel tempo. Sans protocole commun (REST, gRPC, ou messages asynchrones), c'est la cacophonie. Tout le monde improvise, mais pendant le même jam-session.
+La communication entre services, c'est comme un orchestre de jazz : chaque musicien doit savoir quand jouer, dans quelle tonalité, et à quel tempo. Sans protocole commun (REST, gRPC, ou messages asynchrones), c'est la cacophonie. Tout le monde improvise, mais pendant le même jam-session.
 ====
 
-Si votre application est composée de plusieurs microservices :
+Si votre application est composée de plusieurs microservices ou composants qui doivent communiquer entre eux, il est crucial de choisir les bons protocoles et patterns de communication.
 
-    * *API REST* : Standard et simple, utilisez HTTP/HTTPS avec des formats JSON.
-    * *gRPC* : Plus performant que REST, utilise Protocol Buffers et HTTP/2.
-    * *Message queues* : Pour la communication asynchrone, utilisez RabbitMQ, Apache Kafka, AWS SQS, Azure Service Bus, Postgres Notify, ou GCP Pub/Sub.
-    * *Service mesh* : Pour gérer la communication entre services (Istio, Linkerd) avec features comme le load balancing, le circuit breaking, et le mTLS.
+*API REST* : Standard et simple, utilisez HTTP/HTTPS avec des formats JSON.
+
+*gRPC* : Plus performant que REST, utilise Protocol Buffers et HTTP/2.
+
+*Message queues* : Pour la communication asynchrone, utilisez RabbitMQ, Apache Kafka, AWS SQS, Azure Service Bus, Postgres Notify, ou GCP Pub/Sub.
+
+*Service mesh* : Pour gérer la communication entre services (Istio, Linkerd) avec features comme le load balancing, le circuit breaking, et le mTLS.
 
 Certaines considérations importantes sont à ne pas négliger. Utilisez des *timeouts* pour toutes les communications inter-services. Implémentez des *retry* avec *backoff exponentiel*. Utilisez des *circuit-breakers* pour éviter les cascades de défaillances.   Propagez les *correlation ID*s pour le *tracing distribué*.
 
@@ -496,11 +522,15 @@ La résilience, c'est l'amortisseur : la route est cahoteuse, mais on garde le 
 
 Dans un environnement distribué, les erreurs sont inévitables. Votre application doit être conçue pour être résiliente :
 
-    * *Circuit breaker* : Évite de surcharger un service défaillant en "ouvrant le circuit" après un certain nombre d'échecs.
-    * *Retry avec backoff exponentiel* : Réessaie les opérations échouées avec un délai croissant entre chaque tentative.
-    * *Timeout* : Définissez des timeouts pour toutes les opérations réseau pour éviter d'attendre indéfiniment.
-    * *Bulkhead* : Isolez les ressources pour qu'une défaillance dans une partie du système n'affecte pas les autres.
-    * *Fallback* : Prévoyez un comportement de secours quand une opération échoue (cache, valeur par défaut, mode dégradé).
+*Circuit breaker* : Évite de surcharger un service défaillant en "ouvrant le circuit" après un certain nombre d'échecs.
+
+*Retry avec backoff exponentiel* : Réessaie les opérations échouées avec un délai croissant entre chaque tentative.
+
+*Timeout* : Définissez des timeouts pour toutes les opérations réseau pour éviter d'attendre indéfiniment.
+
+*Bulkhead* : Isolez les ressources pour qu'une défaillance dans une partie du système n'affecte pas les autres.
+
+*Fallback* : Prévoyez un comportement de secours quand une opération échoue (cache, valeur par défaut, mode dégradé).
 
 Des bibliothèques comme Resilience4j (Java), Polly (.NET) ou Hystrix facilitent l'implémentation de ces patterns.
 
@@ -512,12 +542,17 @@ Les bons patterns, c'est une carte routière : on évite les chemins de terre e
 
 Plusieurs patterns architecturaux sont particulièrement adaptés aux déploiements distribués :
 
-    * *Strangler Fig Pattern* : Migrez progressivement une application monolithique vers des microservices en "étranglant" l'ancien système
-    * *Backend for Frontend (BFF)* : Créez des API spécifiques pour chaque type de client (web, mobile, etc.)
-    * *API Gateway* : Point d'entrée unique pour tous vos services, gérant l'authentification, le routage, le rate limiting
-    * *Event Sourcing* : Stockez tous les changements d'état comme une séquence d'événements
-    * *CQRS (Command Query Responsibility Segregation)* : Séparez les opérations de lecture et d'écriture pour optimiser chacune indépendamment
-    * *Sidecar Pattern* : Déployez des fonctionnalités auxiliaires (logging, monitoring) dans un conteneur séparé mais adjacent
+*Strangler Fig Pattern* : Migrez progressivement une application monolithique vers des microservices en "étranglant" l'ancien système
+
+*Backend for Frontend (BFF)* : Créez des API spécifiques pour chaque type de client (web, mobile, etc.)
+
+*API Gateway* : Point d'entrée unique pour tous vos services, gérant l'authentification, le routage, le rate limiting
+
+*Event Sourcing* : Stockez tous les changements d'état comme une séquence d'événements
+
+*CQRS (Command Query Responsibility Segregation)* : Séparez les opérations de lecture et d'écriture pour optimiser chacune indépendamment
+
+*Sidecar Pattern* : Déployez des fonctionnalités auxiliaires (logging, monitoring) dans un conteneur séparé mais adjacent
 
 Il est important de bien comprendre ces patterns, dans quel contexte les utiliser et de les adapter à vos besoins spécifiques.
 
@@ -527,11 +562,15 @@ Il est important de bien comprendre ces patterns, dans quel contexte les utilise
 Les anti-patterns, ce sont les panneaux ‘route barrée' : si on insiste, on finit dans le fossé.
 ====
 
-    * *Distributed Monolith* : Microservices trop couplés qui doivent être déployés ensemble. L'indépendance relative entre les services est cruciale.
-    * *Chatty Services* : Trop de communication entre services, créant de la latence, pensez à regrouper les appels, à la caching, ou à utiliser des messages asynchrones.
-    * *Tight Coupling* : Services dépendant fortement les uns des autres, rendant les changements et le déploiement difficiles.
-    * *Data Ownership Violations* : Services accédant directement à la base de données d'autres services. Si vous choisissez de considérer la base de données comme un service, chaque service doit gérer son propre schéma de données. De plus, s'il est plus efficace pour un service d'accéder directement à la base de données d'un autre service, pensez à exposer l'information sous la forme d'une vue qui devient le contrat entre les deux services.
-    * *Ignorer la loi de fallacies of distributed computing* : Supposer que le réseau est fiable, la latence nulle, la bande passante infinie, etc.
+*Distributed Monolith* : Microservices trop couplés qui doivent être déployés ensemble. L'indépendance relative entre les services est cruciale.
+
+*Chatty Services* : Trop de communication entre services, créant de la latence, pensez à regrouper les appels, à la caching, ou à utiliser des messages asynchrones.
+
+*Tight Coupling* : Services dépendant fortement les uns des autres, rendant les changements et le déploiement difficiles. Pensez à utiliser des interfaces claires et des contrats stables.
+
+*Data Ownership Violations* : Services accédant directement à la base de données d'autres services. Si vous choisissez de considérer la base de données comme un service, chaque service doit gérer son propre schéma de données. De plus, s'il est plus efficace pour un service d'accéder directement à la base de données d'un autre service, pensez à exposer l'information sous la forme d'une vue qui devient le contrat entre les deux services.
+
+*Ignorer la loi de fallacies of distributed computing* : Supposer que le réseau est fiable, la latence nulle, la bande passante infinie, etc.
 
 == Sécurité
 
@@ -593,6 +632,6 @@ Si vous voulez aller plus loin, les principes des https://12factor.net/[12-Facto
 
 '''
 
-Cet article a été initialement publié dans le cadre  du *Advent of Tech 2025 @ Onepoint x Wepoint*, une série d'articles tech publiés par https://www.groupeonepoint.com/fr/[Onepoint] pour patienter jusqu'à Noël.
+Cet article fait partie du *Advent of Tech 2025 @ Onepoint*, une série d'articles tech publiés par https://www.groupeonepoint.com/fr/[Onepoint] pour patienter jusqu'à Noël.
 
 Voir tous les articles du https://dev.to/onepoint/advent-of-tech-onepoint-x-wepoint-2025-2o3k[Advent of Tech 2025]
