@@ -15,7 +15,7 @@ toc: true
 
 == Introduction
 
-L'idée de cet article m'est venue, en début d'année, après ma publication sur les éléments à considérer quand on link:/fr/posts/green-field/[démarre un projet de développement] et en discutant avec des collègues qui commençaient à apprendre un environnement cloud.
+L'idée de cet article m'est venue, en début d'année, après ma publication sur les éléments à considérer quand on link:/fr/posts/green-field/[Projet Green Field] et en discutant avec des collègues qui commençaient à apprendre un environnement cloud.
 
 Les applications sont maintenant souvent déployées dans des environnements distribués, que ce soit via des fournisseurs cloud (AWS, Azure, GCP), des orchestrateurs comme Kubernetes, des services managés, des fonctions serverless, ou même des infrastructures on-premise distribuées.
 
@@ -32,8 +32,7 @@ La plupart de ces considérations s'appliquent également aux fonctions serverle
 Plusieurs clones, une seule mission
 ====
 
-La considération la plus importante est que votre application doit être conçue pour fonctionner dans un environnement où plusieurs instances de l'application peuvent être exécutées simultanément.
-Cela signifie que votre application ne doit pas dépendre d'un état local ou de ressources spécifiques à une instance. De plus, une instance ne doit pas interférer avec une autre instance et on veut éviter la duplication de traitement.
+La considération la plus importante est que votre application doit être conçue pour fonctionner dans un environnement où plusieurs instances peuvent être exécutées simultanément. Cela signifie qu'une instance de votre application ne doit pas interférer avec une autre instance, et qu'il faut éviter la duplication de traitement. De plus, votre application ne doit pas dépendre d'un état local ou de ressources spécifiques à une instance, car ces éléments ne sont pas garantis d'être disponibles ou persistants entre les instances ou les redémarrages.
 
 Que ce soit pour scaler horizontalement (ajouter plus d'instances) ou pour la résilience (redémarrer une instance défaillante), parce que le nombre d'instances change en fonction de la charge réelle ou anticipée, en fonction de l'heure, etc., votre application doit être capable de gérer plusieurs instances sans conflit.
 
@@ -81,7 +80,7 @@ Le choix final que vous ferez dépendra de si vous prévoyez déployer votre app
 Les feature flags, c'est comme les scènes post-crédits Marvel: on peut les activer pour certains, les cacher pour d'autres, et les couper net si ça tourne mal. Zéro recompilation, juste un interrupteur.
 ====
 
-Les feature flags (drapeaux de fonctionnalités) permettent d'activer ou désactiver des fonctionnalités sans recompiler l'application, ou même la redéployer si vous mettez en place une façon d'en prendre compte pendant que l'application roule. Cette stratégie peut être très utile, notamment pour :
+Les feature flags (drapeaux de fonctionnalités) permettent d'activer ou désactiver des fonctionnalités sans recompiler l'application, ou même la redéployer si vous mettez en place une façon d'en prendre compte pendant que l'application roule. Cette stratégie peut être très utile, notamment pour les cas d'utilisation suivants :
 
 *Déploiements progressifs* : Activer une nouvelle fonctionnalité pour un pourcentage d'utilisateurs ou certains groupes d'utilisateurs
 
@@ -105,7 +104,7 @@ Utilisez plutôt des services de gestion des secrets qui offrent des fonctionnal
 
 Ces solutions offrent plusieurs avantages, comme l'encryption des secrets au repos et en transit, un contrôle d'accès granulaire, la rotation automatique des secrets, et l'audit des accès.
 
-== Sauvegarde de fichiers de travail ou téléversés
+== Stockage de fichiers de travail ou téléversés
 
 ====
 Écrire sur le disque local en cloud, c'est laisser vos notes sur la table du café : ça marche… jusqu'au ménage.
@@ -145,7 +144,7 @@ L'important, c'est de faire en sorte que les tâches périodiques soient exécut
 Les sessions en déploiement distribué, c'est un vestiaire: on présente son ticket et on retrouve son manteau, peu importe la porte d'entrée ou le préposé.
 ====
 
-Dans un environnement distribué avec plusieurs instances, la gestion de l'état utilisateur (sessions) devient critique. Si un utilisateur se connecte à une instance et que sa prochaine requête est routée vers une autre instance, l'application doit pouvoir récupérer l'état de la session.
+Dans un environnement distribué avec plusieurs instances, la gestion de l'état utilisateur (sessions) devient critique. Si un utilisateur se connecte à une instance et que sa prochaine requête est routée vers une autre instance, l'application doit pouvoir récupérer les informations de la session.
 
 Plusieurs approches existent :
 
@@ -317,6 +316,10 @@ Le *Startup probe*, pour les applications qui prennent du temps à démarrer, é
 
 Implémentez des endpoints HTTP dédiés (par exemple `/health` et `/ready`) qui retournent le statut approprié.
 
+=== Exposition d'informations
+
+Exposez des *informations* sur votre application (version, git commit, environnement, etc.) sur le endpoint `/info`.
+
 === Graceful shutdown
 
 ====
@@ -325,10 +328,10 @@ Fermer en douceur, c'est dire au revoir avant de raccrocher : on termine la phr
 
 Lorsqu'une instance de votre application est arrêtée (mise à jour, scaling down, etc.), elle doit se terminer proprement :
 
-    * Arrêter d'accepter de nouvelles requêtes
-    * Terminer le traitement des requêtes en cours
-    * Fermer proprement les connexions aux bases de données et aux services externes
-    * Libérer les ressources
+    . Arrêter d'accepter de nouvelles requêtes
+    . Terminer le traitement des requêtes en cours
+    . Fermer proprement les connexions aux bases de données et aux services externes
+    . Libérer les ressources
 
 Implémentez un signal handler (SIGTERM) pour gérer l'arrêt gracieux de votre application. La plupart des orchestrateurs envoient un SIGTERM avant de forcer l'arrêt avec SIGKILL.
 
@@ -368,6 +371,8 @@ L'automatisation du déploiement est essentielle pour le cloud, elle est aussi t
 
 *Infrastructure as Code* : Gérez votre infrastructure avec Terraform, CloudFormation, Pulumi, ou ARM templates.
 
+Faites en sorte que votre pipeline injecte la version de l'image dans les variables d'environnement de l'application.
+
 === Conteneurisation et images
 
 ====
@@ -388,13 +393,15 @@ La conteneurisation est quasi-universelle dans le déploiement distribué :
 
 *Pipelines* : Automatisez la construction, le test et le déploiement de vos images via des pipelines CI/CD.
 
+Assurez-vous d'exposer la version de l'image dans les variables d'environnement de l'application.
+
 === Optimisation des coûts (cloud)
 
 ====
 Le cloud facture comme un taxi : laissez le compteur tourner, et la note grimpe. Mettez des limites.
 ====
 
-Le cloud peut devenir coûteux si on ne fait pas attention :
+Le cloud peut devenir coûteux si on ne fait pas attention.
 
 *Auto-scaling intelligent* : Configurez l'auto-scaling basé sur des métriques réelles (CPU, mémoire, nombre de requêtes).
 
@@ -412,7 +419,7 @@ Le cloud peut devenir coûteux si on ne fait pas attention :
 Les ressources, c'est le budget calorique : trop peu, on cale; trop, on somnole. Trouvons le bon dosage.
 ====
 
-Définir correctement les ressources allouées à votre application est essentiel :
+Définir correctement les ressources allouées à votre application est essentiel.
 
 *Requests et Limits* : Dans Kubernetes, définissez des requests (ressources garanties) et des limits (ressources maximales) pour CPU et mémoire
 
@@ -520,7 +527,7 @@ Certaines considérations importantes sont à ne pas négliger. Utilisez des *ti
 La résilience, c'est l'amortisseur : la route est cahoteuse, mais on garde le cap sans casser le châssis.
 ====
 
-Dans un environnement distribué, les erreurs sont inévitables. Votre application doit être conçue pour être résiliente :
+Dans un environnement distribué, les erreurs sont inévitables. Votre application doit être conçue pour être résiliente.
 
 *Circuit breaker* : Évite de surcharger un service défaillant en "ouvrant le circuit" après un certain nombre d'échecs.
 
@@ -578,7 +585,7 @@ Les anti-patterns, ce sont les panneaux ‘route barrée' : si on insiste, on f
 La sécurité, c'est la serrure ET l'alarme : le cloud a des voisins curieux, mieux vaut être prudent.
 ====
 
-Tant dans un déploiement distribué traditionnel que dans le cloud, la sécurité est une responsabilité partagée par les développeurs et l'équipe devops doit être intégrée dès le début.
+Tant dans un déploiement distribué traditionnel que dans le cloud, la sécurité est une responsabilité partagée par les développeurs et l'équipe devops, et doit être intégrée dès le début.
 
 *Principe du moindre privilège* : Donnez uniquement les permissions nécessaires aux applications et aux utilisateurs.
 

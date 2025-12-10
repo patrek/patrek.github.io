@@ -1,0 +1,646 @@
+---
+date: "2025-12-14T00:00:00-05:00"
+draft: true
+title: "Developing for Distributed Deployment: Best Practices and Considerations"
+description: "Considerations for developing an application intended for distributed deployment"
+featured_image: "/images/dev-for-distributed.png"
+tags: ["distributed", "cloud", "kubernetes", "aws", "azure", "gcp", "multiple instances", "devops", "architecture", "design patterns"]
+summary: "A list of best practices and considerations for developing an application intended for distributed deployment."
+toc: true
+---
+
+= Developing for Distributed Deployment: Best Practices and Considerations
+
+:sectnums:
+:toc: left
+
+== Introduction
+
+The idea for this article came to me earlier this year, after my post link:/en/posts/green-field/[Green Field Project] and while discussing with colleagues who were beginning to learn a cloud environment.
+
+Applications are now often deployed in distributed environments, whether via cloud providers (AWS, Azure, GCP), orchestrators like Kubernetes, managed services, serverless functions, or even distributed on-premise infrastructures.
+
+Developing applications intended for these distributed environments requires taking several specific aspects into consideration.
+Here is a list of key practices and considerations for developing resilient and scalable distributed applications.
+
+For the purposes of this article, we will primarily state considerations for long-lived services.
+Most of these considerations also apply to serverless functions and event-driven applications.
+
+
+== Multiple Disposable Instances to Provide a Single Service
+
+====
+Multiple clones, a single mission
+====
+
+The most important consideration is that your application must be designed to run in an environment where multiple instances of the application can be executed simultaneously.
+This means that one instance must not interfere with another instance, and we want to avoid duplicate processing. Furthermore, your application must not depend on local state or instance-specific resources.
+
+Whether for horizontal scaling (adding more instances) or for resilience (restarting a failing instance), because the number of instances changes based on actual or anticipated load, time of day, etc., your application must be able to handle multiple instances without conflict.
+
+It will also likely be started without human intervention. You must therefore keep these aspects in mind during the design and development of your application.
+
+== Architecture Behind a Load Balancer/Reverse Proxy
+
+====
+Like a service center call dispatcher: each request is sent to the right department — billing, support, or accounts — depending on what is requested.
+====
+
+In most cases, your application instances will be deployed behind a load balancer.
+The load balancer distributes incoming traffic among the different instances of your application.
+Using sticky sessions ensures that the load balancer will send returning traffic to the same instance.
+But, it is possible that the instance that did the initial processing is no longer available (scale down, update, etc.) or that the load balancer does not support sticky sessions, meaning your application must be able to take over a request without having answered the previous request in the workflow.
+
+In modern architectures, the load balancer or API Gateway can also route to different services depending on the request:
+
+    * By path (path-based routing), e.g.: `/api/users` → Users service, `/api/orders` → Orders service
+    * By host (host-based routing), e.g.: `api.example.com` → API, `static.example.com` → static resources
+    * By header or API version (header/version routing), e.g.: `X-Client: mobile` or `Accept: application/vnd.company.v2+json`
+    * By method or port (rare), depending on technical constraints
+
+The consequences on the development side are that you must avoid assumptions of local session state, because a request can arrive at another service or another instance. It becomes very useful to propagate correlation identifiers to trace the request across multiple services.
+
+== Externalize Configuration
+
+====
+Externalizing configuration is like inserting a SIM card into a phone: same device, settings adapted to the network. by changing the SIM, we can also change provider — Bell, Vidéotron, Orange — without touching the phone itself.
+====
+
+An important aspect of developing for distributed deployment (including cloud) is to separate the application configuration from the code itself.
+This notably allows modifying the configuration without having to recompile the application.
+
+A very common practice is to use environment variables to provide configuration to the application. See https://12factor.net/config
+
+Different cloud providers also offer a configuration externalization service, such as AWS Systems Manager Parameter Store, Azure App Configuration, or GCP Secret Manager.
+These services allow storing and managing configuration securely and centrally. It is also possible to deploy your own configuration service, like Consul, etcd, or Spring Cloud Config. However, you will have to adapt your application so that it can retrieve the configuration from these services.
+
+The final choice you make will depend on whether you plan to deploy your application in a single cloud provider or in several, or if it is possible that you will eventually change providers. It is probably more prudent to use a cloud-provider-agnostic solution to avoid *vendor locking*, that is, being able to deploy only on a single provider.
+
+== Feature Flags and Dynamic Configuration
+
+====
+Feature flags are like Marvel post-credits scenes: we can activate them for some, hide them for others, and cut them clean if it goes wrong. Zero recompilation, just a switch.
+====
+
+Feature flags allow enabling or disabling features without recompiling the application, or even redeploying it if you implement a way to take them into account while the application is running. This strategy can be very useful, especially for the following use cases.
+
+*Progressive deployments*: Activating a new feature for a percentage of users or certain groups of users
+
+*A/B testing*: Testing different versions of a feature
+
+*Kill switch*: Quickly deactivating a problematic feature in production without redeploying
+
+*Specific environments*: Activating features only in certain environments, like dev or qa but not in production to validate before full deployment without having to manage multiple code branches.
+
+Tools like LaunchDarkly, Unleash, Split.io, or AWS AppConfig can be used to manage feature flags.
+
+== Secrets Management
+
+====
+Putting secrets in source code is like hiding the house key under the doormat: everyone knows where to look. Use a real safe.
+====
+
+Never store secrets (passwords, API keys, certificates) directly in the code or in versioned configuration files.
+
+Instead, use secrets management services that offer advanced security features, such as dedicated cloud services (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager), your orchestrator's encryption system (Kubernetes Secrets with encryption at rest enabled), or third-party tools like HashiCorp Vault or SOPS.
+
+These solutions offer several advantages, such as encryption of secrets at rest and in transit, granular access control, automatic secret rotation, and access auditing.
+
+== Storing Working or Uploaded Files
+
+====
+Writing to the local disk in the cloud is leaving your notes on the cafe table: it works… until the cleaning happens.
+====
+
+Let's imagine an application that generates a report (PDF, Excel, etc.) from data provided by the user.
+
+In a "classic" scenario, the application might generate the report on the instance's local hard drive, then make it available for download.
+
+However, in a multi-instance environment, this file must be put either in shared storage, a network volume, or, at worst, the database.
+
+Providers offer storage services, such as AWS S3, AWS EFS, Azure Blob Storage, Azure Files, GCP Cloud Storage, or GCP Filestore, which can be used to store these intermediate files.
+
+== Periodic Tasks / Cron Jobs
+
+====
+Crons in multi-instance are like cleaning the house in a shared apartment: if 5 roommates clean the same room at the same time, it's wasted effort. Only one needs to do it at a time. Otherwise, same room cleaned 5 times = 5 times the work, 5 times the cost.
+====
+
+Periodic tasks, such as sending reminder emails, creating reports, or purging data, are frequent in applications.
+
+In a distributed environment, it is important to ensure that these tasks are not executed simultaneously by multiple instances of the application.
+
+To achieve this, you need to think of a way to synchronize the execution of these tasks. Several approaches are possible:
+
+    * Use an external scheduling service, such as AWS CloudWatch Events, Azure Logic Apps, or GCP Cloud Scheduler, to trigger periodic tasks.
+    * Use a distributed locking mechanism, such as an entry in a database or a distributed cache service (Redis, Memcached) to ensure that only one instance executes the task at a given time.
+    * Use a scheduling library like Quartz Scheduler or similar.
+
+It can be interesting to develop a mechanism that allows launching specific tasks, which can be called by the external scheduling service or by an internal job with distributed locking. For example, creating secured HTTP endpoints that trigger periodic tasks. In this case, complementary endpoints to obtain the task status can also be useful for monitoring.
+
+The important thing is to ensure that periodic tasks are executed reliably and without conflict between the different instances of the application.
+
+== State and Session Management
+
+====
+Sessions in distributed deployment are a cloakroom: you present your ticket and get your coat back, regardless of the entrance door or the attendant.
+====
+
+In a distributed environment with multiple instances, user state management (sessions) becomes critical. If a user connects to an instance and their next request is routed to another instance, the application must be able to retrieve the session information.
+
+Several approaches exist:
+
+*Stateless sessions*: Use JWT (JSON Web Tokens) tokens which contain all necessary information. The client transmits the token with each request. It can transmit it by header, by cookie, or in the request body.
+
+*Distributed cache*: Store sessions in a distributed cache like Redis or Memcached, accessible by all instances.
+
+*Sticky sessions*: Configure the load balancer to always route the same user to the same instance (less recommended as it creates dependencies and won't work if the instance is stopped).
+
+*Database*: Store sessions in the database (less performant but simpler).
+
+The best approach depends on your specific needs, but stateless sessions (JWT) or distributed cache (Redis, Memcached) are generally preferred. Stateless sessions reduce reliance on centralized storage and facilitate horizontal scaling. However, immediate revocation of sessions can be more complex with JWT. On the other hand, using a distributed cache offers centralized session management but introduces an additional dependency and may require more complex infrastructure.
+
+== Persistence and Database Transactions
+
+====
+The database is like the only teller at the bank: if 10 customers each open their door (connection), it's wasteful. You need a shared queue. And if 10 customers pay the same bill at the same time, you must avoid duplicates. Only one successful transaction, not 10 identical writes.
+====
+
+In a distributed environment, managing database transactions requires special attention.
+
+*Database connections*: Use a connection pool to optimize resource usage. Configure the maximum number of connections based on the number of instances.
+
+*Distributed transactions*: Avoid distributed transactions (2PC - Two-Phase Commit) as much as possible, as they are complex and reduce performance. Prioritize the Saga pattern to manage transactions across multiple services.
+
+*Idempotency*: Design your database operations to be idempotent, meaning they produce the same result even if executed multiple times.
+
+*Retry and resilience*: Implement retry mechanisms to handle temporary database connection failures.
+
+=== Database Schema Migrations
+
+====
+Migrating the schema is renovating without closing the store: we move the shelves, we keep the customers.
+====
+
+Schema migrations in a distributed environment require careful planning.
+
+*Forward-compatible migrations*: Changes must be compatible with the old version during deployment, so we can deploy new instances before removing old ones or even do an application rollback if necessary.
+
+*Migration tools*: Use Liquibase, Flyway, or native tools (Alembic for Python, migrate for Go).
+
+*Tested deployments*: For changes, particularly major ones, it is important to test the database migration before applying to production.
+
+*Migrations at shutdown vs at startup*: Decide if migrations run before or during deployment.
+
+*Rollback*: Always prepare a rollback plan for complex migrations.
+
+=== Patterns for Schema Changes
+
+There are some common patterns for managing database schema changes in a distributed environment. They help minimize service interruptions and ensure compatibility between versions.
+
+    * *Expand-Contract Pattern*:
+      1. Expand: Add the new column/table
+      2. Dual-write: Write to the old and new structure
+      3. Migrate: Migrate old data
+      4. Contract: Delete the old structure
+
+    * *Change Versioning*: When schema changes affect the API, use versioning (v1, v2)
+
+== Caching and Performance
+
+====
+Cache is like keeping important documents on your desk rather than in the basement: you quickly access what you use often. But be careful, sometimes you have to clean up to avoid working with outdated versions.
+====
+
+Cache is crucial for performance in a distributed environment. Getting information from memory is much faster than fetching it from a database or external service.
+
+=== Cache Types
+
+There are several types of cache you can use.
+
+*Local in-memory cache*: Fast but not shared between instances (Caffeine, Guava Cache)
+
+*Distributed cache*: Shared between all instances (Redis, Memcached, Hazelcast)
+
+*CDN*: For static resources (CloudFront, Azure CDN, Cloud CDN, others)
+
+*HTTP caching*: Use HTTP headers (Cache-Control, ETag) for client-side caching
+
+*Reverse proxy cache*: Cache like varnish
+
+=== Cache Strategies
+
+The cache strategy will depend on your specific needs.
+
+
+*Cache-aside*: The application checks the cache, then the database if necessary
+
+*Write-through*: Data is written to the cache and the database simultaneously
+
+*Write-behind*: Data is written to the cache first, then to the database asynchronously
+
+*Invalidation*: Define clear strategies to invalidate the cache (TTL, events)
+
+=== Invalidation and Cache Cleaning
+
+One of the most significant challenges with cache is knowing when to clean or invalidate it. A stale cache can cause bugs that are difficult to diagnose.
+
+*TTL (Time-To-Live)*: Define a maximum lifespan for each cache entry. After this delay, the entry is automatically deleted or marked as expired.
+
+*Event-based invalidation*: When data is modified in the database, invalidate or update the corresponding cache entries. Use event listeners or pub/sub patterns.
+
+*Cache tagging*: Associate tags with cache entries to be able to invalidate multiple related entries at once (for example, all entries linked to a specific user).
+
+*Versioning*: Include a version in the cache key. When you deploy a format change, increment the version to automatically invalidate old entries.
+
+*Selective flush vs global*: Avoid emptying the entire cache (flush) except in emergencies. Prefer targeted invalidation to maintain performance.
+
+*Cache warming*: After a clear or at startup, pre-fill the cache with the most used data to avoid a sudden load on the database.
+
+Some considerations are important for cache invalidation and cleaning for distributed environments. If you use a distributed cache (Redis, Memcached), invalidation will be visible to all instances. However, if you use a local in-memory cache, each instance will have its own cache. You will need to propagate invalidation events to all instances (via pub/sub or message queue). Clearly document your invalidation strategy for each type of cached data.
+
+=== Other Important Considerations
+
+* Watch out for the *thundering herd*: when multiple instances attempt to reload the same expired cache simultaneously. We return here to the notion that multiple instances attempt to do the same thing at the same time. You can implement a *grace mode* strategy to mitigate the problem.
+* Use well-structured cache keys to facilitate targeted invalidation.
+* Monitor the cache hit/miss rate to optimize configuration.
+* Log cache invalidations to facilitate debugging.
+
+== Considerations for the DevOps Team
+
+====
+DevOps is like piloting a plane you didn't build: you need clear dashboard instruments, lights that turn on at the right time, and a manual that says what to do if things go wrong.
+====
+
+The team that will deploy and manage the application has specific needs that must be taken into account from the start of development.
+
+=== Observability: Logs, Metrics, and Traces
+
+====
+And when the plane has problems, you become a detective: logs tell what happened in the cockpit, metrics show flight trends, and traces follow the route through the sky. Without these instruments, you investigate blindly in the fog.
+====
+
+Observability is crucial in a distributed environment where it can be difficult to diagnose problems.
+
+==== Structured Logging
+
+Use a structured log format such as *JSON* to facilitate search and analysis.
+Include a *correlation ID* in each log to trace a request across multiple services and instances.
+*Centralize your logs* in a system like AWS CloudWatch, Azure Monitor, GCP Cloud Logging, ELK Stack (Elasticsearch, Logstash, Kibana), Datadog, or Loki.
+
+Avoid logging sensitive information (passwords, tokens, personal data).
+Also avoid logging too much information so as not to drown out important logs.
+If possible, use logging libraries that support dynamic reconfiguration of lead level (DEBUG, INFO, WARN, ERROR) without restarting the application.
+
+==== Metrics
+
+Expose *metrics* on the health and performance of your application (response time, number of requests, error rate, CPU/memory usage).
+Use tools like *Prometheus*, *Grafana*, or native tools of your deployment platform to collect and visualize these metrics.
+Configure *alerts* based on these metrics to be notified of problems.
+
+==== Distributed Tracing
+
+Implement distributed tracing with tools like *Jaeger*, *Zipkin*, or AWS X-Ray to track the journey of a request through your different services.
+Use *OpenTelemetry* as a standard to instrument your application.
+
+=== Health Checks and Readiness Probes
+
+====
+Probes are the microphone check before the concert: checking we're ready before turning up the sound.
+====
+
+Orchestrators like Kubernetes and load balancers need to know if an instance of your application is healthy and ready to receive traffic.
+
+There are generally three types of probes.
+The *Liveness probe* indicates if the application is alive and working. If it fails, the orchestrator restarts the instance.
+The *Readiness probe* indicates if the application is ready to receive traffic. For example, if database connections are not yet established, the instance is not ready.
+The *Startup probe*, for applications that take time to start, prevents the liveness probe from killing the application prematurely.
+
+Implement dedicated HTTP endpoints (e.g. `/health` and `/ready`) that return the appropriate status.
+
+=== Information Exposition
+
+Expose *information* about your application (version, environment, etc.) on the `/info` endpoint.
+
+=== Graceful Shutdown
+
+====
+Closing gracefully is saying goodbye before hanging up: we finish the sentence, then we cut so.
+====
+
+When an instance of your application is stopped (update, scaling down, etc.), it must terminate cleanly:
+
+    . Stop accepting new requests
+    . Finish processing requests in progress
+    . Cleanly close connections to databases and external services
+    . Release resources
+
+Implement a signal handler (SIGTERM) to manage the graceful shutdown of your application. Most orchestrators send a SIGTERM before forcing the stop with SIGKILL.
+
+=== Dependency and Vulnerability Management
+
+====
+Do your inventory like in Home Alone: check the traps, don't leave easy entries.
+====
+
+Proactive dependency management is crucial for security and stability:
+
+*Regular scan*: Use tools like Dependabot, Snyk, or OWASP Dependency-Check to identify vulnerabilities in your dependencies
+*Automated updates*: Configure automatic pull requests for security updates
+*Semantic versioning*: Respect semantic versioning for your own libraries
+*Lockfiles*: Use lock files (package-lock.json, uv.lock, Pipfile.lock, go.sum, pom.xml) to guarantee reproducibility
+*Regular audit*: Perform regular security audits of your dependencies
+
+=== CI/CD and Deployment Pipelines
+
+====
+The pipeline is the assembly line: we produce reliable versions, not Monday morning prototypes.
+====
+
+Deployment automation is essential for cloud, and it is also very useful when deploying on traditional servers. It helps reduce oversights, human errors, and accelerate updates.
+
+*Continuous Integration*: Run tests automatically at each commit (GitHub Actions, GitLab CI, Jenkins, CircleCI).
+
+*Tests*: Include unit, integration, and end-to-end tests in your pipeline.
+
+*Image Build*: Automate container image creation.
+
+*Security Scan*: Integrate security scanning of images and dependencies in the pipeline.
+
+*Progressive Deployment*: Use strategies like blue/green deployment, canary deployment, or rolling updates to minimize risks.
+
+*Automatic Rollback*: Configure automatic rollback if health checks fail after a deployment.
+
+*Infrastructure as Code*: Manage your infrastructure with Terraform, CloudFormation, Pulumi, or ARM templates.
+
+Make your pipeline inject the version of the image in the environment variables of the application.
+
+=== Containerization and Images
+
+====
+A good container is a well-packed suitcase: light, secure, and without the 'latest' tag lost at the airport.
+====
+
+Containerization is quasi-universal in distributed deployment:
+
+*Lightweight images*: Use minimal base images (Alpine, distroless) to reduce size and attack surface.
+
+*Multi-stage builds*: Use multi-stage builds to separate compilation from execution and reduce final size.
+
+*Security scan*: Scan your images to detect vulnerabilities (Trivy, Snyk, Clair).
+
+*Versioning*: Version your images and avoid using the `latest` tag in pre-production or production.
+
+*Non-root user*: Run your containers with a non-root user for security.
+
+*Pipelines*: Automate the construction, testing, and deployment of your images via CI/CD pipelines.
+
+Make sure you expose the version of the image in the environment variables of the application.
+
+=== Cost Optimization (Cloud)
+
+====
+Cloud charges like a taxi: leave the meter running, and the bill climbs. Set limits.
+====
+
+Cloud can become expensive if we're not careful.
+
+*Intelligent auto-scaling*: Configure auto-scaling based on real metrics (CPU, memory, number of requests).
+
+*Right-sizing*: Choose the appropriate instance size for your workload. Do not over-provision.
+
+*Use of spot instances*: For non-critical workloads or test environments, use spot/preemptible instances.
+
+*Automatic shutdown*: Stop development and test environments outside working hours.
+
+*Cost monitoring*: Use cost monitoring tools provided by your cloud provider.
+
+=== Resource Management and Limits
+
+====
+Resources are the calorie budget: too little, we stall; too much, we doze off. Let's find the right dosage.
+====
+
+Correctly defining resources allocated to your application is essential.
+
+*Requests and Limits*: In Kubernetes, define requests (guaranteed resources) and limits (maximum resources) for CPU and memory.
+
+*Memory leaks*: Actively monitor memory leaks which can cause frequent restarts.
+
+*JVM tuning*: For Java applications, correctly configure heap size and garbage collector based on allocated resources.
+
+*Connection pools*: Correctly size your connection pools (DB, HTTP clients) based on the number of instances and load.
+
+*Thread pools*: Configure thread pools to avoid thread exhaustion and blockages.
+
+== Local Development and Dev Environment
+
+====
+Developing locally is rehearsing in the studio: we fix false notes before the concert in prod.
+====
+
+Developing for a distributed environment does not mean everything must be done in that environment.
+
+=== Local Emulation of Distributed Services
+
+*LocalStack*: Emulates AWS services locally (S3, DynamoDB, SQS, etc.)
+*Azurite*: Emulator for Azure Storage
+*Docker Compose*: Orchestrate your services locally (database, cache, message queues)
+*Testcontainers*: Launch containers for your integration tests
+*Minikube/Kind*: Run Kubernetes locally to test your deployments
+
+=== Local Configuration vs Distributed Deployment
+
+Use different configuration profiles for local development vs distributed deployment. Avoid depending on specific cloud services during local development when possible. Clearly document steps to configure the local development environment, ideally with automation scripts. Use environment variables with default values to simplify local configuration. If you must use secrets, use local `.env` files or secrets management services adapted for development like SOPS. See the article I wrote on this subject: https://dev.to/onepoint/sops-secrets-encryptes-dans-un-depot-git-1c04[SOPS - Encrypted secrets in a GIT repository]
+
+=== Hot Reload and Rapid Development
+
+Use hot reload tools (Spring Boot DevTools, Nodemon, Air for Go) to accelerate the development cycle.
+Configure mounted volumes in Docker for fast code reloading.
+Use tools like Skaffold or Tilt for continuous development on Kubernetes.
+
+== Tests for Distributed Applications
+
+====
+Tests are like car crash tests: we smash prototypes in a lab to avoid having real accidents on the highway. And when someone modifies the steering wheel or brakes, we smash everything again to verify it still holds the road.
+====
+
+Testing distributed applications requires a different approach.
+
+=== Unit Tests
+
+    * Tests isolated from business logic
+    * Mock external dependencies (database, third-party services)
+    * Use test frameworks adapted to your language
+
+=== Integration Tests
+
+    * *Testcontainers*: Launch Docker containers to test with real dependencies
+    * *Database tests*: Test SQL queries and migrations with a real database
+    * *API tests*: Test your REST/gRPC endpoints with tools like RestAssured, Supertest
+
+=== End-to-End Tests
+
+    * Test the complete system in an environment similar to production
+    * Use tools like Selenium, Cypress, Playwright for web applications
+    * Automate these tests in your CI/CD pipeline
+
+=== Load and Performance Tests
+
+    * *Load testing*: Test behavior under normal load (Apache JMeter, Gatling, k6)
+    * *Stress testing*: Test system limits
+    * *Spike testing*: Test response to sudden traffic spikes
+    * *Soak testing*: Test stability over a long period to detect memory leaks
+
+=== Chaos Engineering Tests
+
+If necessary, integrate chaos engineering tests to validate your application's resilience:
+
+    * Test resilience by introducing voluntary failures
+    * Use tools like Chaos Monkey, Gremlin, or LitmusChaos
+    * Simulate server outages, network latencies, unavailable databases
+
+=== Visual Regression Tests
+
+    * For frontend applications, test that the interface hasn't changed unintentionally
+    * Use tools like Percy, Chromatic, or Applitools
+
+== Communication Between Services
+
+====
+Communication between services is like a jazz orchestra: each musician must know when to play, in what key, and at what tempo. Without a common protocol (REST, gRPC, or asynchronous messages), it's cacophony. Everyone improvises, but during the same jam session.
+====
+
+If your application is composed of several microservices or components that must communicate with each other, it is crucial to choose the right protocols and communication patterns.
+
+*REST API*: Standard and simple, use HTTP/HTTPS with JSON formats.
+
+*gRPC*: More performant than REST, uses Protocol Buffers and HTTP/2.
+
+*Message queues*: For asynchronous communication, use RabbitMQ, Apache Kafka, AWS SQS, Azure Service Bus, Postgres Notify, or GCP Pub/Sub.
+
+*Service mesh*: To manage communication between services (Istio, Linkerd) with features like load balancing, circuit breaking, and mTLS.
+
+Some important considerations are not to be neglected. Use *timeouts* for all inter-service communications. Implement *retry* with *exponential backoff*. Use *circuit-breakers* to avoid failure cascades. Propagate *correlation IDs* for *distributed tracing*.
+
+=== Resilience and Error Management
+
+====
+Resilience is the shock absorber: the road is bumpy, but we keep course without breaking the chassis.
+====
+
+In a distributed environment, errors are inevitable. Your application must be designed to be resilient.
+
+*Circuit breaker*: Avoids overloading a failing service by "opening the circuit" after a certain number of failures.
+
+*Retry with exponential backoff*: Retries failed operations with an increasing delay between each attempt.
+
+*Timeout*: Define timeouts for all network operations to avoid waiting indefinitely.
+
+*Bulkhead*: Isolate resources so that a failure in one part of the system does not affect others.
+
+*Fallback*: Provide a backup behavior when an operation fails (cache, default value, degraded mode).
+
+Libraries like Resilience4j (Java), Polly (.NET) or Hystrix facilitate the implementation of these patterns.
+
+=== Design Patterns to Consider
+
+====
+Good patterns are a roadmap: we avoid dirt roads and arrive on time.
+====
+
+Several architectural patterns are particularly suitable for distributed deployments:
+
+*Strangler Fig Pattern*: Gradually migrate a monolithic application to microservices by "strangling" the old system
+
+*Backend for Frontend (BFF)*: Create specific APIs for each type of client (web, mobile, etc.)
+
+*API Gateway*: Single entry point for all your services, managing authentication, routing, rate limiting
+
+*Event Sourcing*: Store all state changes as a sequence of events
+
+*CQRS (Command Query Responsibility Segregation)*: Separate read and write operations to optimize each independently
+
+*Sidecar Pattern*: Deploy auxiliary features (logging, monitoring) in a separate but adjacent container
+
+It is important to understand these patterns well, in which context to use them, and to adapt them to your specific needs.
+
+=== Anti-Patterns to Avoid
+
+====
+Anti-patterns are 'road closed' signs: if you insist, you end up in the ditch.
+====
+
+*Distributed Monolith*: Overly coupled microservices that must be deployed together. Relative independence between services is crucial.
+
+*Chatty Services*: Too much communication between services, creating latency, think about grouping calls, caching, or using asynchronous messages.
+
+*Tight Coupling*: Services relying heavily on each other, making changes and deployment difficult. Think about using clear interfaces and stable contracts.
+
+*Data Ownership Violations*: Services directly accessing another service's database. If you choose to consider the database as a service, each service must manage its own data schema. Furthermore, if it is more efficient for a service to directly access another service's database, consider exposing the information in the form of a view which becomes the contract between the two services.
+
+*Ignoring the law of fallacies of distributed computing*: Assuming that the network is reliable, latency is zero, bandwidth is infinite, etc.
+
+== Security
+
+====
+Security is the lock AND the alarm: the cloud has curious neighbors, better to be careful.
+====
+
+Both in a traditional distributed deployment and in the cloud, security is a responsibility shared by developers and the DevOps team, and must be integrated from the start.
+
+*Principle of least privilege*: Give only necessary permissions to applications and users.
+
+*Encryption*: Encrypt data at rest and in transit (TLS/HTTPS).
+
+*Authentication and authorization*: Use standards like OAuth2/OIDC for authentication, JWT for tokens.
+
+*Vulnerability scan*: Regularly scan your dependencies and images.
+
+*WAF*: Use a Web Application Firewall to protect against common attacks.
+
+*DDoS protection*: Activate DDoS protection offered by your cloud provider. Otherwise, look at what you can set up yourself.
+
+*Audit logs*: Keep audit logs for all sensitive operations.
+
+== Multiple Environments
+
+====
+Multi-environments are tailored suits: same actor, studio rehearsals, gala premiere.
+====
+
+Maintain multiple environments for different stages of the lifecycle. They allow freedom to test and validate changes before deploying them to testers, then to production.
+
+*Local*: For individual development
+
+*Development*: To ensure new features work together, that it deploys correctly, to allow developers to test integrations.
+
+*Test/QA*: For integration and acceptance tests
+
+*Staging/Pre-prod*: A copy of production for final tests by a restricted group of users, often on the client side, before deployment to production
+
+*Production*: The production environment
+
+Using Infrastructure as Code is an excellent practice to guarantee that all environments are configured consistently. It also prevents manual configuration from being forgotten in an environment or essential configuration being omitted or different between environments.
+
+== Conclusion
+
+====
+Adopting these practices is like learning the piano: you don't play Beethoven on day one. Start with the basics, adapt to your pace, and before long you'll make music — without blowing a fuse or the budget.
+====
+
+Developing for distributed environments is not simply a question of deployment in a cloud provider or in the organization's servers.
+One must think about specific aspects of development to ensure the application works correctly in a distributed architecture.
+
+This little guide covers several of the most important considerations, but there are others depending on the specific needs of each application.
+It is certainly not exhaustive, but I hope it will serve as a starting point for those who are starting in development for distributed deployment.
+
+Adopting these practices can seem burdensome at first, but it brings numerous advantages: better scalability, increased resilience, ease of maintenance, and cost reduction in the long term. The important thing is to start gradually and adapt these principles to the real needs of your application.
+
+If you want to go further, the principles of https://12factor.net/[12-Factor App], a well-established methodology for building modern SaaS (Software as a Service) applications is a good starting point.
+
+'''
+
+This article is part of the *Advent of Tech 2025 @ Onepoint*, a series of tech articles published by https://www.groupeonepoint.com/en/[Onepoint] to wait until Christmas.
+
+See all articles from the https://dev.to/onepoint/advent-of-tech-onepoint-x-wepoint-2025-2o3k[Advent of Tech 2025]
