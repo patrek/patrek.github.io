@@ -80,7 +80,7 @@ Le choix final que vous ferez dépendra de si vous prévoyez déployer votre app
 Les feature flags, c'est comme les scènes post-crédits Marvel: on peut les activer pour certains, les cacher pour d'autres, et les couper net si ça tourne mal. Zéro recompilation, juste un interrupteur.
 ====
 
-Les feature flags (drapeaux de fonctionnalités) permettent d'activer ou désactiver des fonctionnalités sans recompiler l'application, ou même la redéployer si vous mettez en place une façon d'en prendre compte pendant que l'application roule. Cette stratégie peut être très utile, notamment pour les cas d'utilisation suivants :
+Les feature flags (drapeaux de fonctionnalités) permettent d'activer ou désactiver des fonctionnalités sans recompiler l'application, ou même la redéployer si vous mettez en place une façon d'en prendre compte pendant que l'application roule. Cette stratégie peut être très utile, notamment pour les cas d'utilisation suivants.
 
 *Déploiements progressifs* : Activer une nouvelle fonctionnalité pour un pourcentage d'utilisateurs ou certains groupes d'utilisateurs
 
