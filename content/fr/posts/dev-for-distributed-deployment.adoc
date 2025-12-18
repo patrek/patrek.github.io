@@ -1,6 +1,6 @@
 ---
 date: "2025-12-14T00:00:00-05:00"
-draft: true
+draft: false
 title: "Développer pour le déploiement distribué : Bonnes pratiques et considérations"
 description: "Considérations pour le développement d'une application destinée à un déploiement distribué"
 featured_image: "/images/dev-for-distributed.png"
