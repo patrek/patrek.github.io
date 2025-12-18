@@ -320,7 +320,7 @@ Implement dedicated HTTP endpoints (e.g. `/health` and `/ready`) that return the
 
 === Information Exposition
 
-Expose *information* about your application (version, environment, etc.) on the `/info` endpoint.
+Expose *information* about your application (version, environment, git commit, etc.) on the `/info` endpoint.
 
 === Graceful Shutdown
 
