@@ -1,0 +1,2 @@
+{{ $asciidocSidebar := resources.Get "ananke/css/asciidoc-sidebar.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $asciidocSidebar.RelPermalink }}">
