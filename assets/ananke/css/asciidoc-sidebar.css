@@ -1,27 +1,16 @@
 /* Style pour les blocs sidebar AsciiDoc */
 .sidebarblock {
-    background-color: #f8f9fa;
-    border-left: 4px solid #0066cc;
+    background-color: #fefefe;
+    border-left: 4px solid #60a5fa;
     padding: 1em 1.5em;
     margin: 1.5em 0;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .sidebarblock .content {
     font-style: italic;
-    color: #495057;
+    color: #4b5563;
     line-height: 1.6;
-}
-
-/* Version sombre pour les thèmes sombres */
-@media (prefers-color-scheme: dark) {
-    .sidebarblock {
-        background-color: #2d3748;
-        border-left-color: #4299e1;
-    }
-
-    .sidebarblock .content {
-        color: #cbd5e0;
-    }
 }
