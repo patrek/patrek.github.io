@@ -29,9 +29,9 @@ Most of these considerations also apply to serverless functions and event-driven
 
 == Multiple Disposable Instances to Provide a Single Service
 
-====
+****
 Multiple clones, a single mission
-====
+****
 
 The most important consideration is that your application must be designed to run in an environment where multiple instances of the application can be executed simultaneously.
 This means that one instance must not interfere with another instance, and we want to avoid duplicate processing. Furthermore, your application must not depend on local state or instance-specific resources.
@@ -42,9 +42,9 @@ It will also likely be started without human intervention. You must therefore ke
 
 == Architecture Behind a Load Balancer/Reverse Proxy
 
-====
+****
 Like a service center call dispatcher: each request is sent to the right department — billing, support, or accounts — depending on what is requested.
-====
+****
 
 In most cases, your application instances will be deployed behind a load balancer.
 The load balancer distributes incoming traffic among the different instances of your application.
@@ -62,9 +62,9 @@ The consequences on the development side are that you must avoid assumptions of 
 
 == Externalize Configuration
 
-====
+****
 Externalizing configuration is like inserting a SIM card into a phone: same device, settings adapted to the network. by changing the SIM, we can also change provider — Bell, Vidéotron, Orange — without touching the phone itself.
-====
+****
 
 An important aspect of developing for distributed deployment (including cloud) is to separate the application configuration from the code itself.
 This notably allows modifying the configuration without having to recompile the application.
@@ -78,9 +78,9 @@ The final choice you make will depend on whether you plan to deploy your applica
 
 == Feature Flags and Dynamic Configuration
 
-====
+****
 Feature flags are like Marvel post-credits scenes: we can activate them for some, hide them for others, and cut them clean if it goes wrong. Zero recompilation, just a switch.
-====
+****
 
 Feature flags allow enabling or disabling features without recompiling the application, or even redeploying it if you implement a way to take them into account while the application is running. This strategy can be very useful, especially for the following use cases.
 
@@ -96,9 +96,9 @@ Tools like LaunchDarkly, Unleash, Split.io, or AWS AppConfig can be used to mana
 
 == Secrets Management
 
-====
+****
 Putting secrets in source code is like hiding the house key under the doormat: everyone knows where to look. Use a real safe.
-====
+****
 
 Never store secrets (passwords, API keys, certificates) directly in the code or in versioned configuration files.
 
@@ -108,9 +108,9 @@ These solutions offer several advantages, such as encryption of secrets at rest 
 
 == Storing Working or Uploaded Files
 
-====
+****
 Writing to the local disk in the cloud is leaving your notes on the cafe table: it works… until the cleaning happens.
-====
+****
 
 Let's imagine an application that generates a report (PDF, Excel, etc.) from data provided by the user.
 
@@ -122,9 +122,9 @@ Providers offer storage services, such as AWS S3, AWS EFS, Azure Blob Storage, A
 
 == Periodic Tasks / Cron Jobs
 
-====
+****
 Crons in multi-instance are like cleaning the house in a shared apartment: if 5 roommates clean the same room at the same time, it's wasted effort. Only one needs to do it at a time. Otherwise, same room cleaned 5 times = 5 times the work, 5 times the cost.
-====
+****
 
 Periodic tasks, such as sending reminder emails, creating reports, or purging data, are frequent in applications.
 
@@ -142,9 +142,9 @@ The important thing is to ensure that periodic tasks are executed reliably and w
 
 == State and Session Management
 
-====
+****
 Sessions in distributed deployment are a cloakroom: you present your ticket and get your coat back, regardless of the entrance door or the attendant.
-====
+****
 
 In a distributed environment with multiple instances, user state management (sessions) becomes critical. If a user connects to an instance and their next request is routed to another instance, the application must be able to retrieve the session information.
 
@@ -162,9 +162,9 @@ The best approach depends on your specific needs, but stateless sessions (JWT) o
 
 == Persistence and Database Transactions
 
-====
+****
 The database is like the only teller at the bank: if 10 customers each open their door (connection), it's wasteful. You need a shared queue. And if 10 customers pay the same bill at the same time, you must avoid duplicates. Only one successful transaction, not 10 identical writes.
-====
+****
 
 In a distributed environment, managing database transactions requires special attention.
 
@@ -178,9 +178,9 @@ In a distributed environment, managing database transactions requires special at
 
 === Database Schema Migrations
 
-====
+****
 Migrating the schema is renovating without closing the store: we move the shelves, we keep the customers.
-====
+****
 
 Schema migrations in a distributed environment require careful planning.
 
@@ -208,9 +208,9 @@ There are some common patterns for managing database schema changes in a distrib
 
 == Caching and Performance
 
-====
+****
 Cache is like keeping important documents on your desk rather than in the basement: you quickly access what you use often. But be careful, sometimes you have to clean up to avoid working with outdated versions.
-====
+****
 
 Cache is crucial for performance in a distributed environment. Getting information from memory is much faster than fetching it from a database or external service.
 
@@ -268,17 +268,17 @@ Some considerations are important for cache invalidation and cleaning for distri
 
 == Considerations for the DevOps Team
 
-====
+****
 DevOps is like piloting a plane you didn't build: you need clear dashboard instruments, lights that turn on at the right time, and a manual that says what to do if things go wrong.
-====
+****
 
 The team that will deploy and manage the application has specific needs that must be taken into account from the start of development.
 
 === Observability: Logs, Metrics, and Traces
 
-====
+****
 And when the plane has problems, you become a detective: logs tell what happened in the cockpit, metrics show flight trends, and traces follow the route through the sky. Without these instruments, you investigate blindly in the fog.
-====
+****
 
 Observability is crucial in a distributed environment where it can be difficult to diagnose problems.
 
@@ -305,9 +305,9 @@ Use *OpenTelemetry* as a standard to instrument your application.
 
 === Health Checks and Readiness Probes
 
-====
+****
 Probes are the microphone check before the concert: checking we're ready before turning up the sound.
-====
+****
 
 Orchestrators like Kubernetes and load balancers need to know if an instance of your application is healthy and ready to receive traffic.
 
@@ -324,9 +324,9 @@ Expose *information* about your application (version, environment, git commit, e
 
 === Graceful Shutdown
 
-====
+****
 Closing gracefully is saying goodbye before hanging up: we finish the sentence, then we cut so.
-====
+****
 
 When an instance of your application is stopped (update, scaling down, etc.), it must terminate cleanly:
 
@@ -339,9 +339,9 @@ Implement a signal handler (SIGTERM) to manage the graceful shutdown of your app
 
 === Dependency and Vulnerability Management
 
-====
+****
 Do your inventory like in Home Alone: check the traps, don't leave easy entries.
-====
+****
 
 Proactive dependency management is crucial for security and stability:
 
@@ -353,9 +353,9 @@ Proactive dependency management is crucial for security and stability:
 
 === CI/CD and Deployment Pipelines
 
-====
+****
 The pipeline is the assembly line: we produce reliable versions, not Monday morning prototypes.
-====
+****
 
 Deployment automation is essential for cloud, and it is also very useful when deploying on traditional servers. It helps reduce oversights, human errors, and accelerate updates.
 
@@ -377,9 +377,9 @@ Make your pipeline inject the version of the image in the environment variables 
 
 === Containerization and Images
 
-====
+****
 A good container is a well-packed suitcase: light, secure, and without the 'latest' tag lost at the airport.
-====
+****
 
 Containerization is quasi-universal in distributed deployment:
 
@@ -399,9 +399,9 @@ Make sure you expose the version of the image in the environment variables of th
 
 === Cost Optimization (Cloud)
 
-====
+****
 Cloud charges like a taxi: leave the meter running, and the bill climbs. Set limits.
-====
+****
 
 Cloud can become expensive if we're not careful.
 
@@ -417,9 +417,9 @@ Cloud can become expensive if we're not careful.
 
 === Resource Management and Limits
 
-====
+****
 Resources are the calorie budget: too little, we stall; too much, we doze off. Let's find the right dosage.
-====
+****
 
 Correctly defining resources allocated to your application is essential.
 
@@ -435,9 +435,9 @@ Correctly defining resources allocated to your application is essential.
 
 == Local Development and Dev Environment
 
-====
+****
 Developing locally is rehearsing in the studio: we fix false notes before the concert in prod.
-====
+****
 
 Developing for a distributed environment does not mean everything must be done in that environment.
 
@@ -461,9 +461,9 @@ Use tools like Skaffold or Tilt for continuous development on Kubernetes.
 
 == Tests for Distributed Applications
 
-====
+****
 Tests are like car crash tests: we smash prototypes in a lab to avoid having real accidents on the highway. And when someone modifies the steering wheel or brakes, we smash everything again to verify it still holds the road.
-====
+****
 
 Testing distributed applications requires a different approach.
 
@@ -507,9 +507,9 @@ If necessary, integrate chaos engineering tests to validate your application's r
 
 == Communication Between Services
 
-====
+****
 Communication between services is like a jazz orchestra: each musician must know when to play, in what key, and at what tempo. Without a common protocol (REST, gRPC, or asynchronous messages), it's cacophony. Everyone improvises, but during the same jam session.
-====
+****
 
 If your application is composed of several microservices or components that must communicate with each other, it is crucial to choose the right protocols and communication patterns.
 
@@ -525,9 +525,9 @@ Some important considerations are not to be neglected. Use *timeouts* for all in
 
 === Resilience and Error Management
 
-====
+****
 Resilience is the shock absorber: the road is bumpy, but we keep course without breaking the chassis.
-====
+****
 
 In a distributed environment, errors are inevitable. Your application must be designed to be resilient.
 
@@ -545,9 +545,9 @@ Libraries like Resilience4j (Java), Polly (.NET) or Hystrix facilitate the imple
 
 === Design Patterns to Consider
 
-====
+****
 Good patterns are a roadmap: we avoid dirt roads and arrive on time.
-====
+****
 
 Several architectural patterns are particularly suitable for distributed deployments:
 
@@ -567,9 +567,9 @@ It is important to understand these patterns well, in which context to use them,
 
 === Anti-Patterns to Avoid
 
-====
+****
 Anti-patterns are 'road closed' signs: if you insist, you end up in the ditch.
-====
+****
 
 *Distributed Monolith*: Overly coupled microservices that must be deployed together. Relative independence between services is crucial.
 
@@ -583,9 +583,9 @@ Anti-patterns are 'road closed' signs: if you insist, you end up in the ditch.
 
 == Security
 
-====
+****
 Security is the lock AND the alarm: the cloud has curious neighbors, better to be careful.
-====
+****
 
 Both in a traditional distributed deployment and in the cloud, security is a responsibility shared by developers and the DevOps team, and must be integrated from the start.
 
@@ -605,9 +605,9 @@ Both in a traditional distributed deployment and in the cloud, security is a res
 
 == Multiple Environments
 
-====
+****
 Multi-environments are tailored suits: same actor, studio rehearsals, gala premiere.
-====
+****
 
 Maintain multiple environments for different stages of the lifecycle. They allow freedom to test and validate changes before deploying them to testers, then to production.
 
@@ -625,9 +625,9 @@ Using Infrastructure as Code is an excellent practice to guarantee that all envi
 
 == Conclusion
 
-====
+****
 Adopting these practices is like learning the piano: you don't play Beethoven on day one. Start with the basics, adapt to your pace, and before long you'll make music — without blowing a fuse or the budget.
-====
+****
 
 Developing for distributed environments is not simply a question of deployment in a cloud provider or in the organization's servers.
 One must think about specific aspects of development to ensure the application works correctly in a distributed architecture.
